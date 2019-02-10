@@ -5,9 +5,9 @@ output_dir: "."
 navbar:
   title: "Appalachian State Baseball"
   left:
-    - text: "Allison"
+    - text: "Luke Allison"
       href: allison.html
-    - text: "Baldwin"
+    - text: "Bret Baldwin"
       href: baldwin.html
   right:
     - text: ""
