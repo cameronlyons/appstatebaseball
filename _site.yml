@@ -33,6 +33,8 @@ navbar:
         href: leshock.html
       - text: "Joel McDaniel"
         href: mcdaniel.html
+      - text: "Kendall McGowan"
+        href: mcgowan.html
 
 output:
   html_document: 
