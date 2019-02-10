@@ -31,6 +31,8 @@ navbar:
         href: leek.html
       - text: "Alex Leshock"
         href: leshock.html
+      - text: "Joel McDaniel"
+        href: mcdaniel.html
 
 output:
   html_document: 
