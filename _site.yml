@@ -10,6 +10,10 @@ navbar:
       href: baldwin.html
     - text: "Drew Beck"
       href: beck.html
+    - text: "McKinley Bell"
+      href: bell.html
+    - text: "CJ Brown"
+      href: brown.html
 
 output:
   html_document: 

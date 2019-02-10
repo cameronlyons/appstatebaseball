@@ -1,5 +1,5 @@
 ---
-title: "McKinley Bell"
+title: "Phillip Cole"
 ---
 
 <hr>
@@ -26,7 +26,7 @@ library(plyr)
 library(stringr)
 Master <- read_csv("Master.csv")
 Hitter <- Master %>%
-  filter(Batter == "Bell, McKinley")
+  filter(Batter == "Cole, Phillip")
 x <- c(-.95,.95,.95,-.95,-.95)
 z <- c(1.6,1.6,3.5,3.5,1.6)
 sz <- data_frame(x, z)
