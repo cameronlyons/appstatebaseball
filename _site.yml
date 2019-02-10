@@ -29,6 +29,8 @@ navbar:
         href: drumheller.html
       - text: "Tyler Leek"
         href: leek.html
+      - text: "Alex Leshock"
+        href: leshock.html
 
 output:
   html_document: 
