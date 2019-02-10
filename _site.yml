@@ -5,22 +5,22 @@ output_dir: "."
 navbar:
   title: "Cameron Lyons"
   left:
-  - text: "Allison"
-    href: allison.html
-  - text: "Baldwin"
-    href: baldwin.html
+    - text: "Allison"
+      href: allison.html
+    - text: "Baldwin"
+      href: baldwin.html
   right:
-  - text: ""
-    icon: fa-github
-    href: https://github.com/cameronlyons/cameronlyons.github.io/
-  - text: ""
-    icon: fa-twitter
-    href: https://twitter.com/CameronL3310
+    - text: ""
+      icon: fa-github
+      href: https://github.com/cameronlyons/cameronlyons.github.io/
+    - text: ""
+      icon: fa-twitter
+      href: https://twitter.com/CameronL3310
 
 output:
-  html_document:
-  theme: cosmo
-  highlight: textmate
-  include:
-  after_body: footer.html
-  css: webpage.css
+  html_document: 
+    theme: cosmo
+    highlight: textmate
+    include:
+    after_body: footer.html
+    css: webpage.css
