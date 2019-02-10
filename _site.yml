@@ -18,6 +18,8 @@ navbar:
       href: cole.html
     - text: "Hayden Cross"
       href: cross.html
+    - text: "Bradley Davis"
+      href: davis.html
 
 output:
   html_document: 
