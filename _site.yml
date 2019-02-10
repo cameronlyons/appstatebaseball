@@ -8,7 +8,7 @@ navbar:
   - text: "Allison"
     href: allison.html
   - text: "Baldwin"
-    href: Baldwin.html
+    href: baldwin.html
   right:
   - text: ""
     icon: fa-github
