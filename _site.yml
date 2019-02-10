@@ -4,24 +4,25 @@ output_dir: "."
 navbar:
   title: "Appalachian State Baseball"
   left:
-    - text: "Luke Allison"
-      href: allison.html
-    - text: "Bret Baldwin"
-      href: baldwin.html
-    - text: "Drew Beck"
-      href: beck.html
-    - text: "McKinley Bell"
-      href: bell.html
-    - text: "CJ Brown"
-      href: brown.html
-    - text: "Phillip Cole"
-      href: cole.html
-    - text: "Hayden Cross"
-      href: cross.html
-    - text: "Bradley Davis"
-      href: davis.html
-    - text: "Kyle Decker"
-      href: decker.html
+    menu:
+      - text: "Luke Allison"
+        href: allison.html
+      - text: "Bret Baldwin"
+        href: baldwin.html
+      - text: "Drew Beck"
+        href: beck.html
+      - text: "McKinley Bell"
+        href: bell.html
+      - text: "CJ Brown"
+        href: brown.html
+      - text: "Phillip Cole"
+        href: cole.html
+      - text: "Hayden Cross"
+        href: cross.html
+      - text: "Bradley Davis"
+        href: davis.html
+      - text: "Kyle Decker"
+        href: decker.html
 
 output:
   html_document: 
