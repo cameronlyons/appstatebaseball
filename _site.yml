@@ -41,6 +41,10 @@ navbar:
         href: terrell.html
       - text: "Bailey Welch"
         href: welch.html
+      - text: "Dalton Williams"
+        href: williams.html
+      - text: "Robbie Young"
+        href: young.html
 
 output:
   html_document: 
