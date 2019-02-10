@@ -11,7 +11,7 @@
 
 
 
-<title></title>
+<title>Team Hitting</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -22,8 +22,13 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<script src="site_libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.8.0/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="site_libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-1.39.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="site_libs/plotly-main-1.39.2/plotly-latest.min.js"></script>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -289,20 +294,7 @@ $(document).ready(function () {
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://github.com/cameronlyons/cameronlyons.github.io/">
-    <span class="fa fa-github"></span>
-     
-    
-  </a>
-</li>
-<li>
-  <a href="https://twitter.com/CameronL3310">
-    <span class="fa fa-twitter"></span>
-     
-    
-  </a>
-</li>
+        
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -312,11 +304,101 @@ $(document).ready(function () {
 
 
 
+<h1 class="title toc-ignore">Team Hitting</h1>
 
 </div>
 
 
-
+<hr>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th>Hitting Summary</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>PA:</td>
+<td>37</td>
+<td>2B:</td>
+<td>2</td>
+<td>RBI:</td>
+<td>3</td>
+<td>AVG:</td>
+<td>0.167</td>
+</tr>
+<tr class="even">
+<td>AB:</td>
+<td>30</td>
+<td>3B:</td>
+<td>0</td>
+<td>BB:</td>
+<td>6</td>
+<td>SLG:</td>
+<td>0.233</td>
+</tr>
+<tr class="odd">
+<td>Hits:</td>
+<td>5</td>
+<td>HR:</td>
+<td>0</td>
+<td>HBP:</td>
+<td>0</td>
+<td>OPS:</td>
+<td>0.531</td>
+</tr>
+<tr class="even">
+<td>SO:</td>
+<td>13</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>OBP:</td>
+<td>0.297</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr class="header">
+<th>Hits</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>AVG Exit Velocity:</td>
+<td>78.73 mph</td>
+</tr>
+<tr class="even">
+<td>Max Exit Velocity:</td>
+<td>93.37 mph</td>
+</tr>
+<tr class="odd">
+<td>AVG Launch Angle:</td>
+<td>15.67 degrees</td>
+</tr>
+<tr class="even">
+<td>Max Estimated Distance:</td>
+<td>353.99 feet</td>
+</tr>
+</tbody>
+</table>
+<center>
+<div id="htmlwidget-16d08466b3eee49cc7e0" style="width:384px;height:384px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-16d08466b3eee49cc7e0">{"x":{"data":[{"x":[0,63.6396103067893,0,-63.6396103067893,0,0],"y":[0,63.6396103067893,127.279220613579,63.6396103067893,0,0],"text":["xa:   0.00000<br />ya:   0.00000","xa:  63.63961<br />ya:  63.63961","xa:   0.00000<br />ya: 127.27922","xa: -63.63961<br />ya:  63.63961","xa:   0.00000<br />ya:   0.00000","xa:   0.00000<br />ya:   0.00000"],"type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-71.9516288773811,-83.7982726910651],"y":[243.921720585963,286.119992566383],"text":["factor(Hitter$PlayResult): Double<br />xa:  -71.9516289<br />ya:  243.921721","factor(Hitter$PlayResult): Double<br />xa:  -83.7982727<br />ya:  286.119993"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"Double","legendgroup":"Double","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[9.29815432724966],"y":[134.763538899425],"text":"factor(Hitter$PlayResult): Error<br />xa:    9.2981543<br />ya:  134.763539","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(183,159,0,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(183,159,0,1)"}},"hoveron":"points","name":"Error","legendgroup":"Error","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.118104209187348,-5.17172143792909,97.387361920915,92.3762478649854,19.7899731470551,-62.4346588453151,null,36.2208919060214,-2.8050931408378,75.3591941302443,null],"y":[5.23252151376218,11.8771724538555,241.265130429302,247.929753957836,272.845882748089,180.242264491571,null,352.127974272024,8.91385967355729,220.460591608259,null],"text":["factor(Hitter$PlayResult): Out<br />xa:   -0.1181042<br />ya:    5.232522","factor(Hitter$PlayResult): Out<br />xa:   -5.1717214<br />ya:   11.877172","factor(Hitter$PlayResult): Out<br />xa:   97.3873619<br />ya:  241.265130","factor(Hitter$PlayResult): Out<br />xa:   92.3762479<br />ya:  247.929754","factor(Hitter$PlayResult): Out<br />xa:   19.7899731<br />ya:  272.845883","factor(Hitter$PlayResult): Out<br />xa:  -62.4346588<br />ya:  180.242264","factor(Hitter$PlayResult): Out<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Out<br />xa:   36.2208919<br />ya:  352.127974","factor(Hitter$PlayResult): Out<br />xa:   -2.8050931<br />ya:    8.913860","factor(Hitter$PlayResult): Out<br />xa:   75.3591941<br />ya:  220.460592","factor(Hitter$PlayResult): Out<br />xa:           NA<br />ya:          NA"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,186,56,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,186,56,1)"}},"hoveron":"points","name":"Out","legendgroup":"Out","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-28.0062917283375],"y":[302.802186867247],"text":"factor(Hitter$PlayResult): Sacrifice<br />xa:  -28.0062917<br />ya:  302.802187","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,191,196,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"Sacrifice","legendgroup":"Sacrifice","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-66.7774716754986,0.328544941240629,-64.8136170227623],"y":[168.732119045207,109.061115332818,112.615959987352],"text":["factor(Hitter$PlayResult): Single<br />xa:  -66.7774717<br />ya:  168.732119","factor(Hitter$PlayResult): Single<br />xa:    0.3285449<br />ya:  109.061115","factor(Hitter$PlayResult): Single<br />xa:  -64.8136170<br />ya:  112.615960"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(97,156,255,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(97,156,255,1)"}},"hoveron":"points","name":"Single","legendgroup":"Single","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[null,null,null,null,null,null,null,null,null,null,null,110.661130634613,null,null,null,null,-105.194117098996,null,null,-1.7622628190019,null,null,null,124.970629572593,null,null,null,null,null,null,null,null,null,null,null,null,4.59927816283579,50.6253429172083,null,null,5.75971094643035,null,33.6818788987156,null,null,null,null,null,null,40.6361849320906,72.956573345986,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,133.138578524987,null,-3.11942009434704,null,null,null,null,null,null,95.3972732409652,null,null,null,null,null,null,null,null,null,null,null,null,null,108.575755768175,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,71.4362206588579,null],"y":[null,null,null,null,null,null,null,null,null,null,null,67.8174012948368,null,null,null,null,100.12454611891,null,null,0.902015029163832,null,null,null,-113.781805160514,null,null,null,null,null,null,null,null,null,null,null,null,5.47183001486979,-52.6156789714254,null,null,-10.7316918879191,null,-199.599341098763,null,null,null,null,null,null,-187.89476947569,-179.725558921895,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,-148.625766652021,null,-7.16390104455414,null,null,null,null,null,null,-107.826568598821,null,null,null,null,null,null,null,null,null,null,null,null,null,-151.995054403633,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,-182.002598148476,null],"text":["factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:  110.6611306<br />ya:   67.817401","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa: -105.1941171<br />ya:  100.124546","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:   -1.7622628<br />ya:    0.902015","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:  124.9706296<br />ya: -113.781805","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:    4.5992782<br />ya:    5.471830","factor(Hitter$PlayResult): Undefined<br />xa:   50.6253429<br />ya:  -52.615679","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:    5.7597109<br />ya:  -10.731692","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:   33.6818789<br />ya: -199.599341","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:   40.6361849<br />ya: -187.894769","factor(Hitter$PlayResult): Undefined<br />xa:   72.9565733<br />ya: -179.725559","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:  133.1385785<br />ya: -148.625767","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:   -3.1194201<br />ya:   -7.163901","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:   95.3972732<br />ya: -107.826569","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:  108.5757558<br />ya: -151.995054","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA","factor(Hitter$PlayResult): Undefined<br />xa:   71.4362207<br />ya: -182.002598","factor(Hitter$PlayResult): Undefined<br />xa:           NA<br />ya:          NA"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(245,100,227,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(245,100,227,1)"}},"hoveron":"points","name":"Undefined","legendgroup":"Undefined","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0,300,null,0,300,null,0,300,null,0,300,null,0,300,null,0,300],"y":[0,300,null,0,300,null,0,300,null,0,300,null,0,300,null,0,300],"text":"xa: 0<br />ya: 0","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0,-300,null,0,-300,null,0,-300,null,0,-300,null,0,-300,null,0,-300],"y":[0,300,null,0,300,null,0,300,null,0,300,null,0,300,null,0,300],"text":"xa: 0<br />ya: 0","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":23.3059360730594,"r":7.30593607305936,"b":10.958904109589,"l":43.1050228310502},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-198,198],"tickmode":"array","ticktext":["-100","0","100"],"tickvals":[-100,0,100],"categoryorder":"array","categoryarray":["-100","0","100"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":false,"tickfont":{"color":null,"family":null,"size":0},"tickangle":-0,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0.66417600664176,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":"","titlefont":{"color":null,"family":null,"size":0},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-35.5,525.5],"tickmode":"array","ticktext":["0","100","200","300","400","500"],"tickvals":[0,100,200,300,400,500],"categoryorder":"array","categoryarray":["0","100","200","300","400","500"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0.66417600664176,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x","title":"Distance","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"y":1},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":[{"name":"Collaborate","icon":{"width":1000,"ascent":500,"descent":-50,"path":"M487 375c7-10 9-23 5-36l-79-259c-3-12-11-23-22-31-11-8-22-12-35-12l-263 0c-15 0-29 5-43 15-13 10-23 23-28 37-5 13-5 25-1 37 0 0 0 3 1 7 1 5 1 8 1 11 0 2 0 4-1 6 0 3-1 5-1 6 1 2 2 4 3 6 1 2 2 4 4 6 2 3 4 5 5 7 5 7 9 16 13 26 4 10 7 19 9 26 0 2 0 5 0 9-1 4-1 6 0 8 0 2 2 5 4 8 3 3 5 5 5 7 4 6 8 15 12 26 4 11 7 19 7 26 1 1 0 4 0 9-1 4-1 7 0 8 1 2 3 5 6 8 4 4 6 6 6 7 4 5 8 13 13 24 4 11 7 20 7 28 1 1 0 4 0 7-1 3-1 6-1 7 0 2 1 4 3 6 1 1 3 4 5 6 2 3 3 5 5 6 1 2 3 5 4 9 2 3 3 7 5 10 1 3 2 6 4 10 2 4 4 7 6 9 2 3 4 5 7 7 3 2 7 3 11 3 3 0 8 0 13-1l0-1c7 2 12 2 14 2l218 0c14 0 25-5 32-16 8-10 10-23 6-37l-79-259c-7-22-13-37-20-43-7-7-19-10-37-10l-248 0c-5 0-9-2-11-5-2-3-2-7 0-12 4-13 18-20 41-20l264 0c5 0 10 2 16 5 5 3 8 6 10 11l85 282c2 5 2 10 2 17 7-3 13-7 17-13z m-304 0c-1-3-1-5 0-7 1-1 3-2 6-2l174 0c2 0 4 1 7 2 2 2 4 4 5 7l6 18c0 3 0 5-1 7-1 1-3 2-6 2l-173 0c-3 0-5-1-8-2-2-2-4-4-4-7z m-24-73c-1-3-1-5 0-7 2-2 3-2 6-2l174 0c2 0 5 0 7 2 3 2 4 4 5 7l6 18c1 2 0 5-1 6-1 2-3 3-5 3l-174 0c-3 0-5-1-7-3-3-1-4-4-5-6z"},"click":"function(gd) { \n        // is this being viewed in RStudio?\n        if (location.search == '?viewer_pane=1') {\n          alert('To learn about plotly for collaboration, visit:\\n https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html');\n        } else {\n          window.open('https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html', '_blank');\n        }\n      }"}],"cloud":false},"source":"A","attrs":{"a6ee28a95688":{"x":{},"y":{},"type":"scatter"},"a6ee672f8fd7":{"colour":{},"x":{},"y":{}},"a6ee3067d1ba":{"x":{},"y":{}},"a6ee1d559936":{"x":{},"y":{}}},"cur_data":"a6ee28a95688","visdat":{"a6ee28a95688":["function (y) ","x"],"a6ee672f8fd7":["function (y) ","x"],"a6ee3067d1ba":["function (y) ","x"],"a6ee1d559936":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"base_url":"https://plot.ly"},"evals":["config.modeBarButtonsToAdd.0.click"],"jsHooks":[]}</script>
+</center>
+<p><img src="baldwin_files/figure-html/unnamed-chunk-5-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p><img src="baldwin_files/figure-html/unnamed-chunk-6-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p><img src="baldwin_files/figure-html/unnamed-chunk-7-1.png" width="384" style="display: block; margin: auto;" /></p>
+<hr>
 
 <div id="footer">
   

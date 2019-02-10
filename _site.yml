@@ -8,13 +8,6 @@ navbar:
       href: allison.html
     - text: "Bret Baldwin"
       href: baldwin.html
-  right:
-    - text: ""
-      icon: fa-github
-      href: https://github.com/cameronlyons/cameronlyons.github.io/
-    - text: ""
-      icon: fa-twitter
-      href: https://twitter.com/CameronL3310
 
 output:
   html_document: 
