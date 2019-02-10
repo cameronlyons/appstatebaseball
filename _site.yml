@@ -8,6 +8,8 @@ navbar:
       href: allison.html
     - text: "Bret Baldwin"
       href: baldwin.html
+    - text: "Drew Beck"
+      href: beck.html
 
 output:
   html_document: 
