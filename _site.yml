@@ -4,7 +4,9 @@ output_dir: "."
 navbar:
   title: "Appalachian State Baseball"
   right:
-    menu:
+    - text: ""
+      icon: fa-bars
+      menu:
       - text: "Luke Allison"
         href: allison.html
       - text: "Bret Baldwin"
@@ -19,10 +21,14 @@ navbar:
         href: cole.html
       - text: "Hayden Cross"
         href: cross.html
-      - text: "Bradley Davis"
-        href: davis.html
       - text: "Kyle Decker"
         href: decker.html
+      - text: "Bradley Davis"
+        href: davis.html
+      - text: "Luke Drumheller"
+        href: drumheller.html
+      - text: "Tyler Leek"
+        href: leek.html
 
 output:
   html_document: 
