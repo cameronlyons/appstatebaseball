@@ -35,6 +35,8 @@ navbar:
         href: mcdaniel.html
       - text: "Kendall McGowan"
         href: mcgowan.html
+      - text: "Riley Smith"
+        href: smith.html
 
 output:
   html_document: 
