@@ -20,6 +20,8 @@ navbar:
       href: cross.html
     - text: "Bradley Davis"
       href: davis.html
+    - text: "Kyle Decker"
+      href: decker.html
 
 output:
   html_document: 
