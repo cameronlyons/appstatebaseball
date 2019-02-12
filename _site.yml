@@ -5,7 +5,7 @@ navbar:
   title: "Appalachian State Baseball"
   right:
     - text: ""
-      icon: fa-bars
+      icon: <i class="fas fa-baseball-ball"></i>
       menu:
       - text: "Luke Allison"
         href: allison.html
