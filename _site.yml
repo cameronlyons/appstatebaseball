@@ -21,10 +21,10 @@ navbar:
         href: cole.html
       - text: "Hayden Cross"
         href: cross.html
-      - text: "Kyle Decker"
-        href: decker.html
       - text: "Bradley Davis"
         href: davis.html
+      - text: "Kyle Decker"
+        href: decker.html
       - text: "Luke Drumheller"
         href: drumheller.html
       - text: "Tyler Leek"
