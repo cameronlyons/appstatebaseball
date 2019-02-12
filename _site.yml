@@ -4,8 +4,8 @@ output_dir: "."
 navbar:
   title: "Appalachian State Baseball"
   right:
-    - text: ""
-      icon: <i class="fas fa-baseball-ball"></i>
+    - text: "Batting"
+      icon: fa-baseball-ball
       menu:
       - text: "Luke Allison"
         href: allison.html
