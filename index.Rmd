@@ -4,6 +4,8 @@ title: "2018 - 2019 Fall/Winter"
 
 <hr>
 
+*This site was last rendered on `r format(Sys.time(), "%A, %B %d, %Y at %X.")`*
+
 ```{r,label = "SETUP", include=FALSE, results = 'hide'}
 knitr::opts_chunk$set(echo = FALSE, fig.align = "center", fig.width = 4, fig.height = 4, comment = NA, warning = FALSE, message = FALSE)
 library(readr)
