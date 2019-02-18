@@ -7,6 +7,8 @@ navbar:
     - text: "Batting"
       icon: 
       menu:
+      - text: "Team Batting"
+        href: batting.html
       - text: "Luke Allison"
         href: allison.html
       - text: "Bret Baldwin"
@@ -48,6 +50,8 @@ navbar:
     - text: "Pitching"
       icon: 
       menu:
+      - text: "Team Pitching"
+        href: pitching.html
       - text: "Brandon Boone"
         href: boone.html
       - text: "Kaleb Bowman"

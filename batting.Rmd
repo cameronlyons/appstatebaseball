@@ -1,0 +1,229 @@
+---
+title: "Team Batting"
+---
+
+<hr>
+
+```{r Master,label = "SETUP", include=FALSE, results = 'hide'}
+knitr::opts_chunk$set(echo = FALSE, fig.align = "center", fig.width = 4, fig.height = 4, comment = NA, warning = FALSE, message = FALSE)
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(utils)
+library(plyr)
+library(stringr)
+library(base)
+library(ggplot2)
+library(readxl)
+library(jpeg)
+library(plotly)
+library(gapminder)
+library(dplyr)
+library(reshape2)
+library(grid)
+library(plotrix)
+library(plyr)
+library(stringr)
+Master <- read_csv("Master.csv")
+Hitter <- Master %>%
+  filter(BatterTeam == "APP_MOU" | BatterTeam == "APP_PRA")
+x <- c(-.95,.95,.95,-.95,-.95)
+z <- c(1.6,1.6,3.5,3.5,1.6)
+sz <- data_frame(x, z)
+```
+
+```{r Summary}
+s <- sum(str_count(Hitter$PlayResult, "Single"))
+do <- sum(str_count(Hitter$PlayResult, "Double"))
+t <- sum(str_count(Hitter$PlayResult, "Triple"))
+hr <- sum(str_count(Hitter$PlayResult, "HomeRun"))
+hit <- sum(s + do + t + hr)
+inpl <- sum(str_count(Hitter$PitchCall, "InPlay"))
+rbi <- sum(Hitter$RunsScored)
+bb <- sum(str_count(Hitter$KorBB, "Walk"))
+hbp <- sum(str_count(Hitter$PitchCall, "HitByPitch"))
+walk <- sum(hbp + bb)
+sac <- sum(str_count(Hitter, "Sacrifice"))
+es <- Hitter %>%
+  filter(PitchCall == "InPlay" & ExitSpeed & !Hitter$HitType == "Bunt")
+la <- Hitter %>%
+  filter(PitchCall == "InPlay" & Angle & !Hitter$HitType == "Bunt")
+so <- sum(str_count(Hitter$KorBB, "Strikeout"))
+pa <- inpl + walk + so
+ab <- pa - walk - sac
+avg <- hit / ab
+obp <- (hit + walk) / pa
+tb <- sum(s + (2 * do) + (3 * t) + (4 * hr)) 
+slg <- tb / ab
+ops <- obp + slg
+```
+
+| | | | | | | Hitting Summary
+-|-|-|-|-|-|-|-
+PA:|`r pa`| 2B:| `r do` | RBI: |`r rbi`| AVG: |`r round(avg, digits = 3)` |
+AB: |`r ab` | 3B: | `r t` | BB: |`r bb` |SLG: | `r round(slg, digits = 3)`|
+Hits: |`r hit`| HR: | `r hr` | HBP: | `r hbp` | OPS: | `r round(ops, digits = 3)`|
+ | SO: |`r so` ||||| OBP: | `r round(obp, digits = 3)`
+
+Hits| | 
+-|-|
+AVG Exit Velocity: | `r round(mean(es$ExitSpeed, na.rm = TRUE), digits = 2)` mph
+Max Exit Velocity: | `r round(max(es$ExitSpeed, na.rm = TRUE), digits = 2)` mph
+AVG Launch Angle: | `r round(mean(la$Angle, na.rm = TRUE), digits = 2)` degrees
+Max Estimated Distance: | `r round(max(Hitter$Distance, na.rm = TRUE), digits = 2)` feet
+
+<center>
+```{r SprayChart}
+Hitter$Bearing <- ((Hitter$Bearing * -1) + 90)*pi/180
+Hitter$x <- Hitter$Distance*cos(Hitter$Bearing)
+Hitter$y <- Hitter$Distance*sin(Hitter$Bearing)
+bases <- data.frame(xa = c(0, 90/sqrt(2), 0, -90/sqrt(2), 0, rep(0)),
+ya = c(0, 90/sqrt(2), 2 * 90/sqrt(2), 90/sqrt(2), 0, rep(0)))
+sprayfilter <- Hitter %>%
+  filter(!PlayResult == "Undefined" & !PlayResult == "Sacrifice")
+bb <- ggplot(bases, aes(x = xa, y = ya)) + 
+  geom_path() + 
+  geom_point(data = sprayfilter, x = sprayfilter$x, y = sprayfilter$y, aes(color = factor(sprayfilter$PlayResult), shape = factor(sprayfilter$PlayResult))) + 
+  geom_segment(x = 0, xend = 300, y = 0, yend = 300) + 
+  geom_segment(x = 0, xend = -300, y = 0, yend = 300) + 
+  xlim(-250, 250) + ylim(-10, 500) +
+  theme(axis.line = element_blank(),
+      axis.text.x = element_blank(),
+      axis.text.y = element_blank(),
+      axis.ticks = element_blank(),
+      axis.title.x = element_blank(),
+      axis.title.y = element_blank(),
+      panel.background = element_blank(),
+      panel.border = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank(),
+      plot.background = element_blank(),
+      legend.title = element_blank()) +
+  coord_equal() +
+  scale_color_discrete(limits = c("Single" ,"Double", "Triple", "HomeRun", "Out", "FieldersChoice", "Error")) +
+  scale_shape_discrete(limits = c("Single" ,"Double", "Triple", "HomeRun", "Out", "FieldersChoice", "Error"))
+#Exit Speed
+#Distance
+ggplotly(bb)
+```
+</center>
+
+```{r NinetyPlus}
+NinetyPlus <- Hitter %>%
+  filter(ExitSpeed >= 90)
+ggplot() +
+  geom_path(data = sz, aes(x = x, y = z)) +
+  coord_equal() +
+  xlab("Plate Width") +
+  ylab("Plate Height") +
+  ggtitle("90+ Exit Velocities") +
+  geom_point(data = NinetyPlus,aes(x = PlateLocSide, y = PlateLocHeight, size = ExitSpeed, color = TaggedPitchType)) +
+  scale_size(range = c(0.1, 2)) + coord_cartesian(xlim = c(-2, 2), ylim = c(0, 5)) +
+  scale_color_discrete(limits = c("Fastball" ,"ChangeUp", "Splitter", "Curveball", "Slider"))
+```
+
+```{r HeatMapHardHitAVG}
+a <- c(-.32,-.32)
+b <- c(1.6,3.5)
+hm1 <- data_frame(a, b)
+c <- c(.32,.32)
+d <- c(1.6,3.5)
+hm2 <- data_frame(c, d)
+e <- c(-.95,.95)
+f <- c(2.23,2.23)
+hm3 <- data_frame(e, f)
+g <- c(-.95,.95)
+h <- c(2.87,2.87)
+hm4 <- data_frame(g, h)
+hhfilter <- Hitter %>%
+  filter(PitchCall == "InPlay" &  !Hitter$HitType == "Bunt" & PlateLocSide & PlateLocHeight)
+hhfilter <- sum(str_count(hhfilter$PitchCall == "InPlay", pattern = "TRUE"))
+bl <- between(NinetyPlus$PlateLocSide, -2, -.32) & between(NinetyPlus$PlateLocHeight, 0, 2.23)
+bl <- sum(str_count(bl, pattern = "TRUE"))
+blavg <- bl/hhfilter
+blavg <- round(blavg, digits = 3)
+bm <- between(NinetyPlus$PlateLocSide, -.32, .32) & between(NinetyPlus$PlateLocHeight, 0, 2.23)
+bm <- sum(str_count(bm, pattern = "TRUE"))
+bmavg <- bm/hhfilter
+bmavg <- round(bmavg, digits = 3)
+br <- between(NinetyPlus$PlateLocSide, .32, 2) & between(NinetyPlus$PlateLocHeight, 0, 2.23)
+br <- sum(str_count(br, pattern = "TRUE"))
+bravg <- br/hhfilter
+bravg <- round(bravg, digits = 3)
+ml <- between(NinetyPlus$PlateLocSide, -2, -.32) & between(NinetyPlus$PlateLocHeight, 2.23, 2.87)
+ml <- sum(str_count(ml, pattern = "TRUE"))
+mlavg <- ml/hhfilter
+mlavg <- round(mlavg, digits = 3)
+mm <- between(NinetyPlus$PlateLocSide, -.32, .32) & between(NinetyPlus$PlateLocHeight, 2.23, 2.87)
+mm <- sum(str_count(mm, pattern = "TRUE"))
+mmavg <- mm/hhfilter
+mmavg <- round(mmavg, digits = 3)
+mr <- between(NinetyPlus$PlateLocSide, .32, 2) & between(NinetyPlus$PlateLocHeight, 2.23, 2.87)
+mr <- sum(str_count(mr, pattern = "TRUE"))
+mravg <- mr/hhfilter
+mravg <- round(mravg, digits = 3)
+tl <- between(NinetyPlus$PlateLocSide, -2, -.32) & between(NinetyPlus$PlateLocHeight, 2.87, 5)
+tl <- sum(str_count(tl, pattern = "TRUE"))
+tlavg <- tl/hhfilter
+tlavg <- round(tlavg, digits = 3)
+tm <- between(NinetyPlus$PlateLocSide, -.32, .32) & between(NinetyPlus$PlateLocHeight, 2.87, 5)
+tm <- sum(str_count(tm, pattern = "TRUE"))
+tmavg <- tm/hhfilter
+tmavg <- round(tmavg, digits = 3)
+tr <- between(NinetyPlus$PlateLocSide, .32, 2) & between(NinetyPlus$PlateLocHeight, 2.87, 5)
+tr <- sum(str_count(tr, pattern = "TRUE"))
+travg <- tr/hhfilter
+travg <- round(travg, digits = 3)
+label1 <- data.frame(x1 = c(-.635, 0, .635, -.635, 0, .635, -.635, 0, .635), y1 = c(1.915, 1.915, 1.915, 2.545, 2.545, 2.545, 3.185, 3.185, 3.185))
+hhavg <- c(blavg, bmavg, bravg, mlavg, mmavg, mravg, tlavg, tmavg, travg)
+ggplot() +
+  ggtitle("Hard Hit AVG") +
+  theme(axis.line = element_blank(),
+      axis.text.x = element_blank(),
+      axis.text.y = element_blank(),
+      axis.ticks = element_blank(),
+      axis.title.x = element_blank(),
+      axis.title.y = element_blank(),
+      panel.background = element_blank(),
+      panel.border = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank(),
+      plot.background = element_blank(),
+      legend.title = element_blank()) +
+  geom_path(data = sz, aes(x = x, y = z)) +
+  geom_path(data = hm1, aes(x = a, y = b)) +
+  geom_path(data = hm2, aes(x = c, y = d)) +
+  geom_path(data = hm3, aes(x = e, y = f)) +
+  geom_path(data = hm4, aes(x = g, y = h)) +
+  geom_text(data = label1, aes(x = x1, y = y1, label = hhavg)) +
+  coord_cartesian(xlim = c(-1.25, 1.25), ylim = c(1.6, 3.5))
+```
+
+```{r FastballTakes}
+FastballTakes <- Hitter %>%
+  filter(TaggedPitchType == "Fastball" & PitchCall == "StrikeCalled")
+ggplot() +
+  geom_path(data = sz, aes(x = x, y = z)) +
+  coord_equal() +
+  xlab("Plate Width") +
+  ylab("Plate Height") +
+  ggtitle("Fastball Takes") +
+  geom_point(data = FastballTakes,aes(x = PlateLocSide, y = PlateLocHeight, color = TaggedPitchType)) +
+  coord_cartesian(xlim = c(-2, 2), ylim = c(0, 5))
+```
+
+```{r Whiffs}
+Whiffs <- Hitter %>%
+  filter(PitchCall == "StrikeSwinging")
+ggplot() +
+  geom_path(data = sz, aes(x = x, y = z)) +
+  coord_equal() +
+  xlab("Plate Width") +
+  ylab("Plate Height") +
+  ggtitle("Swings & Misses") +
+  geom_point(data = Whiffs,aes(x = PlateLocSide, y = PlateLocHeight, color = TaggedPitchType)) + 
+  coord_cartesian(xlim = c(-2, 2), ylim = c(0, 5)) +
+  scale_color_discrete(limits = c("Fastball" ,"ChangeUp", "Splitter", "Curveball", "Slider"))
+```
+
+<hr>

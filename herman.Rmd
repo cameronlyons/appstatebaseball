@@ -3,3 +3,49 @@ title: "Will Herman"
 ---
 
 <hr>
+
+```{r Master, message=FALSE, warning=FALSE, echo=FALSE}
+knitr::opts_chunk$set(fig.align = "center", fig.width = 4, fig.height = 4, comment = NA, message = FALSE, warning = FALSE, echo = FALSE)
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(tidyverse)
+Master <- read_csv("Master.csv")
+Pitcher <- Master %>%
+  filter(Pitcher == "Herman, Will")
+x <- c(-.95,.95,.95,-.95,-.95)
+z <- c(1.6,1.6,3.5,3.5,1.6)
+sz <- data_frame(x, z)
+```
+
+```{r RightHandedBatter}
+FastballsThrownR <- Pitcher %>%
+  filter(TaggedPitchType == "Fastball" & BatterSide == "Right" & RelSpeed)
+ggplot() +
+  geom_path(data = sz, aes(x = x, y = z)) +
+  coord_equal() +
+  xlab("Plate Width") +
+  ylab("Plate Height") +
+  ggtitle(" Fatballs to Right Handed Batter") +
+  geom_point(data = FastballsThrownR,aes(x = PlateLocSide, y = PlateLocHeight, color = PitchCall)) +
+  coord_cartesian(xlim = c(-2, 2), ylim = c(0, 5)) +
+  scale_color_discrete(limits = c("StrikeSwinging" ,"StrikeCalled", "BallCalled", "HitByPitch", "InPlay", "FoulBall", "Undefined")) +
+  scale_color_manual(values = c("#DAF7A6","#FFC300", "#FF5733", "#C70039", "#581845", "#000000", "#009E73"))
+```
+
+```{r LeftHandedBatter}
+FastballsThrownL <- Pitcher %>%
+  filter(TaggedPitchType == "Fastball" & BatterSide == "Left")
+ggplot() +
+  geom_path(data = sz, aes(x = x, y = z)) +
+  coord_equal() +
+  xlab("Plate Width") +
+  ylab("Plate Height") +
+  ggtitle("Fastballs to Left Handed Batter") +
+  geom_point(data = FastballsThrownL,aes(x = PlateLocSide, y = PlateLocHeight, color = PitchCall)) +
+  coord_cartesian(xlim = c(-2, 2), ylim = c(0, 5)) +
+  scale_color_discrete(limits = c("StrikeSwinging" ,"StrikeCalled", "BallCalled", "HitByPitch", "InPlay", "FoulBall", "Undefined")) +
+  scale_color_manual(values = c("#DAF7A6","#FFC300", "#FF5733", "#C70039", "#581845", "#000000", "#009E73"))
+```
+
+<hr>
