@@ -4,32 +4,17 @@ title: "Kyle Decker"
 
 <hr>
 
-```{r,label = "SETUP", include=FALSE, results = 'hide'}
-knitr::opts_chunk$set(echo = FALSE, fig.align = "center", fig.width = 4, fig.height = 4, comment = NA, warning = FALSE, message = FALSE)
-library(readr)
-library(dplyr)
-library(ggplot2)
+```{r Master,label = "SETUP", include=FALSE, results = 'hide'}
+knitr::opts_chunk$set(echo = FALSE, fig.align = "center", comment = NA, warning = FALSE, message = FALSE)
 library(utils)
-library(plyr)
-library(stringr)
-library(base)
-library(ggplot2)
-library(readxl)
-library(jpeg)
-library(plotly)
-library(gapminder)
 library(dplyr)
-library(reshape2)
-library(grid)
-library(plotrix)
-library(plyr)
 library(stringr)
-Master <- read_csv("Master.csv")
+library(ggplot2)
+library(gridExtra)
+library(plotly)
+Master <- read.csv("Master.csv")
 Hitter <- Master %>%
   filter(Batter == "Decker, Kyle")
-x <- c(-.95,.95,.95,-.95,-.95)
-z <- c(1.6,1.6,3.5,3.5,1.6)
-sz <- data_frame(x, z)
 ```
 
 ```{r Summary}
@@ -58,6 +43,25 @@ slg <- tb / ab
 ops <- obp + slg
 ```
 
+```{r Strike Zone Mapping}
+x <- c(-.95,.95,.95,-.95,-.95)
+z <- c(1.6,1.6,3.5,3.5,1.6)
+sz <- data_frame(x, z)
+a <- c(-.32,-.32)
+b <- c(1.6,3.5)
+hm1 <- data_frame(a, b)
+c <- c(.32,.32)
+d <- c(1.6,3.5)
+hm2 <- data_frame(c, d)
+e <- c(-.95,.95)
+f <- c(2.23,2.23)
+hm3 <- data_frame(e, f)
+g <- c(-.95,.95)
+h <- c(2.87,2.87)
+hm4 <- data_frame(g, h)
+labels <- data.frame(x1 = c(-.635, 0, .635, -.635, 0, .635, -.635, 0, .635), y1 = c(1.915, 1.915, 1.915, 2.545, 2.545, 2.545, 3.185, 3.185, 3.185))
+```
+
 | | | | | | | Hitting Summary
 -|-|-|-|-|-|-|-
 PA:|`r pa`| 2B:| `r do` | RBI: |`r rbi`| AVG: |`r round(avg, digits = 3)` |
@@ -73,7 +77,7 @@ AVG Launch Angle: | `r round(mean(la$Angle, na.rm = TRUE), digits = 2)` degrees
 Max Estimated Distance: | `r round(max(Hitter$Distance, na.rm = TRUE), digits = 2)` feet
 
 <center>
-```{r SprayChart}
+```{r Spray Chart}
 Hitter$Bearing <- ((Hitter$Bearing * -1) + 90)*pi/180
 Hitter$x <- Hitter$Distance*cos(Hitter$Bearing)
 Hitter$y <- Hitter$Distance*sin(Hitter$Bearing)
@@ -83,9 +87,19 @@ sprayfilter <- Hitter %>%
   filter(!PlayResult == "Undefined" & !PlayResult == "Sacrifice")
 bb <- ggplot(bases, aes(x = xa, y = ya)) + 
   geom_path() + 
-  geom_point(data = sprayfilter, x = sprayfilter$x, y = sprayfilter$y, aes(color = factor(sprayfilter$PlayResult), shape = factor(sprayfilter$PlayResult))) + 
-  geom_segment(x = 0, xend = 300, y = 0, yend = 300) + 
-  geom_segment(x = 0, xend = -300, y = 0, yend = 300) + 
+  geom_point(data = sprayfilter, x = sprayfilter$x, y = sprayfilter$y, 
+             aes(color = factor(sprayfilter$PlayResult), 
+                 text = paste("Exit Speed: ", ExitSpeed, 
+                               "<br> Distance: ", Distance,
+                               "<br> Launch Angle: ", Angle), 
+                 shape = factor(sprayfilter$PlayResult))) + 
+  geom_segment(x = 0, xend = -233.35, y = 0, yend = 233.35) +
+  geom_segment(x = -233.35, xend = -160.59, y = 233.35, yend = 340) + 
+  geom_segment(x = -160.59, xend = -49.36, y = 340, yend = 401.98) +
+  geom_segment(x = -49.36, xend = 49.36, y = 401.98, yend = 401.98) +
+  geom_segment(x = 49.36, xend = 157.67, y = 401.98, yend = 338.05) +
+  geom_segment(x = 157.67, xend = 229.81, y = 338.05, yend = 229.81) +
+  geom_segment(x = 229.81, xend = 0, y = 229.81, yend = 0) +
   xlim(-250, 250) + ylim(-10, 500) +
   theme(axis.line = element_blank(),
       axis.text.x = element_blank(),
@@ -102,37 +116,78 @@ bb <- ggplot(bases, aes(x = xa, y = ya)) +
   coord_equal() +
   scale_color_discrete(limits = c("Single" ,"Double", "Triple", "HomeRun", "Out", "FieldersChoice", "Error")) +
   scale_shape_discrete(limits = c("Single" ,"Double", "Triple", "HomeRun", "Out", "FieldersChoice", "Error"))
-ggplotly(bb)
+ggplotly(bb, tooltip = "text")
 ```
-</center>
 
-```{r NinetyPlus}
+```{r Ninety Plus}
 NinetyPlus <- Hitter %>%
   filter(ExitSpeed >= 90)
-ggplot() +
+np <- ggplot() +
   geom_path(data = sz, aes(x = x, y = z)) +
   coord_equal() +
   xlab("Plate Width") +
   ylab("Plate Height") +
   ggtitle("90+ Exit Velocities") +
-  geom_point(data = NinetyPlus,aes(x = PlateLocSide, y = PlateLocHeight, size = ExitSpeed, color = TaggedPitchType)) +
-  scale_size(range = c(0.1, 2)) + coord_cartesian(xlim = c(-2, 2), ylim = c(0, 5)) +
-  scale_color_discrete(limits = c("Fastball" ,"ChangeUp", "Splitter", "Curveball", "Slider"))
+  geom_point(data = NinetyPlus,
+             aes(x = PlateLocSide, y = PlateLocHeight, color = TaggedPitchType, 
+                 text = paste("Pitch Type: ", TaggedPitchType, "<br>Exit Speed: ", ExitSpeed, "<br> Distance: ", Distance, "<br> Launch Angle: ", Angle))) +
+  scale_color_discrete(limits = c("Fastball" ,"ChangeUp", "Splitter", "Curveball", "Slider")) +
+  coord_cartesian(xlim = c(-3, 3), ylim = c(0, 5)) +
+  theme(axis.line = element_blank(),
+        panel.background = element_blank(),
+        panel.border = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        plot.background = element_blank(),
+        legend.title = element_blank())
+ggplotly(np, tooltip = "text")
 ```
 
-```{r HeatMapHardHitAVG}
-a <- c(-.32,-.32)
-b <- c(1.6,3.5)
-hm1 <- data_frame(a, b)
-c <- c(.32,.32)
-d <- c(1.6,3.5)
-hm2 <- data_frame(c, d)
-e <- c(-.95,.95)
-f <- c(2.23,2.23)
-hm3 <- data_frame(e, f)
-g <- c(-.95,.95)
-h <- c(2.87,2.87)
-hm4 <- data_frame(g, h)
+```{r Fastball Takes}
+FastballTakes <- Hitter %>%
+  filter(TaggedPitchType == "Fastball" & PitchCall == "StrikeCalled")
+FastballTakes$Count <- paste(FastballTakes$Balls, "-", FastballTakes$Strikes, "") 
+ft <- ggplot() +
+  geom_path(data = sz, aes(x = x, y = z)) +
+  coord_equal() +
+  xlab("Plate Width") +
+  ylab("Plate Height") +
+  ggtitle("Fastball Takes") +
+  geom_point(data = FastballTakes,aes(x = PlateLocSide, y = PlateLocHeight, color = TaggedPitchType, text = paste("Count: ", Count))) +
+  coord_cartesian(xlim = c(-3, 3), ylim = c(0, 5)) +
+  theme(axis.line = element_blank(),
+        panel.background = element_blank(),
+        panel.border = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        plot.background = element_blank(),
+        legend.title = element_blank())
+ggplotly(ft, tooltip = "text")
+```
+
+```{r Whiffs}
+Whiffs <- Hitter %>%
+  filter(PitchCall == "StrikeSwinging")
+wh <- ggplot() +
+  geom_path(data = sz, aes(x = x, y = z)) +
+  coord_equal() +
+  xlab("Plate Width") +
+  ylab("Plate Height") +
+  ggtitle("Swings & Misses") +
+  geom_point(data = Whiffs,aes(x = PlateLocSide, y = PlateLocHeight, color = TaggedPitchType, text = paste("Pitch Type: ", TaggedPitchType, "<br>Velocity: ", RelSpeed, "<br>Spin Rate: ", SpinRate))) +
+  scale_color_discrete(limits = c("Fastball" ,"ChangeUp", "Splitter", "Curveball", "Slider")) +
+  coord_cartesian(xlim = c(-2.55, 2.55), ylim = c(0, 5.1)) +
+  theme(axis.line = element_blank(),
+        panel.background = element_blank(),
+        panel.border = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        plot.background = element_blank(),
+        legend.title = element_blank())
+ggplotly(wh, tooltip = "text")
+```
+
+```{r Heat Map Hard Hit AVG}
 hhfilter <- Hitter %>%
   filter(PitchCall == "InPlay" &  !Hitter$HitType == "Bunt" & PlateLocSide & PlateLocHeight)
 hhfilter <- sum(str_count(hhfilter$PitchCall == "InPlay", pattern = "TRUE"))
@@ -172,7 +227,6 @@ tr <- between(NinetyPlus$PlateLocSide, .32, 2) & between(NinetyPlus$PlateLocHeig
 tr <- sum(str_count(tr, pattern = "TRUE"))
 travg <- tr/hhfilter
 travg <- round(travg, digits = 3)
-label1 <- data.frame(x1 = c(-.635, 0, .635, -.635, 0, .635, -.635, 0, .635), y1 = c(1.915, 1.915, 1.915, 2.545, 2.545, 2.545, 3.185, 3.185, 3.185))
 hhavg <- c(blavg, bmavg, bravg, mlavg, mmavg, mravg, tlavg, tmavg, travg)
 ggplot() +
   ggtitle("Hard Hit AVG") +
@@ -193,35 +247,8 @@ ggplot() +
   geom_path(data = hm2, aes(x = c, y = d)) +
   geom_path(data = hm3, aes(x = e, y = f)) +
   geom_path(data = hm4, aes(x = g, y = h)) +
-  geom_text(data = label1, aes(x = x1, y = y1, label = hhavg)) +
-  coord_cartesian(xlim = c(-1.25, 1.25), ylim = c(1.6, 3.5))
+  geom_text(data = labels, aes(x = x1, y = y1, label = hhavg))
 ```
-
-```{r FastballTakes}
-FastballTakes <- Hitter %>%
-  filter(TaggedPitchType == "Fastball" & PitchCall == "StrikeCalled")
-ggplot() +
-  geom_path(data = sz, aes(x = x, y = z)) +
-  coord_equal() +
-  xlab("Plate Width") +
-  ylab("Plate Height") +
-  ggtitle("Fastball Takes") +
-  geom_point(data = FastballTakes,aes(x = PlateLocSide, y = PlateLocHeight, color = TaggedPitchType)) +
-  coord_cartesian(xlim = c(-2, 2), ylim = c(0, 5))
-```
-
-```{r Whiffs}
-Whiffs <- Hitter %>%
-  filter(PitchCall == "StrikeSwinging")
-ggplot() +
-  geom_path(data = sz, aes(x = x, y = z)) +
-  coord_equal() +
-  xlab("Plate Width") +
-  ylab("Plate Height") +
-  ggtitle("Swings & Misses") +
-  geom_point(data = Whiffs,aes(x = PlateLocSide, y = PlateLocHeight, color = TaggedPitchType)) + 
-  coord_cartesian(xlim = c(-2, 2), ylim = c(0, 5)) +
-  scale_color_discrete(limits = c("Fastball" ,"ChangeUp", "Splitter", "Curveball", "Slider"))
-```
+</center>
 
 <hr>
