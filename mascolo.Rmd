@@ -4,3 +4,58 @@ title: "Chase Mascolo"
 
 <hr>
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, comment = NA, message = FALSE)
+library(tidyverse)
+library(ggplot2)
+library(plotly)
+library(data.table)
+wake1 <- list.files("~/Appalachian State Baseball/Git Repositories/appstatebaseball/wake_files", pattern = "*.csv", full.names = TRUE)
+wake <- rbindlist(lapply(wake1,fread))
+Hitter <- wake %>%
+  filter(Batter == "Mascolo, Chase")
+```
+
+```{r}
+s <- sum(str_count(Hitter$PlayResult, "Single"))
+do <- sum(str_count(Hitter$PlayResult, "Double"))
+t <- sum(str_count(Hitter$PlayResult, "Triple"))
+hr <- sum(str_count(Hitter$PlayResult, "HomeRun"))
+hit <- sum(s + do + t + hr)
+inpl <- sum(str_count(Hitter$PitchCall, "InPlay"))
+rbi <- sum(Hitter$RunsScored)
+bb <- sum(str_count(Hitter$KorBB, "Walk"))
+hbp <- sum(str_count(Hitter$PitchCall, "HitByPitch"))
+walk <- sum(hbp + bb)
+sac <- sum(str_count(Hitter, "Sacrifice"))
+es <- Hitter %>%
+  filter(PitchCall == "InPlay" & ExitSpeed & !Hitter$HitType == "Bunt")
+la <- Hitter %>%
+  filter(PitchCall == "InPlay" & Angle & !Hitter$HitType == "Bunt")
+so <- sum(str_count(Hitter$KorBB, "Strikeout"))
+pa <- inpl + walk + so
+ab <- pa - walk - sac
+avg <- hit / ab
+obp <- (hit + walk) / pa
+tb <- sum(s + (2 * do) + (3 * t) + (4 * hr)) 
+slg <- tb / ab
+ops <- obp + slg
+az <- data.frame(Hitter$BatterSide)
+az <- az[1,1]
+```
+
+Batter Side: `r az` | | | | | | | Hitting Summary 
+-|-|-|-|-|-|-|-
+PA:|`r pa`| 2B:| `r do` | RBI: |`r rbi`| AVG: |`r round(avg, digits = 3)` |
+AB: |`r ab` | 3B: | `r t` | BB: |`r bb` |SLG: | `r round(slg, digits = 3)`|
+Hits: |`r hit`| HR: | `r hr` | HBP: | `r hbp` | OPS: | `r round(ops, digits = 3)`|
+ | SO: |`r so` ||||| OBP: | `r round(obp, digits = 3)`
+
+Hits| | 
+-|-|
+AVG Exit Velocity: | `r round(mean(es$ExitSpeed, na.rm = TRUE), digits = 2)` mph
+Max Exit Velocity: | `r round(max(es$ExitSpeed, na.rm = TRUE), digits = 2)` mph
+AVG Launch Angle: | `r round(mean(la$Angle, na.rm = TRUE), digits = 2)` degrees
+Max Estimated Distance: | `r round(max(Hitter$Distance, na.rm = TRUE), digits = 2)` feet
+
+<hr>
