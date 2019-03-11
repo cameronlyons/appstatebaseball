@@ -4,3 +4,132 @@ title: "Colin Peluse"
 
 <hr>
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, error = FALSE)
+library(tidyverse)
+library(ggplot2)
+library(plotly)
+library(data.table)
+wake1 <- list.files("~/Appalachian State Baseball/Git Repositories/appstatebaseball/wake_files", pattern = "*.csv", full.names = TRUE)
+wake <- rbindlist(lapply(wake1,fread))
+Pitcher <- wake %>%
+  filter(Pitcher == "Peluse, Colin")
+```
+
+
+```{r}
+x <- c(-.95,.95,.95,-.95,-.95)
+z <- c(1.6,1.6,3.5,3.5,1.6)
+sz <- data.frame(x, z)
+fb <- Pitcher %>%
+  filter(TaggedPitchType == "Fastball")
+fbm <- mean(fb$RelSpeed)
+fbr <- range(fb$RelSpeed)
+az <- data.frame(Pitcher$PitcherThrows)
+az <- az[1,1]
+```
+
+Throws: `r az` | | 
+-|-|
+Fastball Range: | `r round(fbr, digits = 2)` mph
+Fastball Avg: | `r round(fbm, digits = 2)` mph
+
+<center>
+```{r all pitches, echo = FALSE, warning = FALSE, error = FALSE}
+all <- Pitcher 
+a <- ggplot() +
+  geom_path(data = sz, aes(x = x, y = z)) + 
+  geom_point(data = all, aes(x = all$PlateLocSide, y = all$PlateLocHeight, color = all$TaggedPitchType, shape = all$TaggedPitchType, text = paste("Pitch Type: ", TaggedPitchType, "<br>Velocity: ", RelSpeed, "<br>Spin Rate: ", SpinRate))) +
+  coord_cartesian(xlim = c(-2.5, 2.5), ylim = c(0, 5)) + 
+    theme_bw() +
+  ggtitle("All Pitches") +
+  xlab("Plate Width") +
+  ylab("Plate Height") +  
+  labs(color = "Pitch Type", shape = "Pitch Type") +
+  scale_color_discrete(limits = c("Fastball" ,"ChangeUp", "Splitter", "Curveball", "Slider")) +
+  coord_cartesian(xlim = c(-3, 3), ylim = c(0, 5)) +
+  theme(axis.line = element_blank(),
+        panel.background = element_blank(),
+        panel.border = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        plot.background = element_blank(),
+        legend.title = element_blank())
+ggplotly(a, tooltip = "text")
+```
+
+```{r RL, echo = FALSE, warning = FALSE, error = FALSE}
+strikerl <- Pitcher %>%
+  filter(BatterSide == "Right")
+c <- ggplot() +
+  geom_path(data = sz, aes(x = x, y = z)) + 
+  geom_point(data = strikerl, aes(x = strikerl$PlateLocSide, y = strikerl$PlateLocHeight, color = strikerl$TaggedPitchType, shape = strikerl$TaggedPitchType, text = paste("Pitch Type: ", TaggedPitchType, "<br>Velocity: ", RelSpeed, "<br>Spin Rate: ", SpinRate))) +
+  coord_cartesian(xlim = c(-2.5, 2.5), ylim = c(0, 5)) + 
+    theme_bw() +
+  ggtitle("Right Handed Batter") +
+  xlab("Plate Width") +
+  ylab("Plate Height") +  
+  labs(color = "Pitch Type", shape = "Pitch Type") +
+  scale_color_discrete(limits = c("Fastball" ,"ChangeUp", "Splitter", "Curveball", "Slider")) +
+  coord_cartesian(xlim = c(-3, 3), ylim = c(0, 5)) +
+  theme(axis.line = element_blank(),
+        panel.background = element_blank(),
+        panel.border = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        plot.background = element_blank(),
+        legend.title = element_blank())
+ggplotly(c, tooltip = "text")
+```
+
+```{r LL, echo = FALSE, warning = FALSE, error = FALSE}
+strikell <- Pitcher %>%
+  filter(BatterSide == "Left")
+b <- ggplot() +
+  geom_path(data = sz, aes(x = x, y = z)) + 
+  geom_point(data = strikell, aes(x = strikell$PlateLocSide, y = strikell$PlateLocHeight, color = strikell$TaggedPitchType, shape = strikell$TaggedPitchType, text = paste("Pitch Type: ", TaggedPitchType, "<br>Velocity: ", RelSpeed, "<br>Spin Rate: ", SpinRate))) +
+  coord_cartesian(xlim = c(-2.5, 2.5), ylim = c(0, 5)) + 
+    theme_bw() +
+  ggtitle("Left Handed Batter") +
+  xlab("Plate Width") +
+  ylab("Plate Height") +  
+  labs(color = "Pitch Type", shape = "Pitch Type") +
+  scale_color_discrete(limits = c("Fastball" ,"ChangeUp", "Splitter", "Curveball", "Slider")) +
+  coord_cartesian(xlim = c(-3, 3), ylim = c(0, 5)) +
+  theme(axis.line = element_blank(),
+        panel.background = element_blank(),
+        panel.border = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        plot.background = element_blank(),
+        legend.title = element_blank())
+ggplotly(b, tooltip = "text")
+```
+
+```{r Fastball Takes, echo = FALSE, warning = FALSE, error = FALSE}
+twok <- Pitcher %>%
+  filter(Strikes == 2)
+twok$Count <- paste(twok$Balls, "-", twok$Strikes, "") 
+k <- ggplot() +
+  geom_path(data = sz, aes(x = x, y = z)) + 
+  geom_point(data = twok, aes(x = twok$PlateLocSide, y = twok$PlateLocHeight, color = twok$TaggedPitchType, shape = twok$TaggedPitchType, text = paste("Pitch Type: ", TaggedPitchType, "<br>Velocity: ", RelSpeed, "<br>Spin Rate: ", SpinRate, "Count: ", Count))) +
+  coord_cartesian(xlim = c(-2.5, 2.5), ylim = c(0, 5)) + 
+    theme_bw() +
+  ggtitle("Two Strike Count") +
+  xlab("Plate Width") +
+  ylab("Plate Height") +  
+  labs(color = "Pitch Type", shape = "Pitch Type") +
+  scale_color_discrete(limits = c("Fastball" ,"ChangeUp", "Splitter", "Curveball", "Slider")) +
+  coord_cartesian(xlim = c(-3, 3), ylim = c(0, 5)) +
+  theme(axis.line = element_blank(),
+        panel.background = element_blank(),
+        panel.border = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        plot.background = element_blank(),
+        legend.title = element_blank())
+ggplotly(k, tooltip = "text")
+```
+</center>
+
+<hr>

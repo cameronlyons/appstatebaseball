@@ -21,21 +21,18 @@ Pitcher <- wake %>%
 x <- c(-.95,.95,.95,-.95,-.95)
 z <- c(1.6,1.6,3.5,3.5,1.6)
 sz <- data.frame(x, z)
-aa <- data.frame(aggregate(RelSpeed ~ TaggedPitchType, data = Pitcher, mean))
-bb <- data.frame(aggregate(RelSpeed ~ TaggedPitchType, data = Pitcher, range))
-a1 <- aa[1,2]
-a2 <- aa[2,2]
-a3 <- aa[3,2]
-b1 <- bb[2,2]
-b2 <- bb[2,3]
+fb <- Pitcher %>%
+  filter(TaggedPitchType == "Fastball")
+fbm <- mean(fb$RelSpeed)
+fbr <- range(fb$RelSpeed)
 az <- data.frame(Pitcher$PitcherThrows)
 az <- az[1,1]
 ```
 
 Throws: `r az` | | 
 -|-|
-Fastball Range: | `r round(b1, digits = 2)` mph
-Fastball Avg: | `r round(a2, digits = 2)` mph
+Fastball Range: | `r round(fbr, digits = 2)` mph
+Fastball Avg: | `r round(fbm, digits = 2)` mph
 
 <center>
 ```{r all pitches, echo = FALSE, warning = FALSE, error = FALSE}
@@ -67,7 +64,6 @@ strikerl <- Pitcher %>%
 c <- ggplot() +
   geom_path(data = sz, aes(x = x, y = z)) + 
   geom_point(data = strikerl, aes(x = strikerl$PlateLocSide, y = strikerl$PlateLocHeight, color = strikerl$TaggedPitchType, shape = strikerl$TaggedPitchType, text = paste("Pitch Type: ", TaggedPitchType, "<br>Velocity: ", RelSpeed, "<br>Spin Rate: ", SpinRate))) +
-  coord_cartesian(xlim = c(-2.5, 2.5), ylim = c(0, 5)) + 
     theme_bw() +
   ggtitle("Right Handed Batter") +
   xlab("Plate Width") +

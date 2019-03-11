@@ -21,21 +21,18 @@ Pitcher <- wake %>%
 x <- c(-.95,.95,.95,-.95,-.95)
 z <- c(1.6,1.6,3.5,3.5,1.6)
 sz <- data.frame(x, z)
-aa <- data.frame(aggregate(RelSpeed ~ TaggedPitchType, data = Pitcher, mean))
-bb <- data.frame(aggregate(RelSpeed ~ TaggedPitchType, data = Pitcher, range))
-a1 <- aa[1,2]
-a2 <- aa[2,2]
-a3 <- aa[3,2]
-b1 <- bb[2,2]
-b2 <- bb[2,3]
+fb <- Pitcher %>%
+  filter(TaggedPitchType == "Fastball")
+fbm <- mean(fb$RelSpeed)
+fbr <- range(fb$RelSpeed)
 az <- data.frame(Pitcher$PitcherThrows)
 az <- az[1,1]
 ```
 
 Throws: `r az` | | 
 -|-|
-Fastball Range: | `r round(b1, digits = 2)` mph
-Fastball Avg: | `r round(a2, digits = 2)` mph
+Fastball Range: | `r round(fbr, digits = 2)` mph
+Fastball Avg: | `r round(fbm, digits = 2)` mph
 
 <center>
 ```{r all pitches, echo = FALSE, warning = FALSE, error = FALSE}
