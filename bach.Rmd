@@ -36,8 +36,6 @@ Throws: `r az` | |
 -|-|
 Fastball Range: | `r round(b1, digits = 2)` mph
 Fastball Avg: | `r round(a2, digits = 2)` mph
-Change Up Avg: | `r round(a1, digits = 2)` mph
-Slider Avg: | `r round(a3, digits = 2)` mph
 
 <center>
 ```{r all pitches, echo = FALSE, warning = FALSE, error = FALSE}

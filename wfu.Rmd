@@ -2,7 +2,7 @@
 title: "Wake Forest University"
 ---
 
-<hr>
+
 
 **Left Handed Pitchers**<br>
 <a href="bach.html">Carter Bach</a><br>
@@ -49,4 +49,3 @@ title: "Wake Forest University"
 <a href="muntz.html">Shane Muntz</a><br>
 <a href="tinsman.html">Brendan Tinsman</a><br>
 
-<hr>
