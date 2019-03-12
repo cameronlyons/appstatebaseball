@@ -23,18 +23,34 @@ z <- c(1.6,1.6,3.5,3.5,1.6)
 sz <- data.frame(x, z)
 fb <- Pitcher %>%
   filter(TaggedPitchType == "Fastball")
-fbm <- mean(fb$RelSpeed, na.rm = TRUE)
 fbr <- range(fb$RelSpeed, na.rm = TRUE)
+fbm <- mean(fb$RelSpeed, na.rm = TRUE)
 fbs <- mean(fb$SpinRate, na.rm = TRUE)
-az <- data.frame(Pitcher$PitcherThrows)
-az <- az[1,1]
+ch <- Pitcher %>%
+  filter(TaggedPitchType == "ChangeUp")
+chr <- range(ch$RelSpeed, na.rm = TRUE)
+chm <- mean(ch$RelSpeed, na.rm = TRUE)
+chs <- mean(ch$SpinRate, na.rm = TRUE)
+sl <- Pitcher %>%
+  filter(TaggedPitchType == "Slider")
+slr <- range(sl$RelSpeed, na.rm = TRUE)
+slm <- mean(sl$RelSpeed, na.rm = TRUE)
+sls <- mean(sl$SpinRate, na.rm = TRUE)
+th <- data.frame(Pitcher$PitcherThrows)
+th <- th[1,1]
 ```
 
-Throws: `r az` | | 
+Throws: `r th` | | 
 -|-|
-Fastball Velocity Range: | `r round(fbr, digits = 2)` mph
+Fastball Velocity Range: | `r round(fbr, digits = 2, col = "red")` mph
 Fastball Velocity Avg: | `r round(fbm, digits = 2)` mph
 Fastball Spin Avg: | `r round(fbs, digits = 2)` rpm
+ChangeUp Velocity Range: | `r round(chr, digits = 2)` mph
+ChangeUp Velocity Avg: | `r round(chm, digits = 2)` mph
+ChangeUp Spin Avg: | `r round(chs, digits = 2)` rpm
+Slider Velocity Range: | `r round(slr, digits = 2)` mph
+Slider Velocity Avg: | `r round(slm, digits = 2)` mph
+Slider Spin Avg: | `r round(sls, digits = 2)` rpm
 
 <center>
 ```{r All Pitches, echo = FALSE, warning = FALSE, error = FALSE}
