@@ -49,7 +49,7 @@ a <- ggplot() +
   ylab("Plate Height") +  
   labs(color = "Pitch Type", shape = "Pitch Type") +
   scale_color_discrete(limits = c("Fastball" ,"ChangeUp", "Splitter", "Curveball", "Slider")) +
-  scale_color_discrete(limits = c("Fastball" ,"ChangeUp", "Splitter", "Curveball", "Slider")) +
+  scale_shape_discrete(limits = c("Fastball" ,"ChangeUp", "Splitter", "Curveball", "Slider")) +
   coord_cartesian(xlim = c(-3, 3), ylim = c(0, 5)) +
   theme(axis.line = element_blank(),
         panel.background = element_blank(),
@@ -74,7 +74,7 @@ c <- ggplot() +
   ylab("Plate Height") +  
   labs(color = "Pitch Type", shape = "Pitch Type") +
   scale_color_discrete(limits = c("Fastball" ,"ChangeUp", "Splitter", "Curveball", "Slider")) +
-  scale_color_discrete(limits = c("Fastball" ,"ChangeUp", "Splitter", "Curveball", "Slider")) +  
+  scale_shape_discrete(limits = c("Fastball" ,"ChangeUp", "Splitter", "Curveball", "Slider")) +  
   coord_cartesian(xlim = c(-3, 3), ylim = c(0, 5)) +
   theme(axis.line = element_blank(),
         panel.background = element_blank(),
@@ -99,7 +99,7 @@ b <- ggplot() +
   ylab("Plate Height") +  
   labs(color = "Pitch Type", shape = "Pitch Type") +
   scale_color_discrete(limits = c("Fastball" ,"ChangeUp", "Splitter", "Curveball", "Slider")) +
-  scale_color_discrete(limits = c("Fastball" ,"ChangeUp", "Splitter", "Curveball", "Slider")) +  
+  scale_shape_discrete(limits = c("Fastball" ,"ChangeUp", "Splitter", "Curveball", "Slider")) +  
   coord_cartesian(xlim = c(-3, 3), ylim = c(0, 5)) +
   theme(axis.line = element_blank(),
         panel.background = element_blank(),
@@ -125,7 +125,7 @@ k <- ggplot() +
   ylab("Plate Height") +  
   labs(color = "Pitch Type", shape = "Pitch Type") +
   scale_color_discrete(limits = c("Fastball" ,"ChangeUp", "Splitter", "Curveball", "Slider")) +
-  scale_color_discrete(limits = c("Fastball" ,"ChangeUp", "Splitter", "Curveball", "Slider")) +  
+  scale_shape_discrete(limits = c("Fastball" ,"ChangeUp", "Splitter", "Curveball", "Slider")) +  
   coord_cartesian(xlim = c(-3, 3), ylim = c(0, 5)) +
   theme(axis.line = element_blank(),
         panel.background = element_blank(),
