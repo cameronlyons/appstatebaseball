@@ -4,7 +4,7 @@ title: "Carter Bach"
 
 <hr>
 
-```{r setup, include=FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, error = FALSE)
 library(tidyverse)
 library(ggplot2)
@@ -23,9 +23,9 @@ z <- c(1.6,1.6,3.5,3.5,1.6)
 sz <- data.frame(x, z)
 fb <- Pitcher %>%
   filter(TaggedPitchType == "Fastball")
-fbm <- mean(fb$RelSpeed)
-fbr <- range(fb$RelSpeed)
-fbs <- mean(fb$SpinRate)
+fbm <- mean(fb$RelSpeed, na.rm = TRUE)
+fbr <- range(fb$RelSpeed, na.rm = TRUE)
+fbs <- mean(fb$SpinRate, na.rm = TRUE)
 az <- data.frame(Pitcher$PitcherThrows)
 az <- az[1,1]
 ```
@@ -37,7 +37,7 @@ Fastball Velocity Avg: | `r round(fbm, digits = 2)` mph
 Fastball Spin Avg: | `r round(fbs, digits = 2)` rpm
 
 <center>
-```{r all pitches, echo = FALSE, warning = FALSE, error = FALSE}
+```{r All Pitches, echo = FALSE, warning = FALSE, error = FALSE}
 all <- Pitcher 
 a <- ggplot() +
   geom_path(data = sz, aes(x = x, y = z)) + 
@@ -48,6 +48,7 @@ a <- ggplot() +
   xlab("Plate Width") +
   ylab("Plate Height") +  
   labs(color = "Pitch Type", shape = "Pitch Type") +
+  scale_color_discrete(limits = c("Fastball" ,"ChangeUp", "Splitter", "Curveball", "Slider")) +
   scale_color_discrete(limits = c("Fastball" ,"ChangeUp", "Splitter", "Curveball", "Slider")) +
   coord_cartesian(xlim = c(-3, 3), ylim = c(0, 5)) +
   theme(axis.line = element_blank(),
@@ -60,7 +61,7 @@ a <- ggplot() +
 ggplotly(a, tooltip = "text")
 ```
 
-```{r RL, echo = FALSE, warning = FALSE, error = FALSE}
+```{r Right Handed Batter, echo = FALSE, warning = FALSE, error = FALSE}
 strikerl <- Pitcher %>%
   filter(BatterSide == "Right")
 c <- ggplot() +
@@ -73,6 +74,7 @@ c <- ggplot() +
   ylab("Plate Height") +  
   labs(color = "Pitch Type", shape = "Pitch Type") +
   scale_color_discrete(limits = c("Fastball" ,"ChangeUp", "Splitter", "Curveball", "Slider")) +
+  scale_color_discrete(limits = c("Fastball" ,"ChangeUp", "Splitter", "Curveball", "Slider")) +  
   coord_cartesian(xlim = c(-3, 3), ylim = c(0, 5)) +
   theme(axis.line = element_blank(),
         panel.background = element_blank(),
@@ -97,6 +99,7 @@ b <- ggplot() +
   ylab("Plate Height") +  
   labs(color = "Pitch Type", shape = "Pitch Type") +
   scale_color_discrete(limits = c("Fastball" ,"ChangeUp", "Splitter", "Curveball", "Slider")) +
+  scale_color_discrete(limits = c("Fastball" ,"ChangeUp", "Splitter", "Curveball", "Slider")) +  
   coord_cartesian(xlim = c(-3, 3), ylim = c(0, 5)) +
   theme(axis.line = element_blank(),
         panel.background = element_blank(),
@@ -108,13 +111,13 @@ b <- ggplot() +
 ggplotly(b, tooltip = "text")
 ```
 
-```{r Fastball Takes, echo = FALSE, warning = FALSE, error = FALSE}
+```{r Two Strikes, echo = FALSE, warning = FALSE, error = FALSE}
 twok <- Pitcher %>%
   filter(Strikes == 2)
 twok$Count <- paste(twok$Balls, "-", twok$Strikes, "") 
 k <- ggplot() +
   geom_path(data = sz, aes(x = x, y = z)) + 
-  geom_point(data = twok, aes(x = twok$PlateLocSide, y = twok$PlateLocHeight, color = twok$TaggedPitchType, shape = twok$TaggedPitchType, text = paste("Pitch Type: ", TaggedPitchType, "<br>Velocity: ", RelSpeed, "<br>Spin Rate: ", SpinRate, "Count: ", Count))) +
+  geom_point(data = twok, aes(x = twok$PlateLocSide, y = twok$PlateLocHeight, color = twok$TaggedPitchType, shape = twok$TaggedPitchType, text = paste("Pitch Type: ", TaggedPitchType, "<br>Velocity: ", RelSpeed, "<br>Spin Rate: ", SpinRate, "<br>Count: ", Count))) +
   coord_cartesian(xlim = c(-2.5, 2.5), ylim = c(0, 5)) + 
     theme_bw() +
   ggtitle("Two Strike Count") +
@@ -122,6 +125,7 @@ k <- ggplot() +
   ylab("Plate Height") +  
   labs(color = "Pitch Type", shape = "Pitch Type") +
   scale_color_discrete(limits = c("Fastball" ,"ChangeUp", "Splitter", "Curveball", "Slider")) +
+  scale_color_discrete(limits = c("Fastball" ,"ChangeUp", "Splitter", "Curveball", "Slider")) +  
   coord_cartesian(xlim = c(-3, 3), ylim = c(0, 5)) +
   theme(axis.line = element_blank(),
         panel.background = element_blank(),
