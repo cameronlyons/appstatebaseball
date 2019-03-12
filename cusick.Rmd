@@ -25,14 +25,16 @@ fb <- Pitcher %>%
   filter(TaggedPitchType == "Fastball")
 fbm <- mean(fb$RelSpeed)
 fbr <- range(fb$RelSpeed)
+fbs <- mean(fb$SpinRate)
 az <- data.frame(Pitcher$PitcherThrows)
 az <- az[1,1]
 ```
 
 Throws: `r az` | | 
 -|-|
-Fastball Range: | `r round(fbr, digits = 2)` mph
-Fastball Avg: | `r round(fbm, digits = 2)` mph
+Fastball Velocity Range: | `r round(fbr, digits = 2)` mph
+Fastball Velocity Avg: | `r round(fbm, digits = 2)` mph
+Fastball Spin Avg: | `r round(fbs, digits = 2)` rpm
 
 <center>
 ```{r all pitches, echo = FALSE, warning = FALSE, error = FALSE}
