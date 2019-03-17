@@ -3,9 +3,6 @@ output_dir: "."
 
 navbar:
   title: "Appalachian State Baseball"
-  left: 
-    - text: "Pitching"
-      href: pitching.html
   right:
     - text: "Scouting"
       icon: 
