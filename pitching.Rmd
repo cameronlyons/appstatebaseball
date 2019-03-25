@@ -32,34 +32,34 @@ ya = c(0, 90/sqrt(2), 2 * 90/sqrt(2), 90/sqrt(2), 0, rep(0)))
 ```
 
 
-```{r}
-
+```{r Shiny}
 ui <- fluidPage(inputPanel(
-  selectInput("data", "", choices = unique(Master$Pitcher)),
-  dateRangeInput("date","", format = "mm-dd-yyyy", start = Sys.Date() - 175, end = Sys.Date()),
-  checkboxGroupInput("batter", label = ("Batter Side"),
-                     choices = unique(Master$BatterSide), selected = c("Right", "Left"))
-  ),
+  selectInput("data", "", choices = sort(Master$Pitcher), selected = ""),
+  dateRangeInput("date","", format = "mm-dd-yyyy", start = "09-27-2018", end = Sys.Date()),
+  checkboxGroupInput("batter", label = ("Batter Side"), choices = unique(Master$BatterSide), selected = c("Right", "Left"), inline = TRUE)),
+  mainPanel(dataTableOutput("outtable"), plotlyOutput("outplot")))
 
-  mainPanel(plotlyOutput("outplot"),dataTableOutput("outtable"))
-)
-
-server <- function(input, output) {
-
-  output$outplot <- renderPlotly({
-  filter_df <- Master %>%
-    filter(Pitcher == input$data) %>%
-    filter(Date >= input$date[1] & Date <= input$date[2]) %>%
-    filter(BatterSide %in% input$batter) %>%
-    filter(!PlayResult == "Undefined" & !PlayResult == "Sacrifice")
+server <- function(input, output){
   
- p <-  ggplot(bases, aes(x = xa, y = ya)) + 
+output$outtable <- renderDataTable({
+filter_df <- Master %>%
+  filter(Pitcher == input$data) %>%
+  filter(Date >= input$date[1] & Date <= input$date[2]) %>%
+  filter(BatterSide %in% input$batter)
+data.frame(aggregate(cbind(RelSpeed, SpinRate) ~ TaggedPitchType, data = filter_df, mean))
+}, options = list(searching = FALSE, paging = FALSE, order = list(1, 'desc'), dom = 't'))
+
+output$outplot <- renderPlotly({
+filter_df <- Master %>%
+  filter(Pitcher == input$data) %>%
+  filter(Date >= input$date[1] & Date <= input$date[2]) %>%
+  filter(BatterSide %in% input$batter) %>%
+  filter(!PlayResult == "Undefined" & !PlayResult == "Sacrifice")
+sc <-  ggplot(bases, aes(x = xa, y = ya)) + 
   geom_path() + 
   geom_point(data = filter_df, x = filter_df$x, y = filter_df$y, 
-             aes(color = factor(filter_df$PlayResult), 
-                 text = paste("Exit Speed: ", ExitSpeed, 
-                               "<br> Distance: ", Distance,
-                               "<br> Launch Angle: ", Angle))) + 
+             aes(color = factor(filter_df$PlayResult), text = paste("", PlayResult, "<br> Exit Speed: ", ExitSpeed, "<br> Distance: ", Distance, 
+                                                                    "<br> Launch Angle: ", Angle))) + 
   geom_segment(x = 0, xend = -233.35, y = 0, yend = 233.35) +
   geom_segment(x = -233.35, xend = -160.59, y = 233.35, yend = 340) + 
   geom_segment(x = -160.59, xend = -49.36, y = 340, yend = 401.98) +
@@ -81,20 +81,9 @@ server <- function(input, output) {
       plot.background = element_blank(),
       legend.title = element_blank()) +
   coord_equal() +
-    ggtitle("Hits Against Pitcher By Batter Side") +
   scale_color_discrete(limits = c("Single" ,"Double", "Triple", "HomeRun", "Out", "FieldersChoice", "Error"))
-ggplotly(p, tooltip = "text")
-  })
-  
-output$outtable <- renderDataTable({
-  filter_df <- Master %>%
-    filter(Pitcher == input$data) %>%
-    filter(Date >= input$date[1] & Date <= input$date[2]) %>%
-    filter(BatterSide %in% input$batter)
-
-data.frame(aggregate(cbind(RelSpeed, SpinRate) ~ TaggedPitchType, data = filter_df, mean))
-  })
-
+ggplotly(sc, tooltip = "text")
+})
 }
 
 shinyApp(ui = ui, server = server)
