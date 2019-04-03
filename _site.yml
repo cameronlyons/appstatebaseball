@@ -7,8 +7,8 @@ navbar:
     - text: "Scouting"
       icon: 
       menu:
-      - text: "Wake Forest"
-        href: wfu.html
+      - text: "Georgia Southern"
+        href: GEO_EAG.html
     - text: "Batting"
       icon: 
       menu:
