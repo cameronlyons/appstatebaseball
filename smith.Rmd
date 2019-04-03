@@ -4,7 +4,7 @@ title: "Riley Smith"
 
 <hr>
 
-```{r Master,label = "SETUP", include=FALSE, results = 'hide'}
+```{r Setup,label = "SETUP", include=FALSE, results = 'hide'}
 knitr::opts_chunk$set(echo = FALSE, fig.align = "center", comment = NA, warning = FALSE, message = FALSE)
 library(utils)
 library(dplyr)
@@ -12,28 +12,28 @@ library(stringr)
 library(ggplot2)
 library(gridExtra)
 library(plotly)
-Master <- read.csv("Master.csv")
-Hitter <- Master %>%
+master <- read.csv("master.csv")
+hitter <- master %>%
   filter(Batter == "Smith, Riley")
 ```
 
-```{r Summary}
-s <- sum(str_count(Hitter$PlayResult, "Single"))
-do <- sum(str_count(Hitter$PlayResult, "Double"))
-t <- sum(str_count(Hitter$PlayResult, "Triple"))
-hr <- sum(str_count(Hitter$PlayResult, "HomeRun"))
+```{r Batter Summary}
+s <- sum(str_count(hitter$PlayResult, "Single"))
+do <- sum(str_count(hitter$PlayResult, "Double"))
+t <- sum(str_count(hitter$PlayResult, "Triple"))
+hr <- sum(str_count(hitter$PlayResult, "HomeRun"))
 hit <- sum(s + do + t + hr)
-inpl <- sum(str_count(Hitter$PitchCall, "InPlay"))
-rbi <- sum(Hitter$RunsScored)
-bb <- sum(str_count(Hitter$KorBB, "Walk"))
-hbp <- sum(str_count(Hitter$PitchCall, "HitByPitch"))
+inpl <- sum(str_count(hitter$PitchCall, "InPlay"))
+rbi <- sum(hitter$RunsScored)
+bb <- sum(str_count(hitter$KorBB, "Walk"))
+hbp <- sum(str_count(hitter$PitchCall, "HitByPitch"))
 walk <- sum(hbp + bb)
-sac <- sum(str_count(Hitter, "Sacrifice"))
-es <- Hitter %>%
-  filter(PitchCall == "InPlay" & ExitSpeed & !Hitter$HitType == "Bunt")
-la <- Hitter %>%
-  filter(PitchCall == "InPlay" & Angle & !Hitter$HitType == "Bunt")
-so <- sum(str_count(Hitter$KorBB, "Strikeout"))
+sac <- sum(str_count(hitter, "Sacrifice"))
+es <- hitter %>%
+  filter(PitchCall == "InPlay" & ExitSpeed & !hitter$HitType == "Bunt")
+la <- hitter %>%
+  filter(PitchCall == "InPlay" & Angle & !hitter$HitType == "Bunt")
+so <- sum(str_count(hitter$KorBB, "Strikeout"))
 pa <- inpl + walk + so
 ab <- pa - walk - sac
 avg <- hit / ab
@@ -42,6 +42,20 @@ tb <- sum(s + (2 * do) + (3 * t) + (4 * hr))
 slg <- tb / ab
 ops <- obp + slg
 ```
+
+| | | | | | | Hitting Summary
+-|-|-|-|-|-|-|-
+PA:|`r pa`| 2B:| `r do` | RBI: |`r rbi`| AVG: |`r sprintf("%.3f", avg)` |
+AB: |`r ab` | 3B: | `r t` | BB: |`r bb` |SLG: | `r sprintf("%.3f", slg)`|
+Hits: |`r hit`| HR: | `r hr` | HBP: | `r hbp` | OPS: | `r sprintf("%.3f", ops)`|
+ | SO: |`r so` ||||| OBP: | `r sprintf("%.3f", obp)`
+
+Hits| | 
+-|-|
+AVG Exit Velocity: | `r sprintf("%.2f", mean(es$ExitSpeed, na.rm = TRUE))` mph
+Max Exit Velocity: | `r sprintf("%.2f", max(es$ExitSpeed, na.rm = TRUE))` mph
+AVG Launch Angle: | `r sprintf("%.2f", mean(la$Angle, na.rm = TRUE))` degrees
+Max Estimated Distance: | `r sprintf("%.2f", max(hitter$Distance, na.rm = TRUE))` feet
 
 ```{r Strike Zone Mapping}
 x <- c(-.95,.95,.95,-.95,-.95)
@@ -62,28 +76,14 @@ hm4 <- data_frame(g, h)
 labels <- data.frame(x1 = c(-.635, 0, .635, -.635, 0, .635, -.635, 0, .635), y1 = c(1.915, 1.915, 1.915, 2.545, 2.545, 2.545, 3.185, 3.185, 3.185))
 ```
 
-| | | | | | | Hitting Summary
--|-|-|-|-|-|-|-
-PA:|`r pa`| 2B:| `r do` | RBI: |`r rbi`| AVG: |`r round(avg, digits = 3)` |
-AB: |`r ab` | 3B: | `r t` | BB: |`r bb` |SLG: | `r round(slg, digits = 3)`|
-Hits: |`r hit`| HR: | `r hr` | HBP: | `r hbp` | OPS: | `r round(ops, digits = 3)`|
- | SO: |`r so` ||||| OBP: | `r round(obp, digits = 3)`
-
-Hits| | 
--|-|
-AVG Exit Velocity: | `r round(mean(es$ExitSpeed, na.rm = TRUE), digits = 2)` mph
-Max Exit Velocity: | `r round(max(es$ExitSpeed, na.rm = TRUE), digits = 2)` mph
-AVG Launch Angle: | `r round(mean(la$Angle, na.rm = TRUE), digits = 2)` degrees
-Max Estimated Distance: | `r round(max(Hitter$Distance, na.rm = TRUE), digits = 2)` feet
-
 <center>
 ```{r Spray Chart}
-Hitter$Bearing <- ((Hitter$Bearing * -1) + 90)*pi/180
-Hitter$x <- Hitter$Distance*cos(Hitter$Bearing)
-Hitter$y <- Hitter$Distance*sin(Hitter$Bearing)
+hitter$Bearing <- ((hitter$Bearing * -1) + 90)*pi/180
+hitter$x <- hitter$Distance*cos(hitter$Bearing)
+hitter$y <- hitter$Distance*sin(hitter$Bearing)
 bases <- data.frame(xa = c(0, 90/sqrt(2), 0, -90/sqrt(2), 0, rep(0)),
 ya = c(0, 90/sqrt(2), 2 * 90/sqrt(2), 90/sqrt(2), 0, rep(0)))
-sprayfilter <- Hitter %>%
+sprayfilter <- hitter %>%
   filter(!PlayResult == "Undefined" & !PlayResult == "Sacrifice")
 bb <- ggplot(bases, aes(x = xa, y = ya)) + 
   geom_path() + 
@@ -120,7 +120,7 @@ ggplotly(bb, tooltip = "text")
 ```
 
 ```{r Ninety Plus}
-NinetyPlus <- Hitter %>%
+NinetyPlus <- hitter %>%
   filter(ExitSpeed >= 90)
 np <- ggplot() +
   geom_path(data = sz, aes(x = x, y = z)) +
@@ -144,7 +144,7 @@ ggplotly(np, tooltip = "text")
 ```
 
 ```{r Fastball Takes}
-FastballTakes <- Hitter %>%
+FastballTakes <- hitter %>%
   filter(TaggedPitchType == "Fastball" & PitchCall == "StrikeCalled")
 FastballTakes$Count <- paste(FastballTakes$Balls, "-", FastballTakes$Strikes, "") 
 ft <- ggplot() +
@@ -166,7 +166,7 @@ ggplotly(ft, tooltip = "text")
 ```
 
 ```{r Whiffs}
-Whiffs <- Hitter %>%
+Whiffs <- hitter %>%
   filter(PitchCall == "StrikeSwinging")
 wh <- ggplot() +
   geom_path(data = sz, aes(x = x, y = z)) +
@@ -176,7 +176,7 @@ wh <- ggplot() +
   ggtitle("Swings & Misses") +
   geom_point(data = Whiffs,aes(x = PlateLocSide, y = PlateLocHeight, color = TaggedPitchType, text = paste("Pitch Type: ", TaggedPitchType, "<br>Velocity: ", RelSpeed, "<br>Spin Rate: ", SpinRate))) +
   scale_color_discrete(limits = c("Fastball" ,"ChangeUp", "Splitter", "Curveball", "Slider")) +
-  coord_cartesian(xlim = c(-2.55, 2.55), ylim = c(0, 5.1)) +
+  coord_cartesian(xlim = c(-3, 3), ylim = c(0, 5)) +
   theme(axis.line = element_blank(),
         panel.background = element_blank(),
         panel.border = element_blank(),
@@ -185,69 +185,6 @@ wh <- ggplot() +
         plot.background = element_blank(),
         legend.title = element_blank())
 ggplotly(wh, tooltip = "text")
-```
-
-```{r Heat Map Hard Hit AVG}
-hhfilter <- Hitter %>%
-  filter(PitchCall == "InPlay" &  !Hitter$HitType == "Bunt" & PlateLocSide & PlateLocHeight)
-hhfilter <- sum(str_count(hhfilter$PitchCall == "InPlay", pattern = "TRUE"))
-bl <- between(NinetyPlus$PlateLocSide, -2, -.32) & between(NinetyPlus$PlateLocHeight, 0, 2.23)
-bl <- sum(str_count(bl, pattern = "TRUE"))
-blavg <- bl/hhfilter
-blavg <- round(blavg, digits = 3)
-bm <- between(NinetyPlus$PlateLocSide, -.32, .32) & between(NinetyPlus$PlateLocHeight, 0, 2.23)
-bm <- sum(str_count(bm, pattern = "TRUE"))
-bmavg <- bm/hhfilter
-bmavg <- round(bmavg, digits = 3)
-br <- between(NinetyPlus$PlateLocSide, .32, 2) & between(NinetyPlus$PlateLocHeight, 0, 2.23)
-br <- sum(str_count(br, pattern = "TRUE"))
-bravg <- br/hhfilter
-bravg <- round(bravg, digits = 3)
-ml <- between(NinetyPlus$PlateLocSide, -2, -.32) & between(NinetyPlus$PlateLocHeight, 2.23, 2.87)
-ml <- sum(str_count(ml, pattern = "TRUE"))
-mlavg <- ml/hhfilter
-mlavg <- round(mlavg, digits = 3)
-mm <- between(NinetyPlus$PlateLocSide, -.32, .32) & between(NinetyPlus$PlateLocHeight, 2.23, 2.87)
-mm <- sum(str_count(mm, pattern = "TRUE"))
-mmavg <- mm/hhfilter
-mmavg <- round(mmavg, digits = 3)
-mr <- between(NinetyPlus$PlateLocSide, .32, 2) & between(NinetyPlus$PlateLocHeight, 2.23, 2.87)
-mr <- sum(str_count(mr, pattern = "TRUE"))
-mravg <- mr/hhfilter
-mravg <- round(mravg, digits = 3)
-tl <- between(NinetyPlus$PlateLocSide, -2, -.32) & between(NinetyPlus$PlateLocHeight, 2.87, 5)
-tl <- sum(str_count(tl, pattern = "TRUE"))
-tlavg <- tl/hhfilter
-tlavg <- round(tlavg, digits = 3)
-tm <- between(NinetyPlus$PlateLocSide, -.32, .32) & between(NinetyPlus$PlateLocHeight, 2.87, 5)
-tm <- sum(str_count(tm, pattern = "TRUE"))
-tmavg <- tm/hhfilter
-tmavg <- round(tmavg, digits = 3)
-tr <- between(NinetyPlus$PlateLocSide, .32, 2) & between(NinetyPlus$PlateLocHeight, 2.87, 5)
-tr <- sum(str_count(tr, pattern = "TRUE"))
-travg <- tr/hhfilter
-travg <- round(travg, digits = 3)
-hhavg <- c(blavg, bmavg, bravg, mlavg, mmavg, mravg, tlavg, tmavg, travg)
-ggplot() +
-  ggtitle("Hard Hit AVG") +
-  theme(axis.line = element_blank(),
-      axis.text.x = element_blank(),
-      axis.text.y = element_blank(),
-      axis.ticks = element_blank(),
-      axis.title.x = element_blank(),
-      axis.title.y = element_blank(),
-      panel.background = element_blank(),
-      panel.border = element_blank(),
-      panel.grid.major = element_blank(),
-      panel.grid.minor = element_blank(),
-      plot.background = element_blank(),
-      legend.title = element_blank()) +
-  geom_path(data = sz, aes(x = x, y = z)) +
-  geom_path(data = hm1, aes(x = a, y = b)) +
-  geom_path(data = hm2, aes(x = c, y = d)) +
-  geom_path(data = hm3, aes(x = e, y = f)) +
-  geom_path(data = hm4, aes(x = g, y = h)) +
-  geom_text(data = labels, aes(x = x1, y = y1, label = hhavg))
 ```
 </center>
 
