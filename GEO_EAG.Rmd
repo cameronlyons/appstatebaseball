@@ -41,7 +41,7 @@ mcalister <- fb %>%
 nahas <- fb %>%
   filter(Pitcher == "Nahas, Joe")
 owens <- fb %>%
-  filter(Pitcher == "Owens, Tyler")
+  filter(PitcherId == 1000054107)
 roberts <- fb %>%
   filter(Pitcher == "Roberts, Tristan")
 shuman <- fb %>%
