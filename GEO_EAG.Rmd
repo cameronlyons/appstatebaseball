@@ -42,6 +42,8 @@ nahas <- fb %>%
   filter(Pitcher == "Nahas, Joe")
 owens <- fb %>%
   filter(PitcherId == 1000054107)
+parker <- fb %>%
+  filter(Pitcher == "Parker, Jacob")
 roberts <- fb %>%
   filter(Pitcher == "Roberts, Tristan")
 shuman <- fb %>%
@@ -63,6 +65,7 @@ whitney <- fb %>%
 **AIDAN MCALISTER** | `r sprintf("%.0f", range(mcalister$RelSpeed, na.rm = TRUE))` | `r sprintf("%.0f", mean(mcalister$SpinRate, na.rm = TRUE))`
 **JOE NAHAS** | `r sprintf("%.0f", range(nahas$RelSpeed, na.rm = TRUE))` | `r sprintf("%.0f", mean(nahas$SpinRate, na.rm = TRUE))`
 **TYLER OWENS** | `r sprintf("%.0f", range(owens$RelSpeed, na.rm = TRUE))` | `r sprintf("%.0f", mean(owens$SpinRate, na.rm = TRUE))`
+**JACOB PARKER** | `r sprintf("%.0f", range(parker$RelSpeed, na.rm = TRUE))` | `r sprintf("%.0f", mean(parker$SpinRate, na.rm = TRUE))`
 **TRISTAN ROBERTS** | `r sprintf("%.0f", range(roberts$RelSpeed, na.rm = TRUE))` | `r sprintf("%.0f", mean(roberts$SpinRate, na.rm = TRUE))`
 **SETH SHUMAN** | `r sprintf("%.0f", range(shuman$RelSpeed, na.rm = TRUE))` | `r sprintf("%.0f", mean(shuman$SpinRate, na.rm = TRUE))`
 **COLE WHITNEY** | `r sprintf("%.0f", range(whitney$RelSpeed, na.rm = TRUE))` | `r sprintf("%.0f", mean(whitney$SpinRate, na.rm = TRUE))`
