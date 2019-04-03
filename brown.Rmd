@@ -14,7 +14,7 @@ library(gridExtra)
 library(plotly)
 master <- read.csv("master.csv")
 hitter <- master %>%
-  filter(Batter == "Allison, Luke")
+  filter(Batter == "Brown, CJ")
 ```
 
 ```{r Batter Summary}
