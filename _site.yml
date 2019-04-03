@@ -52,47 +52,6 @@ navbar:
         href: williams.html
       - text: "Robbie Young"
         href: young.html
-    - text: "Pitching"
-      icon: 
-      menu:
-      - text: "Team Pitching"
-        href: pitching.html
-      - text: "Brandon Boone"
-        href: boone.html
-      - text: "Kaleb Bowman"
-        href: bowman.html
-      - text: "Phillip Cole"
-        href: cole1.html
-      - text: "Jason Cornatzer"
-        href: cornatzer.html
-      - text: "Bobby Hampton"
-        href: hampton.html
-      - text: "Jack Hartman"
-        href: hartman.html
-      - text: "Matthew Helms"
-        href: helms.html
-      - text: "Brennen Herbert"
-        href: herbert.html
-      - text: "Will Herman"
-        href: herman.html
-      - text: "Cole Hooper"
-        href: hooper.html
-      - text: "Cameron Kepley"
-        href: kepley.html
-      - text: "Joeseph Lowder"
-        href: lowder.html
-      - text: "Evan Mauldin"
-        href: mauldin.html
-      - text: "Andrew Papp"
-        href: papp.html
-      - text: "Austin Primm"
-        href: primm.html
-      - text: "Cam Roberts"
-        href: roberts.html
-      - text: "Will Sprinkle"
-        href: sprinkle.html
-      - text: "Tyler Tuthill"
-        href: tuthill.html
 
 output:
   html_document: 
