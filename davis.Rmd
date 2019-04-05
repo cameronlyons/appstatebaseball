@@ -57,23 +57,28 @@ Max Exit Velocity: | `r sprintf("%.2f", max(es$ExitSpeed, na.rm = TRUE))` mph
 AVG Launch Angle: | `r sprintf("%.2f", mean(la$Angle, na.rm = TRUE))` degrees
 Max Estimated Distance: | `r sprintf("%.2f", max(hitter$Distance, na.rm = TRUE))` feet
 
-```{r Strike Zone Mapping}
+```{r Strike Zone/Home Plate/Batter Mapping}
 x <- c(-.95,.95,.95,-.95,-.95)
-z <- c(1.6,1.6,3.5,3.5,1.6)
-sz <- data_frame(x, z)
-a <- c(-.32,-.32)
-b <- c(1.6,3.5)
-hm1 <- data_frame(a, b)
-c <- c(.32,.32)
-d <- c(1.6,3.5)
-hm2 <- data_frame(c, d)
-e <- c(-.95,.95)
-f <- c(2.23,2.23)
-hm3 <- data_frame(e, f)
-g <- c(-.95,.95)
-h <- c(2.87,2.87)
-hm4 <- data_frame(g, h)
-labels <- data.frame(x1 = c(-.635, 0, .635, -.635, 0, .635, -.635, 0, .635), y1 = c(1.915, 1.915, 1.915, 2.545, 2.545, 2.545, 3.185, 3.185, 3.185))
+y <- c(1.6,1.6,3.5,3.5,1.6)
+sz <- data_frame(x, y)
+
+x1 <- c(-.95, -.95, 0, .95, .95, -.95)
+y1 <- c(0, .15, .25, .15, 0, 0)
+hp <- data_frame(x1, y1)
+
+x2 <- c(1.61, 3.11, 3.11, 1.61, 1.61)
+y2 <- c(0, 0, 5.5, 5.5, 0)
+rhb <- data_frame(x2, y2)
+
+x4 <- c(-1.61, -3.11, -3.11, -1.61, -1.61)
+y4 <- c(0, 0, 5.5, 5.5, 0)
+lhb <- data_frame(x2, y2)
+
+x3 <- c(2.36)
+y3 <- c(2.75)
+
+x5 <- c(-2.36)
+y5 <- c(2.75)
 ```
 
 <center>
@@ -91,8 +96,7 @@ bb <- ggplot(bases, aes(x = xa, y = ya)) +
              aes(color = factor(sprayfilter$PlayResult), 
                  text = paste("Exit Speed: ", ExitSpeed, 
                                "<br> Distance: ", Distance,
-                               "<br> Launch Angle: ", Angle), 
-                 shape = factor(sprayfilter$PlayResult))) + 
+                               "<br> Launch Angle: ", Angle))) + 
   geom_segment(x = 0, xend = -233.35, y = 0, yend = 233.35) +
   geom_segment(x = -233.35, xend = -160.59, y = 233.35, yend = 340) + 
   geom_segment(x = -160.59, xend = -49.36, y = 340, yend = 401.98) +
@@ -114,8 +118,7 @@ bb <- ggplot(bases, aes(x = xa, y = ya)) +
       plot.background = element_blank(),
       legend.title = element_blank()) +
   coord_equal() +
-  scale_color_discrete(limits = c("Single" ,"Double", "Triple", "HomeRun", "Out", "FieldersChoice", "Error")) +
-  scale_shape_discrete(limits = c("Single" ,"Double", "Triple", "HomeRun", "Out", "FieldersChoice", "Error"))
+  scale_color_discrete(limits = c("Single" ,"Double", "Triple", "HomeRun", "Out", "FieldersChoice", "Error"))
 ggplotly(bb, tooltip = "text")
 ```
 
@@ -123,23 +126,31 @@ ggplotly(bb, tooltip = "text")
 NinetyPlus <- hitter %>%
   filter(ExitSpeed >= 90)
 np <- ggplot() +
-  geom_path(data = sz, aes(x = x, y = z)) +
+  geom_path(data = sz, aes(x = x, y = y)) +
+  geom_path(data = rhb, aes(x = x2, y = y2), color = "lightgray") +
+  geom_path(data = lhb, aes(x = x4, y = y4), color = "lightgray") +
+  geom_text(mapping = aes(x = x3, y = y3), label = paste("RHB"), color = "lightgray") +
+  geom_text(mapping = aes(x = x5, y = y5), label = paste("LHB"), color = "lightgray") +
+  geom_polygon(hp, mapping = aes(x = x1, y = y1), color = "black", fill = "white") +
   coord_equal() +
-  xlab("Plate Width") +
-  ylab("Plate Height") +
   ggtitle("90+ Exit Velocities") +
   geom_point(data = NinetyPlus,
              aes(x = PlateLocSide, y = PlateLocHeight, color = TaggedPitchType, 
                  text = paste("Pitch Type: ", TaggedPitchType, "<br>Exit Speed: ", ExitSpeed, "<br> Distance: ", Distance, "<br> Launch Angle: ", Angle))) +
   scale_color_discrete(limits = c("Fastball" ,"ChangeUp", "Splitter", "Curveball", "Slider")) +
-  coord_cartesian(xlim = c(-3, 3), ylim = c(0, 5)) +
+  coord_cartesian(xlim = c(-4.5, 4.5), ylim = c(0, 5.5)) +
   theme(axis.line = element_blank(),
-        panel.background = element_blank(),
-        panel.border = element_blank(),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        plot.background = element_blank(),
-        legend.title = element_blank())
+      axis.text.x = element_blank(),
+      axis.text.y = element_blank(),
+      axis.ticks = element_blank(),
+      axis.title.x = element_blank(),
+      axis.title.y = element_blank(),
+      panel.background = element_blank(),
+      panel.border = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank(),
+      plot.background = element_blank(),
+      legend.title = element_blank())
 ggplotly(np, tooltip = "text")
 ```
 
@@ -148,20 +159,30 @@ FastballTakes <- hitter %>%
   filter(TaggedPitchType == "Fastball" & PitchCall == "StrikeCalled")
 FastballTakes$Count <- paste(FastballTakes$Balls, "-", FastballTakes$Strikes, "") 
 ft <- ggplot() +
-  geom_path(data = sz, aes(x = x, y = z)) +
+  geom_path(data = sz, aes(x = x, y = y)) +
+  geom_path(data = rhb, aes(x = x2, y = y2), color = "lightgray") +
+  geom_path(data = lhb, aes(x = x4, y = y4), color = "lightgray") +
+  geom_text(mapping = aes(x = x3, y = y3), label = paste("RHB"), color = "lightgray") +
+  geom_text(mapping = aes(x = x5, y = y5), label = paste("LHB"), color = "lightgray") +
+  geom_polygon(hp, mapping = aes(x = x1, y = y1), color = "black", fill = "white") +
   coord_equal() +
   xlab("Plate Width") +
   ylab("Plate Height") +
   ggtitle("Fastball Takes") +
   geom_point(data = FastballTakes,aes(x = PlateLocSide, y = PlateLocHeight, color = TaggedPitchType, text = paste("Count: ", Count))) +
-  coord_cartesian(xlim = c(-3, 3), ylim = c(0, 5)) +
+  coord_cartesian(xlim = c(-4.5, 4.5), ylim = c(0, 5.5)) +
   theme(axis.line = element_blank(),
-        panel.background = element_blank(),
-        panel.border = element_blank(),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        plot.background = element_blank(),
-        legend.title = element_blank())
+      axis.text.x = element_blank(),
+      axis.text.y = element_blank(),
+      axis.ticks = element_blank(),
+      axis.title.x = element_blank(),
+      axis.title.y = element_blank(),
+      panel.background = element_blank(),
+      panel.border = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank(),
+      plot.background = element_blank(),
+      legend.title = element_blank())
 ggplotly(ft, tooltip = "text")
 ```
 
@@ -169,21 +190,31 @@ ggplotly(ft, tooltip = "text")
 Whiffs <- hitter %>%
   filter(PitchCall == "StrikeSwinging")
 wh <- ggplot() +
-  geom_path(data = sz, aes(x = x, y = z)) +
+  geom_path(data = sz, aes(x = x, y = y)) +
+  geom_path(data = rhb, aes(x = x2, y = y2), color = "lightgray") +
+  geom_path(data = lhb, aes(x = x4, y = y4), color = "lightgray") +
+  geom_text(mapping = aes(x = x3, y = y3), label = paste("RHB"), color = "lightgray") +
+  geom_text(mapping = aes(x = x5, y = y5), label = paste("LHB"), color = "lightgray") +
+  geom_polygon(hp, mapping = aes(x = x1, y = y1), color = "black", fill = "white") +
   coord_equal() +
   xlab("Plate Width") +
   ylab("Plate Height") +
   ggtitle("Swings & Misses") +
   geom_point(data = Whiffs,aes(x = PlateLocSide, y = PlateLocHeight, color = TaggedPitchType, text = paste("Pitch Type: ", TaggedPitchType, "<br>Velocity: ", RelSpeed, "<br>Spin Rate: ", SpinRate))) +
   scale_color_discrete(limits = c("Fastball" ,"ChangeUp", "Splitter", "Curveball", "Slider")) +
-  coord_cartesian(xlim = c(-3, 3), ylim = c(0, 5)) +
+  coord_cartesian(xlim = c(-4.5, 4.5), ylim = c(0, 5.5)) +
   theme(axis.line = element_blank(),
-        panel.background = element_blank(),
-        panel.border = element_blank(),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        plot.background = element_blank(),
-        legend.title = element_blank())
+      axis.text.x = element_blank(),
+      axis.text.y = element_blank(),
+      axis.ticks = element_blank(),
+      axis.title.x = element_blank(),
+      axis.title.y = element_blank(),
+      panel.background = element_blank(),
+      panel.border = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank(),
+      plot.background = element_blank(),
+      legend.title = element_blank())
 ggplotly(wh, tooltip = "text")
 ```
 </center>
