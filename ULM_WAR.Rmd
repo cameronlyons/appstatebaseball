@@ -1,0 +1,43 @@
+---
+title: "Louisiana Monroe Pitching"
+---
+
+<hr>
+
+```{r Setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, error = FALSE)
+library(tidyverse)
+library(ggplot2)
+library(plotly)
+library(data.table)
+library(tidyr)
+ncaa <- list.files("./NCAA", pattern = "*.csv", full.names = TRUE)
+ncaa <- rbindlist(lapply(ncaa, fread))
+ulm_war <- ncaa %>%
+  filter(PitcherTeam == "ULM_WAR")
+```
+
+```{r Fastball/Player Filter}
+fb <- ulm_war %>%
+  filter(TaggedPitchType == "Fastball")
+bartonja <- fb %>%
+  filter(Pitcher == "Barton, Jacob")
+bartonju <- fb %>%
+  filter(Pitcher == "Barton, Justin")
+dunn <- fb %>%
+  filter(Pitcher == "Dunn, Miles")
+gray <- fb %>%
+  filter(Pitcher == "Gray, Cole")
+marsh <- fb %>%
+  filter(Pitcher == "Marsh, Dylan")
+```
+
+|| **VELOCITY RANGE** | **SPIN RATE**
+- |       -      |      - 
+**JACOB BARTON** | `r sprintf("%.0f", range(bartonja$RelSpeed, na.rm = TRUE))` | `r sprintf("%.0f", mean(bartonja$SpinRate, na.rm = TRUE))`
+**JUSTIN BARTON** | `r sprintf("%.0f", range(bartonju$RelSpeed, na.rm = TRUE))` | `r sprintf("%.0f", mean(bartonju$SpinRate, na.rm = TRUE))`
+**MILES DUNN** | `r sprintf("%.0f", range(dunn$RelSpeed, na.rm = TRUE))` | `r sprintf("%.0f", mean(dunn$SpinRate, na.rm = TRUE))`
+**COLE GRAY** | `r sprintf("%.0f", range(gray$RelSpeed, na.rm = TRUE))` | `r sprintf("%.0f", mean(gray$SpinRate, na.rm = TRUE))`
+**DYLAN MARSH** | `r sprintf("%.0f", range(marsh$RelSpeed, na.rm = TRUE))` | `r sprintf("%.0f", mean(marsh$SpinRate, na.rm = TRUE))`
+
+<hr>

@@ -1,0 +1,37 @@
+---
+title: "Western Carolina Pitching"
+---
+
+<hr>
+
+```{r Setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, error = FALSE)
+library(tidyverse)
+library(ggplot2)
+library(plotly)
+library(data.table)
+library(tidyr)
+ncaa <- list.files("./NCAA", pattern = "*.csv", full.names = TRUE)
+ncaa <- rbindlist(lapply(ncaa, fread))
+wcc <- ncaa %>%
+  filter(PitcherTeam == "WCC")
+```
+
+```{r Fastball/Player Filter}
+fb <- wcc %>%
+  filter(TaggedPitchType == "Fastball")
+corn <- fb %>%
+  filter(Pitcher == "Corn, Jacob")
+therrian <- fb %>%
+  filter(Pitcher == "Therrian, Blake")
+walter <- fb %>%
+  filter(Pitcher == "Walter, Chase")
+```
+
+|| **VELOCITY RANGE** | **SPIN RATE**
+- |       -      |      - 
+**JACOB CORN** | `r sprintf("%.0f", range(corn$RelSpeed, na.rm = TRUE))` | `r sprintf("%.0f", mean(corn$SpinRate, na.rm = TRUE))`
+**BLAKE THERRIAN** | `r sprintf("%.0f", range(therrian$RelSpeed, na.rm = TRUE))` | `r sprintf("%.0f", mean(therrian$SpinRate, na.rm = TRUE))`
+**CHASE WALTER** | `r sprintf("%.0f", range(walter$RelSpeed, na.rm = TRUE))` | `r sprintf("%.0f", mean(walter$SpinRate, na.rm = TRUE))`
+
+<hr>

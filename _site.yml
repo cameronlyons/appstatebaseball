@@ -9,6 +9,10 @@ navbar:
       menu:
       - text: "Georgia Southern"
         href: GEO_EAG.html
+      - text: "Louisiana Monroe"
+        href: ULM_WAR.html
+      - text: "Western Carollina"
+        href: WCC.html
     - text: "Batting"
       icon: 
       menu:
