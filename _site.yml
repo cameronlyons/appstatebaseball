@@ -11,6 +11,8 @@ navbar:
         href: GEO_EAG.html
       - text: "Louisiana Monroe"
         href: ULM_WAR.html
+      - text: "Radford"
+        href: RAD_HIG.html
       - text: "Western Carollina"
         href: WCC.html
     - text: "Batting"

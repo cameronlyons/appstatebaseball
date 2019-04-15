@@ -1,0 +1,73 @@
+---
+title: "Radford Pitching"
+---
+
+<hr>
+
+```{r Setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, error = FALSE)
+library(tidyverse)
+library(ggplot2)
+library(plotly)
+library(data.table)
+library(tidyr)
+ncaa <- list.files("./NCAA", pattern = "*.csv", full.names = TRUE)
+ncaa <- rbindlist(lapply(ncaa, fread))
+rad_hig <- ncaa %>%
+  filter(PitcherTeam == "RAD_HIG")
+```
+
+```{r Fastball/Player Filter}
+fb <- rad_hig %>%
+  filter(AutoPitchType == "Fastball")
+boone <- fb %>%
+  filter(Pitcher == "Boone, Cody")
+bywaters <- fb %>%
+  filter(Pitcher == "Bywaters, Ryan")
+domecq <- fb %>%
+  filter(Pitcher == "Domecq, Derek")
+donovan <- fb %>%
+  filter(Pitcher == "Donovan, Brandon")
+dunn <- fb %>%
+  filter(Pitcher == "Dunn, Cole")
+feathers <- fb %>%
+  filter(Pitcher == "Feathers, Brandon")
+firoved <- fb %>%
+  filter(Pitcher == "Firoved, Graham")
+fritz <- fb %>%
+  filter(Pitcher == "Fritz, Cameron")
+gerber <- fb %>%
+  filter(Pitcher == "Gerber, Austin")
+hudson <- fb %>%
+  filter(Pitcher == "Hudson, Bruce")
+nardi <- fb %>%
+  filter(Pitcher == "Nardi, Andrew")
+reid <- fb %>%
+  filter(Pitcher == "Reid, Colin")
+ridgely <- fb %>%
+  filter(Pitcher == "Ridgely, Zack")
+threehouse <- fb %>%
+  filter(Pitcher == "Threehouse, Evan")
+williams <- fb %>%
+  filter(Pitcher == "Williams, Hunter")
+```
+
+|| **VELOCITY RANGE** | **SPIN RATE**
+- |       -      |      - 
+**CODY BOONE** | `r sprintf("%.0f", range(boone$RelSpeed, na.rm = TRUE))` | `r sprintf("%.0f", mean(boone$SpinRate, na.rm = TRUE))`
+**RYAN BYWATERS** | `r sprintf("%.0f", range(bywaters$RelSpeed, na.rm = TRUE))` | `r sprintf("%.0f", mean(bywaters$SpinRate, na.rm = TRUE))`
+**DEREK DOMECQ** | `r sprintf("%.0f", range(domecq$RelSpeed, na.rm = TRUE))` | `r sprintf("%.0f", mean(domecq$SpinRate, na.rm = TRUE))`
+**BRANDON DONOVAN** | `r sprintf("%.0f", range(donovan$RelSpeed, na.rm = TRUE))` | `r sprintf("%.0f", mean(donovan$SpinRate, na.rm = TRUE))`
+**COLE DUNN** | `r sprintf("%.0f", range(dunn$RelSpeed, na.rm = TRUE))` | `r sprintf("%.0f", mean(dunn$SpinRate, na.rm = TRUE))`
+**BRANDON FEATHERS** | `r sprintf("%.0f", range(feathers$RelSpeed, na.rm = TRUE))` | `r sprintf("%.0f", mean(feathers$SpinRate, na.rm = TRUE))`
+**GRAHAM FIROVED** | `r sprintf("%.0f", range(firoved$RelSpeed, na.rm = TRUE))` | `r sprintf("%.0f", mean(firoved$SpinRate, na.rm = TRUE))`
+**CAMERON FRITZ** | `r sprintf("%.0f", range(fritz$RelSpeed, na.rm = TRUE))` | `r sprintf("%.0f", mean(fritz$SpinRate, na.rm = TRUE))`
+**AUSTIN GERBER** | `r sprintf("%.0f", range(gerber$RelSpeed, na.rm = TRUE))` | `r sprintf("%.0f", mean(gerber$SpinRate, na.rm = TRUE))`
+**BRUCE HUDSON** | `r sprintf("%.0f", range(hudson$RelSpeed, na.rm = TRUE))` | `r sprintf("%.0f", mean(hudson$SpinRate, na.rm = TRUE))`
+**ANDREW NARDI** | `r sprintf("%.0f", range(nardi$RelSpeed, na.rm = TRUE))` | `r sprintf("%.0f", mean(nardi$SpinRate, na.rm = TRUE))`
+**COLIN REID** | `r sprintf("%.0f", range(reid$RelSpeed, na.rm = TRUE))` | `r sprintf("%.0f", mean(reid$SpinRate, na.rm = TRUE))`
+**ZACK RIDGELY** | `r sprintf("%.0f", range(ridgely$RelSpeed, na.rm = TRUE))` | `r sprintf("%.0f", mean(ridgely$SpinRate, na.rm = TRUE))`
+**EVAN THREEHOUSE** | `r sprintf("%.0f", range(threehouse$RelSpeed, na.rm = TRUE))` | `r sprintf("%.0f", mean(threehouse$SpinRate, na.rm = TRUE))`
+**HUNTER WILLIAMS** | `r sprintf("%.0f", range(williams$RelSpeed, na.rm = TRUE))` | `r sprintf("%.0f", mean(williams$SpinRate, na.rm = TRUE))`
+
+<hr>
