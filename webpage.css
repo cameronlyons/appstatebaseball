@@ -111,6 +111,7 @@ width: 33.3%; }
   border-top-color: red;
   border-bottom-color: red;
 }
+
 /* mobile version */
   .navbar-default .navbar-toggle {
     border-color: #DDD;
