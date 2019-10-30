@@ -15,49 +15,49 @@ navbar:
         href: RAD_HIG.html
       - text: "Western Carollina"
         href: WCC.html
-    - text: "Batting"
+    - text: "2018-2019"
       icon: 
       menu:
       - text: "Team Batting"
-        href: batting.html
+        href: 19batting.html
       - text: "Luke Allison"
-        href: allison.html
+        href: 19allison.html
       - text: "Bret Baldwin"
-        href: baldwin.html
+        href: 19baldwin.html
       - text: "Drew Beck"
-        href: beck.html
+        href: 19beck.html
       - text: "McKinley Bell"
-        href: bell.html
+        href: 19bell.html
       - text: "CJ Brown"
-        href: brown.html
+        href: 19brown.html
       - text: "Phillip Cole"
-        href: cole.html
+        href: 19cole.html
       - text: "Hayden Cross"
-        href: cross.html
+        href: 19cross.html
       - text: "Bradley Davis"
-        href: davis.html
+        href: 19davis.html
       - text: "Kyle Decker"
-        href: decker.html
+        href: 19decker.html
       - text: "Luke Drumheller"
-        href: drumheller.html
+        href: 19drumheller.html
       - text: "Tyler Leek"
-        href: leek.html
+        href: 19leek.html
       - text: "Alex Leshock"
-        href: leshock.html
+        href: 19leshock.html
       - text: "Joel McDaniel"
-        href: mcdaniel.html
+        href: 19mcdaniel.html
       - text: "Kendall McGowan"
-        href: mcgowan.html
+        href: 19mcgowan.html
       - text: "Riley Smith"
-        href: smith.html
+        href: 19smith.html
       - text: "Andrew Terrell"
-        href: terrell.html
+        href: 19terrell.html
       - text: "Bailey Welch"
-        href: welch.html
+        href: 19welch.html
       - text: "Dalton Williams"
-        href: williams.html
+        href: 19williams.html
       - text: "Robbie Young"
-        href: young.html
+        href: 19young.html
 
 output:
   html_document: 

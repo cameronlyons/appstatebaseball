@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Tyler Leek</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.9.0/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="site_libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-1.46.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="site_libs/plotly-main-1.46.1/plotly-latest.min.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="webpage.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Appalachian State Baseball</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Scouting
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="GEO_EAG.html">Georgia Southern</a>
+    </li>
+    <li>
+      <a href="ULM_WAR.html">Louisiana Monroe</a>
+    </li>
+    <li>
+      <a href="RAD_HIG.html">Radford</a>
+    </li>
+    <li>
+      <a href="WCC.html">Western Carollina</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    2018-2019
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="19batting.html">Team Batting</a>
+    </li>
+    <li>
+      <a href="19allison.html">Luke Allison</a>
+    </li>
+    <li>
+      <a href="19baldwin.html">Bret Baldwin</a>
+    </li>
+    <li>
+      <a href="19beck.html">Drew Beck</a>
+    </li>
+    <li>
+      <a href="19bell.html">McKinley Bell</a>
+    </li>
+    <li>
+      <a href="19brown.html">CJ Brown</a>
+    </li>
+    <li>
+      <a href="19cole.html">Phillip Cole</a>
+    </li>
+    <li>
+      <a href="19cross.html">Hayden Cross</a>
+    </li>
+    <li>
+      <a href="19davis.html">Bradley Davis</a>
+    </li>
+    <li>
+      <a href="19decker.html">Kyle Decker</a>
+    </li>
+    <li>
+      <a href="19drumheller.html">Luke Drumheller</a>
+    </li>
+    <li>
+      <a href="19leek.html">Tyler Leek</a>
+    </li>
+    <li>
+      <a href="19leshock.html">Alex Leshock</a>
+    </li>
+    <li>
+      <a href="19mcdaniel.html">Joel McDaniel</a>
+    </li>
+    <li>
+      <a href="19mcgowan.html">Kendall McGowan</a>
+    </li>
+    <li>
+      <a href="19smith.html">Riley Smith</a>
+    </li>
+    <li>
+      <a href="19terrell.html">Andrew Terrell</a>
+    </li>
+    <li>
+      <a href="19welch.html">Bailey Welch</a>
+    </li>
+    <li>
+      <a href="19williams.html">Dalton Williams</a>
+    </li>
+    <li>
+      <a href="19young.html">Robbie Young</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Tyler Leek</h1>
+
+</div>
+
+
+<hr>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th>Hitting Summary</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>PA:</td>
+<td>133</td>
+<td>2B:</td>
+<td>2</td>
+<td>RBI:</td>
+<td>22</td>
+<td>AVG:</td>
+<td>0.296</td>
+</tr>
+<tr class="even">
+<td>AB:</td>
+<td>115</td>
+<td>3B:</td>
+<td>4</td>
+<td>BB:</td>
+<td>13</td>
+<td>SLG:</td>
+<td>0.487</td>
+</tr>
+<tr class="odd">
+<td>Hits:</td>
+<td>34</td>
+<td>HR:</td>
+<td>4</td>
+<td>HBP:</td>
+<td>5</td>
+<td>OPS:</td>
+<td>0.878</td>
+</tr>
+<tr class="even">
+<td>SO:</td>
+<td>24</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>OBP:</td>
+<td>0.391</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr class="header">
+<th>Hits</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>AVG Exit Velocity:</td>
+<td>84.67 mph</td>
+</tr>
+<tr class="even">
+<td>Max Exit Velocity:</td>
+<td>103.47 mph</td>
+</tr>
+<tr class="odd">
+<td>AVG Launch Angle:</td>
+<td>10.49 degrees</td>
+</tr>
+<tr class="even">
+<td>Max Estimated Distance:</td>
+<td>437.40 feet</td>
+</tr>
+</tbody>
+</table>
+<center>
+<div id="htmlwidget-aa97cdb4d49554bba0b5" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-aa97cdb4d49554bba0b5">{"x":{"data":[{"x":[0,63.6396103067893,0,-63.6396103067893,0,0],"y":[0,63.6396103067893,127.279220613579,63.6396103067893,0,0],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[131.877932188464,-132.443467373995],"y":[142.42164992435,133.22213785862],"text":["Exit Speed:  94.72524507 <br> Distance:  194.1023322 <br> Launch Angle:  10.92979754","Exit Speed:  70.94309343 <br> Distance:  187.8547579 <br> Launch Angle:  19.67655769"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(196,154,0,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(196,154,0,1)"}},"hoveron":"points","name":"Double","legendgroup":"Double","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-23.8517570797898,-9.27745213637424],"y":[73.3127718878545,13.1386214876566],"text":["Exit Speed:  89.07024012 <br> Distance:  77.09519335 <br> Launch Angle:  3.628885693","Exit Speed:  36.15161656 <br> Distance:  16.08398249 <br> Launch Angle:  -3.910922255"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(251,97,215,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(251,97,215,1)"}},"hoveron":"points","name":"Error","legendgroup":"Error","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-6.87007797180465,-5.97309102072835],"y":[13.3473301727835,14.8354495311957],"text":["Exit Speed:  82.53346872 <br> Distance:  15.01163529 <br> Launch Angle:  -9.31926621","Exit Speed:  82.44710384 <br> Distance:  15.99276021 <br> Launch Angle:  -9.140088559"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(165,138,255,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(165,138,255,1)"}},"hoveron":"points","name":"FieldersChoice","legendgroup":"FieldersChoice","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-214.550105623446,-246.00759366957,-256.814248813789,-84.6828825265348],"y":[268.718655319229,251.055532418272,295.908541492854,402.153111520741],"text":["Exit Speed:  97.25736856 <br> Distance:  343.8625649 <br> Launch Angle:  45.61739522","Exit Speed:  94.01897421 <br> Distance:  351.4948314 <br> Launch Angle:  30.92583279","Exit Speed:  96.79542794 <br> Distance:  391.8104431 <br> Launch Angle:  34.16488721","Exit Speed:  98.31134743 <br> Distance:  410.9724026 <br> Launch Angle:  30.20397468"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,192,148,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,192,148,1)"}},"hoveron":"points","name":"HomeRun","legendgroup":"HomeRun","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-7.03499781793861,null,null,-0.618904031803003,null,-158.815585518811,-0.475600907300483,-124.270193088971,109.493941028011,null,37.3562966508076,101.645179608115,-0.209969212860335,97.2399929437598,128.771743627015,16.8925776682506,22.7427724576379,1.22856672081701,-32.3025822527608,-2.64982536706599,-2.1364790232592,null,null,93.6267761770604,-0.0258300728550431,47.8363175896682,-109.809824734328,-4.74239081265153,-39.1374642879952,132.292026162074,-50.7870916116837,185.58049412132,7.98352318445121,1.14605982305285,-20.1514256998164,null,-0.182017334387118,null,null,211.13042417267,-141.700075629642,0.309003576271146,-54.2545139132293,21.8834367587388,1.5409368929294,173.654761589774,7.92906445431616,-0.242818807052384,36.4398129353316,-110.375078800806,-1.27491402242282],"y":[65.4531279560031,null,null,2.40081945297587,null,253.671323124153,6.45368972500947,279.979944692223,102.930875897715,null,176.395682223927,88.0643938446063,4.73553831314143,268.831013461633,288.151540645528,76.5529342824585,217.797299841792,6.88044043742629,288.528472570908,4.00069238226345,4.42924762955902,null,null,138.151716889473,5.34404292040265,247.898941021924,256.462687364745,12.3711289207627,359.052261983221,103.64857294046,158.918030569601,228.313733640898,33.049750999283,7.82870859842789,90.0086537422378,null,4.93811097462762,null,null,220.724835929276,319.117874300638,9.15833354875956,175.414162345741,138.631890925121,9.03058516438609,219.16381869667,31.2993550710947,7.68848083684053,177.175448031653,305.589119976812,10.6733654226221],"text":["Exit Speed:  71.32797792 <br> Distance:  65.83010826 <br> Launch Angle:  4.333148131","Exit Speed:  NA <br> Distance:  NA <br> Launch Angle:  NA","Exit Speed:  NA <br> Distance:  NA <br> Launch Angle:  NA","Exit Speed:  70.77074656 <br> Distance:  2.479309631 <br> Launch Angle:  -50.26800013","Exit Speed:  NA <br> Distance:  NA <br> Launch Angle:  NA","Exit Speed:  89.84270633 <br> Distance:  299.285032 <br> Launch Angle:  20.91674655","Exit Speed:  75.76091595 <br> Distance:  6.471190562 <br> Launch Angle:  -18.29335246","Exit Speed:  90.80596428 <br> Distance:  306.3198497 <br> Launch Angle:  21.37060016","Exit Speed:  66.76857799 <br> Distance:  150.2787022 <br> Launch Angle:  58.22799443","Exit Speed:  NA <br> Distance:  NA <br> Launch Angle:  NA","Exit Speed:  77.6766917 <br> Distance:  180.3078745 <br> Launch Angle:  13.74252074","Exit Speed:  62.49937808 <br> Distance:  134.4882151 <br> Launch Angle:  58.89184652","Exit Speed:  55.93550454 <br> Distance:  4.740190944 <br> Launch Angle:  -41.1343802","Exit Speed:  94.5146357 <br> Distance:  285.877124 <br> Launch Angle:  16.93495155","Exit Speed:  87.50079094 <br> Distance:  315.6160204 <br> Launch Angle:  38.83332493","Exit Speed:  87.4783027 <br> Distance:  78.39458481 <br> Launch Angle:  3.390334294","Exit Speed:  79.64555893 <br> Distance:  218.9815004 <br> Launch Angle:  47.46744581","Exit Speed:  85.85812804 <br> Distance:  6.989265827 <br> Launch Angle:  -19.62214252","Exit Speed:  81.87646449 <br> Distance:  290.3310805 <br> Launch Angle:  23.32289536","Exit Speed:  51.57712045 <br> Distance:  4.798657522 <br> Launch Angle:  -41.29154994","Exit Speed:  67.92482128 <br> Distance:  4.917598721 <br> Launch Angle:  -44.74949341","Exit Speed:  NA <br> Distance:  NA <br> Launch Angle:  NA","Exit Speed:  NA <br> Distance:  NA <br> Launch Angle:  NA","Exit Speed:  83.25485806 <br> Distance:  166.8887956 <br> Launch Angle:  63.85529114","Exit Speed:  88.35207566 <br> Distance:  5.344105344 <br> Launch Angle:  -31.98731661","Exit Speed:  75.93778693 <br> Distance:  252.4721732 <br> Launch Angle:  45.62083432","Exit Speed:  82.23839263 <br> Distance:  278.9826296 <br> Launch Angle:  22.18025582","Exit Speed:  75.32601096 <br> Distance:  13.24896605 <br> Launch Angle:  -16.01844775","Exit Speed:  95.50059846 <br> Distance:  361.1789971 <br> Launch Angle:  39.27511242","Exit Speed:  85.60904725 <br> Distance:  168.0601287 <br> Launch Angle:  63.44607757","Exit Speed:  66.44577917 <br> Distance:  166.8360546 <br> Launch Angle:  19.43020407","Exit Speed:  79.284929 <br> Distance:  294.2231819 <br> Launch Angle:  36.96970854","Exit Speed:  90.1788431 <br> Distance:  34.00033358 <br> Launch Angle:  -3.343856353","Exit Speed:  85.27699025 <br> Distance:  7.912150873 <br> Launch Angle:  -16.92495228","Exit Speed:  54.65216383 <br> Distance:  92.23685655 <br> Launch Angle:  66.1621177","Exit Speed:  NA <br> Distance:  NA <br> Launch Angle:  NA","Exit Speed:  86.57320895 <br> Distance:  4.941464389 <br> Launch Angle:  -30.12443081","Exit Speed:  NA <br> Distance:  NA <br> Launch Angle:  NA","Exit Speed:  NA <br> Distance:  NA <br> Launch Angle:  NA","Exit Speed:  88.90335868 <br> Distance:  305.4431358 <br> Launch Angle:  32.11042298","Exit Speed:  99.48788104 <br> Distance:  349.1634705 <br> Launch Angle:  19.43841947","Exit Speed:  67.43633155 <br> Distance:  9.16354498 <br> Launch Angle:  -10.22620365","Exit Speed:  96.23136542 <br> Distance:  183.6128553 <br> Launch Angle:  11.55346627","Exit Speed:  103.4656435 <br> Distance:  140.3484449 <br> Launch Angle:  5.974208873","Exit Speed:  75.72742622 <br> Distance:  9.161111009 <br> Launch Angle:  -18.01365912","Exit Speed:  82.49399202 <br> Distance:  279.6225235 <br> Launch Angle:  34.42138068","Exit Speed:  92.3587663 <br> Distance:  32.28807351 <br> Launch Angle:  -2.506771112","Exit Speed:  95.31382635 <br> Distance:  7.692314252 <br> Launch Angle:  -20.81479699","Exit Speed:  60.09568851 <br> Distance:  180.8839389 <br> Launch Angle:  32.89774685","Exit Speed:  81.90234934 <br> Distance:  324.9113237 <br> Launch Angle:  39.67023701","Exit Speed:  78.87262978 <br> Distance:  10.74923882 <br> Launch Angle:  -15.9670843"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,182,235,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,182,235,1)"}},"hoveron":"points","name":"Out","legendgroup":"Out","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[null,-67.5931291971372,0.311817129799481,null,49.1704443079326,-9.91729111799311,-0.15103949512656,-14.8855414750509,null,null,-1.96573770497539,2.80988481330432,1.01487036136994,-10.6183907337695,-49.0588013810591,3.4234518063742,-42.865119377799,81.2314056826372,null,-10.3636605488459,-10.4474401409519,-113.764965402436,null,83.535979057085],"y":[null,104.60789183699,36.2439555787845,null,194.998414345949,20.2852188457436,2.40891170058854,130.233522216193,null,null,129.698586198527,4.15198190057344,14.2781609452306,20.0141198822247,265.400655855548,31.3661034188568,89.1468735142877,150.752163422759,null,24.1536643093604,79.6264417602255,237.665650591703,null,248.867627673151],"text":["Exit Speed:  NA <br> Distance:  NA <br> Launch Angle:  NA","Exit Speed:  93.80116446 <br> Distance:  124.5457432 <br> Launch Angle:  8.284752509","Exit Speed:  98.3447535 <br> Distance:  36.24529688 <br> Launch Angle:  -0.968374447","Exit Speed:  NA <br> Distance:  NA <br> Launch Angle:  NA","Exit Speed:  95.15600336 <br> Distance:  201.1022481 <br> Launch Angle:  9.265608323","Exit Speed:  84.06910712 <br> Distance:  22.57969811 <br> Launch Angle:  -6.054493295","Exit Speed:  70.15195634 <br> Distance:  2.413642167 <br> Launch Angle:  -70.8995782","Exit Speed:  92.71099774 <br> Distance:  131.0814619 <br> Launch Angle:  9.510299435","Exit Speed:  NA <br> Distance:  NA <br> Launch Angle:  NA","Exit Speed:  NA <br> Distance:  NA <br> Launch Angle:  NA","Exit Speed:  94.64172526 <br> Distance:  129.7134819 <br> Launch Angle:  8.866196479","Exit Speed:  35.28305149 <br> Distance:  5.01342262 <br> Launch Angle:  -36.87155708","Exit Speed:  94.40294446 <br> Distance:  14.31418324 <br> Launch Angle:  -11.48397673","Exit Speed:  81.63654924 <br> Distance:  22.65646081 <br> Launch Angle:  -6.830872597","Exit Speed:  79.20575624 <br> Distance:  269.8967842 <br> Launch Angle:  22.28294929","Exit Speed:  93.41214208 <br> Distance:  31.55237655 <br> Launch Angle:  -1.987156203","Exit Speed:  95.63275703 <br> Distance:  98.91705372 <br> Launch Angle:  4.59783714","Exit Speed:  66.82242071 <br> Distance:  171.2447256 <br> Launch Angle:  20.22517674","Exit Speed:  NA <br> Distance:  NA <br> Launch Angle:  NA","Exit Speed:  97.77220397 <br> Distance:  26.28316875 <br> Launch Angle:  -4.52930024","Exit Speed:  100.4350244 <br> Distance:  80.30889884 <br> Launch Angle:  3.889148237","Exit Speed:  101.7253773 <br> Distance:  263.4908515 <br> Launch Angle:  14.28732214","Exit Speed:  NA <br> Distance:  NA <br> Launch Angle:  NA","Exit Speed:  88.60810986 <br> Distance:  262.5135347 <br> Launch Angle:  17.09240226"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"Single","legendgroup":"Single","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[117.932920581047,160.215325558443,233.812762980463,-37.2348043434671],"y":[330.932885902469,166.693913670124,234.989773551787,400.464047237662],"text":["Exit Speed:  95.8418275 <br> Distance:  351.3185858 <br> Launch Angle:  24.46081426","Exit Speed:  92.04345868 <br> Distance:  231.2051284 <br> Launch Angle:  13.3120222","Exit Speed:  93.45340848 <br> Distance:  331.4944974 <br> Launch Angle:  31.7092319","Exit Speed:  99.91311288 <br> Distance:  402.1913522 <br> Launch Angle:  30.88592146"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(83,180,0,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(83,180,0,1)"}},"hoveron":"points","name":"Triple","legendgroup":"Triple","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0,-233.35,null,0,-233.35,null,0,-233.35,null,0,-233.35,null,0,-233.35,null,0,-233.35],"y":[0,233.35,null,0,233.35,null,0,233.35,null,0,233.35,null,0,233.35,null,0,233.35],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-233.35,-160.59,null,-233.35,-160.59,null,-233.35,-160.59,null,-233.35,-160.59,null,-233.35,-160.59,null,-233.35,-160.59],"y":[233.35,340,null,233.35,340,null,233.35,340,null,233.35,340,null,233.35,340,null,233.35,340],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-160.59,-49.36,null,-160.59,-49.36,null,-160.59,-49.36,null,-160.59,-49.36,null,-160.59,-49.36,null,-160.59,-49.36],"y":[340,401.98,null,340,401.98,null,340,401.98,null,340,401.98,null,340,401.98,null,340,401.98],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-49.36,49.36,null,-49.36,49.36,null,-49.36,49.36,null,-49.36,49.36,null,-49.36,49.36,null,-49.36,49.36],"y":[401.98,401.98,null,401.98,401.98,null,401.98,401.98,null,401.98,401.98,null,401.98,401.98,null,401.98,401.98],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[49.36,157.67,null,49.36,157.67,null,49.36,157.67,null,49.36,157.67,null,49.36,157.67,null,49.36,157.67],"y":[401.98,338.05,null,401.98,338.05,null,401.98,338.05,null,401.98,338.05,null,401.98,338.05,null,401.98,338.05],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[157.67,229.81,null,157.67,229.81,null,157.67,229.81,null,157.67,229.81,null,157.67,229.81,null,157.67,229.81],"y":[338.05,229.81,null,338.05,229.81,null,338.05,229.81,null,338.05,229.81,null,338.05,229.81,null,338.05,229.81],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[229.81,0,null,229.81,0,null,229.81,0,null,229.81,0,null,229.81,0,null,229.81,0],"y":[229.81,0,null,229.81,0,null,229.81,0,null,229.81,0,null,229.81,0,null,229.81,0],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":26.2283105022831,"r":7.30593607305936,"b":13.8812785388128,"l":10.958904109589},"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-275,275],"tickmode":"array","ticktext":["-200","-100","0","100","200"],"tickvals":[-200,-100,0,100,200],"categoryorder":"array","categoryarray":["-200","-100","0","100","200"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":false,"tickfont":{"color":null,"family":null,"size":0},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":{"text":"","font":{"color":null,"family":null,"size":0}},"scaleanchor":"y","scaleratio":1,"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-35.5,525.5],"tickmode":"array","ticktext":["0","100","200","300","400","500"],"tickvals":[0,100,200,300,400,500],"categoryorder":"array","categoryarray":["0","100","200","300","400","500"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":false,"tickfont":{"color":null,"family":null,"size":0},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x","title":{"text":"","font":{"color":null,"family":null,"size":0}},"scaleanchor":"x","scaleratio":1,"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"y":1},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","showSendToCloud":false},"source":"A","attrs":{"68e55f7ed2d":{"x":{},"y":{},"type":"scatter"},"68ed3a4d6c":{"colour":{},"text":{},"x":{},"y":{}},"68e2c1620fd":{"x":{},"y":{}},"68e44e33b21":{"x":{},"y":{}},"68e7e5ca568":{"x":{},"y":{}},"68e73b74205":{"x":{},"y":{}},"68e444f184c":{"x":{},"y":{}},"68e25df62e3":{"x":{},"y":{}},"68e5684d9f6":{"x":{},"y":{}}},"cur_data":"68e55f7ed2d","visdat":{"68e55f7ed2d":["function (y) ","x"],"68ed3a4d6c":["function (y) ","x"],"68e2c1620fd":["function (y) ","x"],"68e44e33b21":["function (y) ","x"],"68e7e5ca568":["function (y) ","x"],"68e73b74205":["function (y) ","x"],"68e444f184c":["function (y) ","x"],"68e25df62e3":["function (y) ","x"],"68e5684d9f6":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-2c0b7383f2e83d2df0f5" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2c0b7383f2e83d2df0f5">{"x":{"data":[{"x":[-0.95,0.95,0.95,-0.95,-0.95],"y":[1.6,1.6,3.5,3.5,1.6],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1.61,3.11,3.11,1.61,1.61],"y":[0,0,5.5,5.5,0],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(211,211,211,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-1.61,-3.11,-3.11,-1.61,-1.61],"y":[0,0,5.5,5.5,0],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(211,211,211,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[2.36],"y":[2.75],"text":"RHB","hovertext":"","textfont":{"size":14.6645669291339,"color":"rgba(211,211,211,1)"},"type":"scatter","mode":"text","hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-2.36],"y":[2.75],"text":"LHB","hovertext":"","textfont":{"size":14.6645669291339,"color":"rgba(211,211,211,1)"},"type":"scatter","mode":"text","hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.95,-0.95,0,0.95,0.95,-0.95,-0.95],"y":[0,0.15,0.25,0.15,0,0,0],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"fill":"toself","fillcolor":"rgba(255,255,255,1)","hoveron":"fills","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.002678573],"y":[2.38694738],"text":"Pitch Type:  ChangeUp <br>Exit Speed:  96.79542794 <br> Distance:  391.8104431 <br> Launch Angle:  34.16488721","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(163,165,0,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(163,165,0,1)"}},"hoveron":"points","name":"ChangeUp","legendgroup":"ChangeUp","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.159254137,0.73341084,-0.001509381,-0.467268806,0.033836845,-0.482860583,-0.635714754,-0.339036345,-0.072385707,-0.158035127,-0.91103845,-0.157653335,-1.08041415,-0.106221502,-1.103458099,-0.360295632,0.38223985,0.341994169,-1.090577397,-0.032171861,0.170322461,-0.498733939,-0.317837919,-0.499776621,-0.009389503,-0.817645598,-0.44111293,-0.266122753],"y":[3.053325265,2.595988218,2.094965746,2.380271787,1.980846932,2.57054352,2.851534294,2.748972471,2.987928753,2.567550312,2.261921859,2.318016492,2.527236361,2.678744151,2.240499456,3.258742306,2.605494458,2.477635834,3.045832889,2.351019371,2.210088264,3.093848681,2.999873419,2.623864025,2.619578747,2.473705934,2.516680106,2.045210918],"text":["Pitch Type:  Fastball <br>Exit Speed:  94.72524507 <br> Distance:  194.1023322 <br> Launch Angle:  10.92979754","Pitch Type:  Fastball <br>Exit Speed:  93.80116446 <br> Distance:  124.5457432 <br> Launch Angle:  8.284752509","Pitch Type:  Fastball <br>Exit Speed:  98.3447535 <br> Distance:  36.24529688 <br> Launch Angle:  -0.968374447","Pitch Type:  Fastball <br>Exit Speed:  95.15600336 <br> Distance:  201.1022481 <br> Launch Angle:  9.265608323","Pitch Type:  Fastball <br>Exit Speed:  90.80596428 <br> Distance:  306.3198497 <br> Launch Angle:  21.37060016","Pitch Type:  Fastball <br>Exit Speed:  95.8418275 <br> Distance:  351.3185858 <br> Launch Angle:  24.46081426","Pitch Type:  Fastball <br>Exit Speed:  93.98353786 <br> Distance:  318.4548902 <br> Launch Angle:  27.67947295","Pitch Type:  Fastball <br>Exit Speed:  94.5146357 <br> Distance:  285.877124 <br> Launch Angle:  16.93495155","Pitch Type:  Fastball <br>Exit Speed:  92.71099774 <br> Distance:  131.0814619 <br> Launch Angle:  9.510299435","Pitch Type:  Fastball <br>Exit Speed:  94.64172526 <br> Distance:  129.7134819 <br> Launch Angle:  8.866196479","Pitch Type:  Fastball <br>Exit Speed:  92.04345868 <br> Distance:  231.2051284 <br> Launch Angle:  13.3120222","Pitch Type:  Fastball <br>Exit Speed:  96.08472419 <br> Distance:  394.9503283 <br> Launch Angle:  33.90536242","Pitch Type:  Fastball <br>Exit Speed:  94.40294446 <br> Distance:  14.31418324 <br> Launch Angle:  -11.48397673","Pitch Type:  Fastball <br>Exit Speed:  95.50059846 <br> Distance:  361.1789971 <br> Launch Angle:  39.27511242","Pitch Type:  Fastball <br>Exit Speed:  93.41214208 <br> Distance:  31.55237655 <br> Launch Angle:  -1.987156203","Pitch Type:  Fastball <br>Exit Speed:  93.45340848 <br> Distance:  331.4944974 <br> Launch Angle:  31.7092319","Pitch Type:  Fastball <br>Exit Speed:  97.25736856 <br> Distance:  343.8625649 <br> Launch Angle:  45.61739522","Pitch Type:  Fastball <br>Exit Speed:  100.6606734 <br> Distance:  437.4023155 <br> Launch Angle:  31.19209129","Pitch Type:  Fastball <br>Exit Speed:  90.1788431 <br> Distance:  34.00033358 <br> Launch Angle:  -3.343856353","Pitch Type:  Fastball <br>Exit Speed:  99.48788104 <br> Distance:  349.1634705 <br> Launch Angle:  19.43841947","Pitch Type:  Fastball <br>Exit Speed:  97.77220397 <br> Distance:  26.28316875 <br> Launch Angle:  -4.52930024","Pitch Type:  Fastball <br>Exit Speed:  98.31134743 <br> Distance:  410.9724026 <br> Launch Angle:  30.20397468","Pitch Type:  Fastball <br>Exit Speed:  96.23136542 <br> Distance:  183.6128553 <br> Launch Angle:  11.55346627","Pitch Type:  Fastball <br>Exit Speed:  103.4656435 <br> Distance:  140.3484449 <br> Launch Angle:  5.974208873","Pitch Type:  Fastball <br>Exit Speed:  100.4350244 <br> Distance:  80.30889884 <br> Launch Angle:  3.889148237","Pitch Type:  Fastball <br>Exit Speed:  92.3587663 <br> Distance:  32.28807351 <br> Launch Angle:  -2.506771112","Pitch Type:  Fastball <br>Exit Speed:  95.31382635 <br> Distance:  7.692314252 <br> Launch Angle:  -20.81479699","Pitch Type:  Fastball <br>Exit Speed:  99.91311288 <br> Distance:  402.1913522 <br> Launch Angle:  30.88592146"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"Fastball","legendgroup":"Fastball","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.022055866],"y":[3.131127521],"text":"Pitch Type:  Sinker <br>Exit Speed:  101.7253773 <br> Distance:  263.4908515 <br> Launch Angle:  14.28732214","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(127,127,127,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(127,127,127,1)"}},"hoveron":"points","name":"Sinker","legendgroup":"Sinker","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.306083957,0.099932891],"y":[2.87802019,2.453511358],"text":["Pitch Type:  Slider <br>Exit Speed:  95.63275703 <br> Distance:  98.91705372 <br> Launch Angle:  4.59783714","Pitch Type:  Slider <br>Exit Speed:  94.01897421 <br> Distance:  351.4948314 <br> Launch Angle:  30.92583279"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(231,107,243,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(231,107,243,1)"}},"hoveron":"points","name":"Slider","legendgroup":"Slider","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.7625570776256,"r":7.30593607305936,"b":13.8812785388128,"l":10.958904109589},"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"90+ Exit Velocities","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-4.95,4.95],"tickmode":"array","ticktext":["-2.5","0.0","2.5"],"tickvals":[-2.5,0,2.5],"categoryorder":"array","categoryarray":["-2.5","0.0","2.5"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":false,"tickfont":{"color":null,"family":null,"size":0},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":{"text":"","font":{"color":null,"family":null,"size":0}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.275,5.775],"tickmode":"array","ticktext":["0","2","4"],"tickvals":[0,2,4],"categoryorder":"array","categoryarray":["0","2","4"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":false,"tickfont":{"color":null,"family":null,"size":0},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x","title":{"text":"","font":{"color":null,"family":null,"size":0}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"y":1},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","showSendToCloud":false},"source":"A","attrs":{"68e3c9cfd4d":{"x":{},"y":{},"type":"scatter"},"68e733abbe9":{"x":{},"y":{}},"68e26937c90":{"x":{},"y":{}},"68e3f78a162":{"x":{},"y":{}},"68e5b4cb6b2":{"x":{},"y":{}},"68e2adc7928":{"x":{},"y":{}},"68e249b68b6":{"x":{},"y":{},"colour":{},"text":{}}},"cur_data":"68e3c9cfd4d","visdat":{"68e3c9cfd4d":["function (y) ","x"],"68e733abbe9":["function (y) ","x"],"68e26937c90":["function (y) ","x"],"68e3f78a162":["function (y) ","x"],"68e5b4cb6b2":["function (y) ","x"],"68e2adc7928":["function (y) ","x"],"68e249b68b6":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-57074ab326f6d6135ae5" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-57074ab326f6d6135ae5">{"x":{"data":[{"x":[-0.95,0.95,0.95,-0.95,-0.95],"y":[1.6,1.6,3.5,3.5,1.6],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1.61,3.11,3.11,1.61,1.61],"y":[0,0,5.5,5.5,0],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(211,211,211,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-1.61,-3.11,-3.11,-1.61,-1.61],"y":[0,0,5.5,5.5,0],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(211,211,211,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[2.36],"y":[2.75],"text":"RHB","hovertext":"","textfont":{"size":14.6645669291339,"color":"rgba(211,211,211,1)"},"type":"scatter","mode":"text","hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-2.36],"y":[2.75],"text":"LHB","hovertext":"","textfont":{"size":14.6645669291339,"color":"rgba(211,211,211,1)"},"type":"scatter","mode":"text","hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.95,-0.95,0,0.95,0.95,-0.95,-0.95],"y":[0,0.15,0.25,0.15,0,0,0],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"fill":"toself","fillcolor":"rgba(255,255,255,1)","hoveron":"fills","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.353426025,0.17354059,0.512184291,-0.708871878,-0.571411702,-0.635333589,-0.663093366,-0.170748478,0.293407013,-0.442298537,-0.418132452,-0.262694707,-0.636568873,0.31131841,-1.232679813,-1.060654639,-0.164921418,-0.723671794,-0.662735515,-0.125713436,-0.651476489,0.211913941,0.525794592,-1.017870698,0.99549914],"y":[3.137514141,1.948066818,1.935962395,2.089777024,4.29573327,2.965362854,3.216840414,2.503837857,3.229449086,2.941354006,2.60373016,3.316955546,3.633192355,1.962881007,3.225770446,3.399383302,1.604316669,1.72592693,1.452061432,2.328184645,3.324927648,2.454646845,2.034233919,1.764431868,2.869483626],"text":["Count:  1 - 1 ","Count:  0 - 1 ","Count:  2 - 1 ","Count:  3 - 2 ","Count:  1 - 2 ","Count:  0 - 0 ","Count:  0 - 1 ","Count:  0 - 0 ","Count:  3 - 0 ","Count:  1 - 0 ","Count:  1 - 1 ","Count:  3 - 2 ","Count:  0 - 0 ","Count:  0 - 0 ","Count:  2 - 1 ","Count:  2 - 1 ","Count:  3 - 2 ","Count:  2 - 0 ","Count:  0 - 2 ","Count:  1 - 0 ","Count:  3 - 0 ","Count:  3 - 0 ","Count:  1 - 0 ","Count:  0 - 0 ","Count:  0 - 0 "],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"Fastball","legendgroup":"Fastball","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.7625570776256,"r":7.30593607305936,"b":13.8812785388128,"l":10.958904109589},"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"Fastball Takes","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-4.95,4.95],"tickmode":"array","ticktext":["-2.5","0.0","2.5"],"tickvals":[-2.5,0,2.5],"categoryorder":"array","categoryarray":["-2.5","0.0","2.5"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":false,"tickfont":{"color":null,"family":null,"size":0},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":{"text":"","font":{"color":null,"family":null,"size":0}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.275,5.775],"tickmode":"array","ticktext":["0","2","4"],"tickvals":[0,2,4],"categoryorder":"array","categoryarray":["0","2","4"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":false,"tickfont":{"color":null,"family":null,"size":0},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x","title":{"text":"","font":{"color":null,"family":null,"size":0}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"y":1},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","showSendToCloud":false},"source":"A","attrs":{"68e57fdeaa":{"x":{},"y":{},"type":"scatter"},"68e7895527e":{"x":{},"y":{}},"68e61fd9102":{"x":{},"y":{}},"68e49cef6f6":{"x":{},"y":{}},"68e1e74b561":{"x":{},"y":{}},"68e38826af8":{"x":{},"y":{}},"68e2cb9e964":{"x":{},"y":{},"colour":{},"text":{}}},"cur_data":"68e57fdeaa","visdat":{"68e57fdeaa":["function (y) ","x"],"68e7895527e":["function (y) ","x"],"68e61fd9102":["function (y) ","x"],"68e49cef6f6":["function (y) ","x"],"68e1e74b561":["function (y) ","x"],"68e38826af8":["function (y) ","x"],"68e2cb9e964":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-5369755a7e316e244469" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-5369755a7e316e244469">{"x":{"data":[{"x":[-0.95,0.95,0.95,-0.95,-0.95],"y":[1.6,1.6,3.5,3.5,1.6],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1.61,3.11,3.11,1.61,1.61],"y":[0,0,5.5,5.5,0],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(211,211,211,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-1.61,-3.11,-3.11,-1.61,-1.61],"y":[0,0,5.5,5.5,0],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(211,211,211,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[2.36],"y":[2.75],"text":"RHB","hovertext":"","textfont":{"size":14.6645669291339,"color":"rgba(211,211,211,1)"},"type":"scatter","mode":"text","hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-2.36],"y":[2.75],"text":"LHB","hovertext":"","textfont":{"size":14.6645669291339,"color":"rgba(211,211,211,1)"},"type":"scatter","mode":"text","hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.95,-0.95,0,0.95,0.95,-0.95,-0.95],"y":[0,0.15,0.25,0.15,0,0,0],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"fill":"toself","fillcolor":"rgba(255,255,255,1)","hoveron":"fills","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-1.300600095,0.318774604,0.364158579,-0.895107292,0.650575086,-1.178570946,0.663961577,1.117242018,-0.58681531,0.32862983],"y":[1.272384552,1.494000765,2.230885953,1.610907148,0.859596048,2.299065631,1.682237437,2.26294671,1.570061378,1.471030677],"text":["Pitch Type:  ChangeUp <br>Velocity:  81.04311553 <br>Spin Rate:  1486.316976","Pitch Type:  ChangeUp <br>Velocity:  81.33557345 <br>Spin Rate:  1998.149501","Pitch Type:  ChangeUp <br>Velocity:  77.15220715 <br>Spin Rate:  1546.925389","Pitch Type:  ChangeUp <br>Velocity:  80.26520303 <br>Spin Rate:  1762.657042","Pitch Type:  ChangeUp <br>Velocity:  79.53814351 <br>Spin Rate:  1344.167664","Pitch Type:  ChangeUp <br>Velocity:  73.60104174 <br>Spin Rate:  1805.949281","Pitch Type:  ChangeUp <br>Velocity:  77.33149317 <br>Spin Rate:  2037.67062","Pitch Type:  ChangeUp <br>Velocity:  69.93459899 <br>Spin Rate:  1567.173187","Pitch Type:  ChangeUp <br>Velocity:  69.61734716 <br>Spin Rate:  1592.441637","Pitch Type:  ChangeUp <br>Velocity:  70.51196866 <br>Spin Rate:  1584.386267"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(163,165,0,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(163,165,0,1)"}},"hoveron":"points","name":"ChangeUp","legendgroup":"ChangeUp","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.870434119],"y":[2.833261973],"text":"Pitch Type:  Curveball <br>Velocity:  76.32635595 <br>Spin Rate:  2292.926536","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,176,246,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,176,246,1)"}},"hoveron":"points","name":"Curveball","legendgroup":"Curveball","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.449182984,-0.725628261,-0.919366491,-1.622267371,-0.429572413,-1.586784351,-0.952842356,0.160907418,-1.162538463,-0.209323878,-0.252350737,-0.504828864,-0.493783573,-1.081023006,0.617624606,0.047145404,-0.970868737,0.669372052,-0.708830588,0.147848551,-0.526088602,-0.764667834,-1.668208946,-1.922639898,-1.730382229,-0.850586169,-1.129678495,-0.270386543],"y":[2.341755386,2.846502652,2.276279912,1.079751384,0.52532351,2.451770401,1.42050854,3.598690109,1.479651209,3.412703553,2.75169585,1.085686069,3.95013569,2.042521178,1.609596805,1.045050528,2.141843498,2.16957111,2.869729061,3.303541485,2.089318986,1.625099435,2.007609719,2.436786879,2.579193219,1.68702063,2.259237057,1.503729416],"text":["Pitch Type:  Fastball <br>Velocity:  88.13364006 <br>Spin Rate:  1975.25639","Pitch Type:  Fastball <br>Velocity:  87.62914412 <br>Spin Rate:  1948.728436","Pitch Type:  Fastball <br>Velocity:  87.19139451 <br>Spin Rate:  NA","Pitch Type:  Fastball <br>Velocity:  86.83896879 <br>Spin Rate:  2544.598015","Pitch Type:  Fastball <br>Velocity:  83.52062725 <br>Spin Rate:  1747.541546","Pitch Type:  Fastball <br>Velocity:  83.44042483 <br>Spin Rate:  1978.734885","Pitch Type:  Fastball <br>Velocity:  83.16020992 <br>Spin Rate:  1908.216712","Pitch Type:  Fastball <br>Velocity:  85.96063252 <br>Spin Rate:  1914.032888","Pitch Type:  Fastball <br>Velocity:  85.45141527 <br>Spin Rate:  1801.954497","Pitch Type:  Fastball <br>Velocity:  87.43019344 <br>Spin Rate:  2440.574979","Pitch Type:  Fastball <br>Velocity:  86.62485244 <br>Spin Rate:  2475.042448","Pitch Type:  Fastball <br>Velocity:  82.39647609 <br>Spin Rate:  1835.611859","Pitch Type:  Fastball <br>Velocity:  86.89864314 <br>Spin Rate:  1857.431865","Pitch Type:  Fastball <br>Velocity:  86.84689721 <br>Spin Rate:  2135.164448","Pitch Type:  Fastball <br>Velocity:  83.50213696 <br>Spin Rate:  1658.446278","Pitch Type:  Fastball <br>Velocity:  86.11017221 <br>Spin Rate:  2083.656639","Pitch Type:  Fastball <br>Velocity:  78.30345921 <br>Spin Rate:  1569.290057","Pitch Type:  Fastball <br>Velocity:  91.09395183 <br>Spin Rate:  2047.47108","Pitch Type:  Fastball <br>Velocity:  92.95971011 <br>Spin Rate:  2073.530262","Pitch Type:  Fastball <br>Velocity:  88.93276276 <br>Spin Rate:  2101.577328","Pitch Type:  Fastball <br>Velocity:  79.10060632 <br>Spin Rate:  1769.102647","Pitch Type:  Fastball <br>Velocity:  77.94262279 <br>Spin Rate:  1785.693618","Pitch Type:  Fastball <br>Velocity:  91.72701119 <br>Spin Rate:  2204.566568","Pitch Type:  Fastball <br>Velocity:  89.53081286 <br>Spin Rate:  2100.534928","Pitch Type:  Fastball <br>Velocity:  88.12147735 <br>Spin Rate:  2056.892056","Pitch Type:  Fastball <br>Velocity:  88.56948814 <br>Spin Rate:  2003.925321","Pitch Type:  Fastball <br>Velocity:  85.57561883 <br>Spin Rate:  1962.383019","Pitch Type:  Fastball <br>Velocity:  82.94412678 <br>Spin Rate:  2104.291008"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"Fastball","legendgroup":"Fastball","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.448698365,-0.003521907],"y":[2.879895231,3.172741183],"text":["Pitch Type:  Sinker <br>Velocity:  81.11794388 <br>Spin Rate:  1795.489574","Pitch Type:  Sinker <br>Velocity:  87.01258442 <br>Spin Rate:  2122.082779"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(127,127,127,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(127,127,127,1)"}},"hoveron":"points","name":"Sinker","legendgroup":"Sinker","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1.012194782,-1.905173874,-2.306297888,-1.035771627,-1.398833422,-1.20560343,-1.254204308,-1.546491872,0.098273854,0.365408367,-1.660819766,-0.436846936,-0.087640772,-1.123791163,-1.332979626,0.19277215],"y":[3.324672519,0.812207791,0.274297241,0.796030112,0.691939934,2.19026615,0.683103998,1.516752583,1.745761803,1.881474952,0.960403934,1.617245649,1.227593104,1.217305735,0.800117902,3.25229774],"text":["Pitch Type:  Slider <br>Velocity:  78.14844296 <br>Spin Rate:  2218.705868","Pitch Type:  Slider <br>Velocity:  78.78940069 <br>Spin Rate:  2319.816353","Pitch Type:  Slider <br>Velocity:  77.06633521 <br>Spin Rate:  NA","Pitch Type:  Slider <br>Velocity:  76.76236209 <br>Spin Rate:  NA","Pitch Type:  Slider <br>Velocity:  78.13401701 <br>Spin Rate:  2406.958779","Pitch Type:  Slider <br>Velocity:  75.50645298 <br>Spin Rate:  2007.294501","Pitch Type:  Slider <br>Velocity:  75.81535588 <br>Spin Rate:  2111.154091","Pitch Type:  Slider <br>Velocity:  85.47702824 <br>Spin Rate:  2125.93252","Pitch Type:  Slider <br>Velocity:  86.0122181 <br>Spin Rate:  2230.922964","Pitch Type:  Slider <br>Velocity:  85.81604943 <br>Spin Rate:  2175.833808","Pitch Type:  Slider <br>Velocity:  85.32573222 <br>Spin Rate:  2199.593696","Pitch Type:  Slider <br>Velocity:  85.15987843 <br>Spin Rate:  2140.552632","Pitch Type:  Slider <br>Velocity:  79.08120077 <br>Spin Rate:  1968.999292","Pitch Type:  Slider <br>Velocity:  81.05922883 <br>Spin Rate:  NA","Pitch Type:  Slider <br>Velocity:  79.75356474 <br>Spin Rate:  2579.332513","Pitch Type:  Slider <br>Velocity:  76.30203856 <br>Spin Rate:  1959.548557"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(231,107,243,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(231,107,243,1)"}},"hoveron":"points","name":"Slider","legendgroup":"Slider","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.427943089,0.471570872],"y":[2.1566587,1.60651812],"text":["Pitch Type:  Splitter <br>Velocity:  78.53533338 <br>Spin Rate:  1072.176107","Pitch Type:  Splitter <br>Velocity:  77.26149422 <br>Spin Rate:  NA"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,191,125,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,191,125,1)"}},"hoveron":"points","name":"Splitter","legendgroup":"Splitter","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.7625570776256,"r":7.30593607305936,"b":13.8812785388128,"l":10.958904109589},"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"Swings & Misses","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-4.95,4.95],"tickmode":"array","ticktext":["-2.5","0.0","2.5"],"tickvals":[-2.5,0,2.5],"categoryorder":"array","categoryarray":["-2.5","0.0","2.5"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":false,"tickfont":{"color":null,"family":null,"size":0},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":{"text":"","font":{"color":null,"family":null,"size":0}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.275,5.775],"tickmode":"array","ticktext":["0","2","4"],"tickvals":[0,2,4],"categoryorder":"array","categoryarray":["0","2","4"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":false,"tickfont":{"color":null,"family":null,"size":0},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x","title":{"text":"","font":{"color":null,"family":null,"size":0}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"y":1},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","showSendToCloud":false},"source":"A","attrs":{"68e493e46c9":{"x":{},"y":{},"type":"scatter"},"68e2a9afbe8":{"x":{},"y":{}},"68e2583e49d":{"x":{},"y":{}},"68e248afd7b":{"x":{},"y":{}},"68e55777510":{"x":{},"y":{}},"68e4a1f4d53":{"x":{},"y":{}},"68e7cce9bbe":{"x":{},"y":{},"colour":{},"text":{}}},"cur_data":"68e493e46c9","visdat":{"68e493e46c9":["function (y) ","x"],"68e2a9afbe8":["function (y) ","x"],"68e2583e49d":["function (y) ","x"],"68e248afd7b":["function (y) ","x"],"68e55777510":["function (y) ","x"],"68e4a1f4d53":["function (y) ","x"],"68e7cce9bbe":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</center>
+<hr>
+
+<div id = "footer">
+  
+  
+<p>
+<strong>Cameron Lyons</strong><br>
+Second Year Student<br>
+Phone: 336-407-4710<br>
+<a href="mailto:lyonscf@appstate.edu">lyonscf@appstate.edu</a><br>
+
+      
+<p>&nbsp;</p>
+      
+<p><strong>Abby Smith</strong><br>
+Fourth Year Student<br>
+Phone: 980-475-9985<br>
+<a href="mailto:smithac16@appstate.edu">smithac16@appstate.edu</a><br>
+          
+</div>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
