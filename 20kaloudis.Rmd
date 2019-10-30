@@ -1,5 +1,5 @@
 ---
-title: "Vasilious Kaloudis"
+title: "Vasili Kaloudis"
 ---
 
 <hr>
@@ -16,7 +16,7 @@ library(lubridate)
 master <- read.csv("master.csv")
 master$Date <- as.Date(master$Date , "%m/%d/%Y")
 hitter <- master %>%
-  filter(Batter == "Kaloudis, Vasilious")
+  filter(Batter == "Kaloudis, Vasili")
 hitter <- hitter[hitter$Date >= "2019-10-25" & hitter$Date <= Sys.Date(),]
 ```
 
