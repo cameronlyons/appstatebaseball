@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Luke Allison</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.9.0/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="site_libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-1.46.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="site_libs/plotly-main-1.46.1/plotly-latest.min.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="webpage.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Appalachian State Baseball</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Scouting
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="GEO_EAG.html">Georgia Southern</a>
+    </li>
+    <li>
+      <a href="ULM_WAR.html">Louisiana Monroe</a>
+    </li>
+    <li>
+      <a href="RAD_HIG.html">Radford</a>
+    </li>
+    <li>
+      <a href="WCC.html">Western Carollina</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    2018-2019
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="19batting.html">Team Batting</a>
+    </li>
+    <li>
+      <a href="19allison.html">Luke Allison</a>
+    </li>
+    <li>
+      <a href="19baldwin.html">Bret Baldwin</a>
+    </li>
+    <li>
+      <a href="19beck.html">Drew Beck</a>
+    </li>
+    <li>
+      <a href="19bell.html">McKinley Bell</a>
+    </li>
+    <li>
+      <a href="19brown.html">CJ Brown</a>
+    </li>
+    <li>
+      <a href="19cole.html">Phillip Cole</a>
+    </li>
+    <li>
+      <a href="19cross.html">Hayden Cross</a>
+    </li>
+    <li>
+      <a href="19davis.html">Bradley Davis</a>
+    </li>
+    <li>
+      <a href="19decker.html">Kyle Decker</a>
+    </li>
+    <li>
+      <a href="19drumheller.html">Luke Drumheller</a>
+    </li>
+    <li>
+      <a href="19leek.html">Tyler Leek</a>
+    </li>
+    <li>
+      <a href="19leshock.html">Alex Leshock</a>
+    </li>
+    <li>
+      <a href="19mcdaniel.html">Joel McDaniel</a>
+    </li>
+    <li>
+      <a href="19mcgowan.html">Kendall McGowan</a>
+    </li>
+    <li>
+      <a href="19smith.html">Riley Smith</a>
+    </li>
+    <li>
+      <a href="19terrell.html">Andrew Terrell</a>
+    </li>
+    <li>
+      <a href="19welch.html">Bailey Welch</a>
+    </li>
+    <li>
+      <a href="19williams.html">Dalton Williams</a>
+    </li>
+    <li>
+      <a href="19young.html">Robbie Young</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    2019-2020
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="20batting.html">Team Batting</a>
+    </li>
+    <li>
+      <a href="20allison.html">Luke Allison</a>
+    </li>
+    <li>
+      <a href="20baldwin.html">Bret Baldwin</a>
+    </li>
+    <li>
+      <a href="20bumgarner.html">Luke Bumgarner</a>
+    </li>
+    <li>
+      <a href="20cole.html">Phillip Cole</a>
+    </li>
+    <li>
+      <a href="20cross.html">Hayden Cross</a>
+    </li>
+    <li>
+      <a href="20drumheller.html">Luke Drumheller</a>
+    </li>
+    <li>
+      <a href="20greckel.html">Andrew Greckel</a>
+    </li>
+    <li>
+      <a href="20idol.html">Peyton Idol</a>
+    </li>
+    <li>
+      <a href="20kaloudis.html">Vasilious Kaloudis</a>
+    </li>
+    <li>
+      <a href="20leek.html">Tyler Leek</a>
+    </li>
+    <li>
+      <a href="20leshock.html">Alex Leshock</a>
+    </li>
+    <li>
+      <a href="20lipson.html">Jack Lipson</a>
+    </li>
+    <li>
+      <a href="20mcgowan.html">Kendall McGowan</a>
+    </li>
+    <li>
+      <a href="19terrell.html">Andrew Terrell</a>
+    </li>
+    <li>
+      <a href="20trease.html">Patrick Trease</a>
+    </li>
+    <li>
+      <a href="20welch.html">Bailey Welch</a>
+    </li>
+    <li>
+      <a href="20williams.html">Dalton Williams</a>
+    </li>
+    <li>
+      <a href="20yakubinis.html">JD Yakubinis</a>
+    </li>
+    <li>
+      <a href="20young.html">Robbie Young</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Luke Allison</h1>
+
+</div>
+
+
+<hr>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th>Hitting Summary</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>PA:</td>
+<td>7</td>
+<td>2B:</td>
+<td>1</td>
+<td>RBI:</td>
+<td>2</td>
+<td>AVG:</td>
+<td>0.429</td>
+</tr>
+<tr class="even">
+<td>AB:</td>
+<td>7</td>
+<td>3B:</td>
+<td>0</td>
+<td>BB:</td>
+<td>0</td>
+<td>SLG:</td>
+<td>0.571</td>
+</tr>
+<tr class="odd">
+<td>Hits:</td>
+<td>3</td>
+<td>HR:</td>
+<td>0</td>
+<td>HBP:</td>
+<td>0</td>
+<td>OPS:</td>
+<td>1.000</td>
+</tr>
+<tr class="even">
+<td>SO:</td>
+<td>2</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>OBP:</td>
+<td>0.429</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr class="header">
+<th>Hits</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>AVG Exit Velocity:</td>
+<td>86.05 mph</td>
+</tr>
+<tr class="even">
+<td>Max Exit Velocity:</td>
+<td>98.74 mph</td>
+</tr>
+<tr class="odd">
+<td>AVG Launch Angle:</td>
+<td>2.67 degrees</td>
+</tr>
+<tr class="even">
+<td>Max Estimated Distance:</td>
+<td>230.00 feet</td>
+</tr>
+</tbody>
+</table>
+<center>
+<div id="htmlwidget-72d6841c0f35cc6cd8d6" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-72d6841c0f35cc6cd8d6">{"x":{"data":[{"x":[0,63.6396103067893,0,-63.6396103067893,0,0],"y":[0,63.6396103067893,127.279220613579,63.6396103067893,0,0],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[32.2780280452701],"y":[226.928667496795],"text":"Exit Speed:  98.74070188 <br> Distance:  229.2127641 <br> Launch Angle:  12.19093881","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(196,154,0,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(196,154,0,1)"}},"hoveron":"points","name":"Double","legendgroup":"Double","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-1.72238106188802,null],"y":[5.89249254188991,null],"text":["Exit Speed:  64.79721916 <br> Distance:  6.139060586 <br> Launch Angle:  -31.91521619","Exit Speed:  NA <br> Distance:  NA <br> Launch Angle:  NA"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,182,235,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,182,235,1)"}},"hoveron":"points","name":"Out","legendgroup":"Out","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-103.800269410947,4.61415052772325],"y":[205.244117915263,217.385325781841],"text":["Exit Speed:  96.20496919 <br> Distance:  229.9992258 <br> Launch Angle:  15.5575409","Exit Speed:  84.45745266 <br> Distance:  217.4342895 <br> Launch Angle:  14.84660506"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"Single","legendgroup":"Single","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0,-233.35,null,0,-233.35,null,0,-233.35,null,0,-233.35,null,0,-233.35,null,0,-233.35],"y":[0,233.35,null,0,233.35,null,0,233.35,null,0,233.35,null,0,233.35,null,0,233.35],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-233.35,-160.59,null,-233.35,-160.59,null,-233.35,-160.59,null,-233.35,-160.59,null,-233.35,-160.59,null,-233.35,-160.59],"y":[233.35,340,null,233.35,340,null,233.35,340,null,233.35,340,null,233.35,340,null,233.35,340],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-160.59,-49.36,null,-160.59,-49.36,null,-160.59,-49.36,null,-160.59,-49.36,null,-160.59,-49.36,null,-160.59,-49.36],"y":[340,401.98,null,340,401.98,null,340,401.98,null,340,401.98,null,340,401.98,null,340,401.98],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-49.36,49.36,null,-49.36,49.36,null,-49.36,49.36,null,-49.36,49.36,null,-49.36,49.36,null,-49.36,49.36],"y":[401.98,401.98,null,401.98,401.98,null,401.98,401.98,null,401.98,401.98,null,401.98,401.98,null,401.98,401.98],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[49.36,157.67,null,49.36,157.67,null,49.36,157.67,null,49.36,157.67,null,49.36,157.67,null,49.36,157.67],"y":[401.98,338.05,null,401.98,338.05,null,401.98,338.05,null,401.98,338.05,null,401.98,338.05,null,401.98,338.05],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[157.67,229.81,null,157.67,229.81,null,157.67,229.81,null,157.67,229.81,null,157.67,229.81,null,157.67,229.81],"y":[338.05,229.81,null,338.05,229.81,null,338.05,229.81,null,338.05,229.81,null,338.05,229.81,null,338.05,229.81],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[229.81,0,null,229.81,0,null,229.81,0,null,229.81,0,null,229.81,0,null,229.81,0],"y":[229.81,0,null,229.81,0,null,229.81,0,null,229.81,0,null,229.81,0,null,229.81,0],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":26.2283105022831,"r":7.30593607305936,"b":13.8812785388128,"l":10.958904109589},"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-275,275],"tickmode":"array","ticktext":["-200","-100","0","100","200"],"tickvals":[-200,-100,0,100,200],"categoryorder":"array","categoryarray":["-200","-100","0","100","200"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":false,"tickfont":{"color":null,"family":null,"size":0},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":{"text":"","font":{"color":null,"family":null,"size":0}},"scaleanchor":"y","scaleratio":1,"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-35.5,525.5],"tickmode":"array","ticktext":["0","100","200","300","400","500"],"tickvals":[0,100,200,300,400,500],"categoryorder":"array","categoryarray":["0","100","200","300","400","500"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":false,"tickfont":{"color":null,"family":null,"size":0},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x","title":{"text":"","font":{"color":null,"family":null,"size":0}},"scaleanchor":"x","scaleratio":1,"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"y":1},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","showSendToCloud":false},"source":"A","attrs":{"f5330f39a0d":{"x":{},"y":{},"type":"scatter"},"f53187bc48f":{"colour":{},"text":{},"x":{},"y":{}},"f533e8034c1":{"x":{},"y":{}},"f5341657bf9":{"x":{},"y":{}},"f532c08b5c1":{"x":{},"y":{}},"f53180e97fa":{"x":{},"y":{}},"f5342ad75f2":{"x":{},"y":{}},"f53564f83c8":{"x":{},"y":{}},"f535de7274e":{"x":{},"y":{}}},"cur_data":"f5330f39a0d","visdat":{"f5330f39a0d":["function (y) ","x"],"f53187bc48f":["function (y) ","x"],"f533e8034c1":["function (y) ","x"],"f5341657bf9":["function (y) ","x"],"f532c08b5c1":["function (y) ","x"],"f53180e97fa":["function (y) ","x"],"f5342ad75f2":["function (y) ","x"],"f53564f83c8":["function (y) ","x"],"f535de7274e":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-65abc8c986f8b410f61a" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-65abc8c986f8b410f61a">{"x":{"data":[{"x":[-0.95,0.95,0.95,-0.95,-0.95],"y":[1.6,1.6,3.5,3.5,1.6],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1.61,3.11,3.11,1.61,1.61],"y":[0,0,5.5,5.5,0],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(211,211,211,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-1.61,-3.11,-3.11,-1.61,-1.61],"y":[0,0,5.5,5.5,0],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(211,211,211,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[2.36],"y":[2.75],"text":"RHB","hovertext":"","textfont":{"size":14.6645669291339,"color":"rgba(211,211,211,1)"},"type":"scatter","mode":"text","hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-2.36],"y":[2.75],"text":"LHB","hovertext":"","textfont":{"size":14.6645669291339,"color":"rgba(211,211,211,1)"},"type":"scatter","mode":"text","hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.95,-0.95,0,0.95,0.95,-0.95,-0.95],"y":[0,0.15,0.25,0.15,0,0,0],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"fill":"toself","fillcolor":"rgba(255,255,255,1)","hoveron":"fills","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.491225564,-0.078256547],"y":[3.237923898,3.036246448],"text":["Pitch Type:  Fastball <br>Exit Speed:  98.74070188 <br> Distance:  229.2127641 <br> Launch Angle:  12.19093881","Pitch Type:  Fastball <br>Exit Speed:  96.20496919 <br> Distance:  229.9992258 <br> Launch Angle:  15.5575409"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"Fastball","legendgroup":"Fastball","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.7625570776256,"r":7.30593607305936,"b":13.8812785388128,"l":10.958904109589},"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"90+ Exit Velocities","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-4.95,4.95],"tickmode":"array","ticktext":["-2.5","0.0","2.5"],"tickvals":[-2.5,0,2.5],"categoryorder":"array","categoryarray":["-2.5","0.0","2.5"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":false,"tickfont":{"color":null,"family":null,"size":0},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":{"text":"","font":{"color":null,"family":null,"size":0}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.275,5.775],"tickmode":"array","ticktext":["0","2","4"],"tickvals":[0,2,4],"categoryorder":"array","categoryarray":["0","2","4"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":false,"tickfont":{"color":null,"family":null,"size":0},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x","title":{"text":"","font":{"color":null,"family":null,"size":0}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"y":1},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","showSendToCloud":false},"source":"A","attrs":{"f532960571c":{"x":{},"y":{},"type":"scatter"},"f5329e01838":{"x":{},"y":{}},"f533d9c367e":{"x":{},"y":{}},"f53403426cf":{"x":{},"y":{}},"f53a236dbc":{"x":{},"y":{}},"f531efba2df":{"x":{},"y":{}},"f5318d16522":{"x":{},"y":{},"colour":{},"text":{}}},"cur_data":"f532960571c","visdat":{"f532960571c":["function (y) ","x"],"f5329e01838":["function (y) ","x"],"f533d9c367e":["function (y) ","x"],"f53403426cf":["function (y) ","x"],"f53a236dbc":["function (y) ","x"],"f531efba2df":["function (y) ","x"],"f5318d16522":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-f531479ed7d3a73e4d18" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f531479ed7d3a73e4d18">{"x":{"data":[{"x":[-0.95,0.95,0.95,-0.95,-0.95],"y":[1.6,1.6,3.5,3.5,1.6],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1.61,3.11,3.11,1.61,1.61],"y":[0,0,5.5,5.5,0],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(211,211,211,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-1.61,-3.11,-3.11,-1.61,-1.61],"y":[0,0,5.5,5.5,0],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(211,211,211,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[2.36],"y":[2.75],"text":"RHB","hovertext":"","textfont":{"size":14.6645669291339,"color":"rgba(211,211,211,1)"},"type":"scatter","mode":"text","hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-2.36],"y":[2.75],"text":"LHB","hovertext":"","textfont":{"size":14.6645669291339,"color":"rgba(211,211,211,1)"},"type":"scatter","mode":"text","hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.95,-0.95,0,0.95,0.95,-0.95,-0.95],"y":[0,0.15,0.25,0.15,0,0,0],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"fill":"toself","fillcolor":"rgba(255,255,255,1)","hoveron":"fills","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.43487884,1.188386796,1.223801804],"y":[3.526968058,2.244282939,2.527181355],"text":["Count:  0 - 0 ","Count:  2 - 0 ","Count:  2 - 1 "],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"Fastball","legendgroup":"Fastball","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.7625570776256,"r":7.30593607305936,"b":13.8812785388128,"l":10.958904109589},"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"Fastball Takes","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-4.95,4.95],"tickmode":"array","ticktext":["-2.5","0.0","2.5"],"tickvals":[-2.5,0,2.5],"categoryorder":"array","categoryarray":["-2.5","0.0","2.5"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":false,"tickfont":{"color":null,"family":null,"size":0},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":{"text":"","font":{"color":null,"family":null,"size":0}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.275,5.775],"tickmode":"array","ticktext":["0","2","4"],"tickvals":[0,2,4],"categoryorder":"array","categoryarray":["0","2","4"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":false,"tickfont":{"color":null,"family":null,"size":0},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x","title":{"text":"","font":{"color":null,"family":null,"size":0}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"y":1},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","showSendToCloud":false},"source":"A","attrs":{"f53206578ca":{"x":{},"y":{},"type":"scatter"},"f5368e2134e":{"x":{},"y":{}},"f532594854c":{"x":{},"y":{}},"f536312eebc":{"x":{},"y":{}},"f533f319716":{"x":{},"y":{}},"f5337bac9a":{"x":{},"y":{}},"f537218eda":{"x":{},"y":{},"colour":{},"text":{}}},"cur_data":"f53206578ca","visdat":{"f53206578ca":["function (y) ","x"],"f5368e2134e":["function (y) ","x"],"f532594854c":["function (y) ","x"],"f536312eebc":["function (y) ","x"],"f533f319716":["function (y) ","x"],"f5337bac9a":["function (y) ","x"],"f537218eda":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-befd61d486e66ef75dc2" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-befd61d486e66ef75dc2">{"x":{"data":[{"x":[-0.95,0.95,0.95,-0.95,-0.95],"y":[1.6,1.6,3.5,3.5,1.6],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1.61,3.11,3.11,1.61,1.61],"y":[0,0,5.5,5.5,0],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(211,211,211,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-1.61,-3.11,-3.11,-1.61,-1.61],"y":[0,0,5.5,5.5,0],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(211,211,211,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[2.36],"y":[2.75],"text":"RHB","hovertext":"","textfont":{"size":14.6645669291339,"color":"rgba(211,211,211,1)"},"type":"scatter","mode":"text","hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-2.36],"y":[2.75],"text":"LHB","hovertext":"","textfont":{"size":14.6645669291339,"color":"rgba(211,211,211,1)"},"type":"scatter","mode":"text","hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.95,-0.95,0,0.95,0.95,-0.95,-0.95],"y":[0,0.15,0.25,0.15,0,0,0],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"fill":"toself","fillcolor":"rgba(255,255,255,1)","hoveron":"fills","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.16245825],"y":[4.109608645],"text":"Pitch Type:  ChangeUp <br>Velocity:  76.55014568 <br>Spin Rate:  1927.046572","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(163,165,0,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(163,165,0,1)"}},"hoveron":"points","name":"ChangeUp","legendgroup":"ChangeUp","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.7625570776256,"r":7.30593607305936,"b":13.8812785388128,"l":10.958904109589},"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"Swings & Misses","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-4.95,4.95],"tickmode":"array","ticktext":["-2.5","0.0","2.5"],"tickvals":[-2.5,0,2.5],"categoryorder":"array","categoryarray":["-2.5","0.0","2.5"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":false,"tickfont":{"color":null,"family":null,"size":0},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":{"text":"","font":{"color":null,"family":null,"size":0}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.275,5.775],"tickmode":"array","ticktext":["0","2","4"],"tickvals":[0,2,4],"categoryorder":"array","categoryarray":["0","2","4"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":false,"tickfont":{"color":null,"family":null,"size":0},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x","title":{"text":"","font":{"color":null,"family":null,"size":0}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"y":1},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","showSendToCloud":false},"source":"A","attrs":{"f53b3312e":{"x":{},"y":{},"type":"scatter"},"f5374b429bf":{"x":{},"y":{}},"f53300763a0":{"x":{},"y":{}},"f53ad69eeb":{"x":{},"y":{}},"f5313afcc9e":{"x":{},"y":{}},"f5348d8c8c2":{"x":{},"y":{}},"f532f6e989":{"x":{},"y":{},"colour":{},"text":{}}},"cur_data":"f53b3312e","visdat":{"f53b3312e":["function (y) ","x"],"f5374b429bf":["function (y) ","x"],"f53300763a0":["function (y) ","x"],"f53ad69eeb":["function (y) ","x"],"f5313afcc9e":["function (y) ","x"],"f5348d8c8c2":["function (y) ","x"],"f532f6e989":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</center>
+<hr>
+
+<div id = "footer">
+  
+  
+<p>
+<strong>Cameron Lyons</strong><br>
+Second Year Student<br>
+Phone: 336-407-4710<br>
+<a href="mailto:lyonscf@appstate.edu">lyonscf@appstate.edu</a><br>
+
+      
+<p>&nbsp;</p>
+      
+<p><strong>Abby Smith</strong><br>
+Fourth Year Student<br>
+Phone: 980-475-9985<br>
+<a href="mailto:smithac16@appstate.edu">smithac16@appstate.edu</a><br>
+          
+</div>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

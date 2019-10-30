@@ -58,6 +58,49 @@ navbar:
         href: 19williams.html
       - text: "Robbie Young"
         href: 19young.html
+    - text: "2019-2020"
+      icon: 
+      menu:
+      - text: "Team Batting"
+        href: 20batting.html
+      - text: "Luke Allison"
+        href: 20allison.html
+      - text: "Bret Baldwin"
+        href: 20baldwin.html
+      - text: "Luke Bumgarner"
+        href: 20bumgarner.html
+      - text: "Phillip Cole"
+        href: 20cole.html
+      - text: "Hayden Cross"
+        href: 20cross.html
+      - text: "Luke Drumheller"
+        href: 20drumheller.html
+      - text: "Andrew Greckel"
+        href: 20greckel.html
+      - text: "Peyton Idol"
+        href: 20idol.html
+      - text: "Vasilious Kaloudis"
+        href: 20kaloudis.html
+      - text: "Tyler Leek"
+        href: 20leek.html
+      - text: "Alex Leshock"
+        href: 20leshock.html
+      - text: "Jack Lipson"
+        href: 20lipson.html
+      - text: "Kendall McGowan"
+        href: 20mcgowan.html
+      - text: "Andrew Terrell"
+        href: 19terrell.html
+      - text: "Patrick Trease"
+        href: 20trease.html
+      - text: "Bailey Welch"
+        href: 20welch.html
+      - text: "Dalton Williams"
+        href: 20williams.html
+      - text: "JD Yakubinis"
+        href: 20yakubinis.html
+      - text: "Robbie Young"
+        href: 20young.html
 
 output:
   html_document: 

@@ -12,7 +12,9 @@ library(stringr)
 library(ggplot2)
 library(gridExtra)
 library(plotly)
+library(lubridate)
 master <- read.csv("master.csv")
+master$Date <- as.Date(master$Date , "%m/%d/%Y")
 hitter <- master %>%
   filter(Batter == "Baldwin, Bret" | Date <= "10/01/2019")
 ```
