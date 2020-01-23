@@ -82,6 +82,10 @@ so_r <- sum(str_count(pitcher_r$KorBB, "Strikeout"))
 pa_r <- inpl_r + walk_r + so_r
 ab_r <- pa_r - walk_r - sac_r
 avg_r <- hit_r / ab_r
+obp_r <- (hit_r + walk_r) / pa_r
+tb_r <- sum(s_r + (2 * do_r) + (3 * t_r) + (4 * hr_r)) 
+slg_r <- tb_r / ab_r
+ops_r <- obp_r + slg_r
 
 pitcher_l <- hitter %>%
   filter(PitcherThrows == "Left")
@@ -104,6 +108,10 @@ so_l <- sum(str_count(pitcher_l$KorBB, "Strikeout"))
 pa_l <- inpl_l + walk_l + so_l
 ab_l <- pa_l - walk_l - sac_l
 avg_l <- hit_l / ab_l
+obp_l <- (hit_l + walk_l) / pa_l
+tb_l <- sum(s_l + (2 * do_l) + (3 * t_l) + (4 * hr_l)) 
+slg_l <- tb_l / ab_l
+ops_l <- obp_l + slg_l
 ```
 
 Split Stats||
@@ -111,7 +119,11 @@ Split Stats||
 ||*RHP*|*LHP*
 Hits:|`r hit_r`|`r hit_l`
 AB: |`r ab_r`|`r ab_l`
-AVG:|`r sprintf("%.3f", avg_r)`|`r sprintf("%.3f", avg_l)`
+SO: | `r so_r`|`r so_l`
+BB: |`r bb_r`|`r bb_l`
+HBP: |`r hbp_r`| `r hbp_l`
+AVG: |`r sprintf("%.3f", avg_r)`|`r sprintf("%.3f", avg_l)`
+OPS: |`r sprintf("%.3f", ops_r)`|`r sprintf("%.3f", ops_l)`
 AVG Exit Velocity:|`r sprintf("%.2f", mean(es_r$ExitSpeed, na.rm = TRUE))` mph|`r sprintf("%.2f", mean(es_l$ExitSpeed, na.rm = TRUE))` mph
 AVG Launch Angle:|`r sprintf("%.2f", mean(la_r$Angle, na.rm = TRUE))` degrees|`r sprintf("%.2f", mean(la_l$Angle, na.rm = TRUE))` degrees
 
@@ -154,7 +166,7 @@ bb <- ggplot(bases, aes(x = xa, y = ya)) +
              aes(color = factor(sprayfilter$PlayResult), 
                  text = paste("Exit Speed: ", sprintf("%.2f", ExitSpeed),
                                "<br> Distance: ", sprintf("%.2f", Distance),
-                               "<br> Launch Angle: ", Angle))) + 
+                               "<br> Angle: ", sprintf("%.2f", Angle)))) + 
   geom_segment(x = 0, xend = -233.35, y = 0, yend = 233.35) +
   geom_segment(x = -233.35, xend = -160.59, y = 233.35, yend = 340) + 
   geom_segment(x = -160.59, xend = -49.36, y = 340, yend = 401.98) +
@@ -310,7 +322,7 @@ np <- ggplot() +
   ggtitle("90+ Exit Velocities") +
   geom_point(data = NinetyPlus,
              aes(x = PlateLocSide, y = PlateLocHeight, color = TaggedPitchType, 
-                 text = paste("Pitch Type: ", TaggedPitchType, "<br>Exit Speed: ", ExitSpeed, "<br> Distance: ", Distance, "<br> Launch Angle: ", Angle))) +
+                 text = paste("Pitch Type: ", TaggedPitchType, "<br>Exit Speed: ", sprintf("%.2f", ExitSpeed), "<br> Distance: ", sprintf("%.2f", Distance), "<br> Launch Angle: ", sprintf("%.2f", Angle)))) +
   scale_color_discrete(limits = c("Fastball" ,"ChangeUp", "Splitter", "Curveball", "Slider")) +
   coord_cartesian(xlim = c(-4.5, 4.5), ylim = c(0, 5.5)) +
   theme(axis.line = element_blank(),
@@ -374,7 +386,7 @@ wh <- ggplot() +
   xlab("Plate Width") +
   ylab("Plate Height") +
   ggtitle("Swings & Misses") +
-  geom_point(data = Whiffs,aes(x = PlateLocSide, y = PlateLocHeight, color = TaggedPitchType, text = paste("Pitch Type: ", TaggedPitchType, "<br>Velocity: ", RelSpeed, "<br>Spin Rate: ", SpinRate))) +
+  geom_point(data = Whiffs,aes(x = PlateLocSide, y = PlateLocHeight, color = TaggedPitchType, text = paste("Pitch Type: ", TaggedPitchType, "<br>Velocity: ", sprintf("%.2f", RelSpeed), "<br>Spin Rate: ", sprintf("%.2f", SpinRate)))) +
   scale_color_discrete(limits = c("Fastball" ,"ChangeUp", "Splitter", "Curveball", "Slider")) +
   coord_cartesian(xlim = c(-4.5, 4.5), ylim = c(0, 5.5)) +
   theme(axis.line = element_blank(),
