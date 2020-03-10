@@ -1,14 +1,8 @@
 ---
 title: "Bret Baldwin"
-output: flexdashboard::flex_dashboard
 ---
 
 <hr>
-
-2019 - 2020
--------------------------------------
-
-### Statistics
 
 ```{r Setup,label = "SETUP", include=FALSE, results = 'hide'}
 knitr::opts_chunk$set(echo = FALSE, fig.align = "center", comment = NA, warning = FALSE, message = FALSE)
@@ -66,11 +60,6 @@ AVG Exit Velocity: | `r sprintf("%.2f", mean(es$ExitSpeed, na.rm = TRUE))` mph
 Max Exit Velocity: | `r sprintf("%.2f", max(es$ExitSpeed, na.rm = TRUE))` mph
 AVG Launch Angle: | `r sprintf("%.2f", mean(la$Angle, na.rm = TRUE))` degrees
 Max Estimated Distance: | `r sprintf("%.2f", max(hitter$Distance, na.rm = TRUE))` feet
-
-Charts & Graphics {.tabset}
--------------------------------------
-
-### Splits
 
 ```{r Split Stats}
 pitcher_r <- hitter %>%
@@ -139,8 +128,6 @@ OPS: |`r sprintf("%.3f", ops_r)`|`r sprintf("%.3f", ops_l)`
 AVG Exit Velocity:|`r sprintf("%.2f", mean(es_r$ExitSpeed, na.rm = TRUE))` mph|`r sprintf("%.2f", mean(es_l$ExitSpeed, na.rm = TRUE))` mph
 AVG Launch Angle:|`r sprintf("%.2f", mean(la_r$Angle, na.rm = TRUE))` degrees|`r sprintf("%.2f", mean(la_l$Angle, na.rm = TRUE))` degrees
 
-### Spray Chart
-
 <center>
 ```{r Spray Chart}
 hitter$Bearing <- ((hitter$Bearing * -1) + 90)*pi/180
@@ -181,8 +168,6 @@ bb <- ggplot(bases, aes(x = xa, y = ya)) +
   scale_color_discrete(limits = c("Single" ,"Double", "Triple", "HomeRun", "Out", "FieldersChoice", "Error"))
 layout(ggplotly(bb, tooltip = "text"), dragmode = "pan")
 ```
-
-### Launch Angle
 
 ```{r Launch Angle}
 lax <- c(0, 6, 0, 5.976, 0, 5.909, 0, 5.796, 0, 5.638, 0, 5.438, 0, 5.196, 0, 4.915, 0, 4.596, 0, 4.242)
@@ -330,8 +315,6 @@ y6 <- c(3.5, 3.817, 3.817, 2.55, 2.55, 2.55, 1.283, 1.283, 1.6, 1.283, 1.283, 2.
 bllz <- data_frame(x6, y6)
 ```
 
-### Heat Map
-
 ```{r Heat Map}
 exits <- hitter %>%
   filter(PitchCall == "InPlay" & ExitSpeed & !hitter$HitType == "Bunt")
@@ -464,8 +447,6 @@ hmp <- ggplot(hmsdf, aes(x, y)) +
 layout(style(ggplotly(hmp), hoverinfo = "none"), dragmode = "pan")
 ```
 
-### Hard Hits
-
 ```{r Ninety Plus}
 NinetyPlus <- hitter %>%
   filter(ExitSpeed >= 90)
@@ -498,8 +479,6 @@ np <- ggplot() +
 layout(ggplotly(np, tooltip = "text"), dragmode = "pan")
 ```
 
-### Fastball Takes
-
 ```{r Fastball Takes}
 FastballTakes <- hitter %>%
   filter(TaggedPitchType == "Fastball" & PitchCall == "StrikeCalled")
@@ -531,8 +510,6 @@ ft <- ggplot() +
       legend.title = element_blank())
 layout(ggplotly(ft, tooltip = "text"), dragmode = "pan")
 ```
-
-### Whiffs
 
 ```{r Whiffs}
 Whiffs <- hitter %>%
