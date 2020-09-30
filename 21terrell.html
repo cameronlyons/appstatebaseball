@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Andrew Terrell</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.9.0/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="site_libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-1.46.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="site_libs/plotly-main-1.46.1/plotly-latest.min.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="webpage.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Appalachian State Baseball</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    2018-2019
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="19batting.html">Team Batting</a>
+    </li>
+    <li>
+      <a href="19allison.html">Luke Allison</a>
+    </li>
+    <li>
+      <a href="19baldwin.html">Bret Baldwin</a>
+    </li>
+    <li>
+      <a href="19beck.html">Drew Beck</a>
+    </li>
+    <li>
+      <a href="19bell.html">McKinley Bell</a>
+    </li>
+    <li>
+      <a href="19brown.html">CJ Brown</a>
+    </li>
+    <li>
+      <a href="19cole.html">Phillip Cole</a>
+    </li>
+    <li>
+      <a href="19cross.html">Hayden Cross</a>
+    </li>
+    <li>
+      <a href="19davis.html">Bradley Davis</a>
+    </li>
+    <li>
+      <a href="19decker.html">Kyle Decker</a>
+    </li>
+    <li>
+      <a href="19drumheller.html">Luke Drumheller</a>
+    </li>
+    <li>
+      <a href="19leek.html">Tyler Leek</a>
+    </li>
+    <li>
+      <a href="19leshock.html">Alex Leshock</a>
+    </li>
+    <li>
+      <a href="19mcdaniel.html">Joel McDaniel</a>
+    </li>
+    <li>
+      <a href="19mcgowan.html">Kendall McGowan</a>
+    </li>
+    <li>
+      <a href="19smith.html">Riley Smith</a>
+    </li>
+    <li>
+      <a href="19terrell.html">Andrew Terrell</a>
+    </li>
+    <li>
+      <a href="19welch.html">Bailey Welch</a>
+    </li>
+    <li>
+      <a href="19williams.html">Dalton Williams</a>
+    </li>
+    <li>
+      <a href="19young.html">Robbie Young</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    2019-2020
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="20batting.html">Team Batting</a>
+    </li>
+    <li>
+      <a href="20allison.html">Luke Allison</a>
+    </li>
+    <li>
+      <a href="20baldwin.html">Bret Baldwin</a>
+    </li>
+    <li>
+      <a href="20bumgarner.html">Luke Bumgarner</a>
+    </li>
+    <li>
+      <a href="20cole.html">Phillip Cole</a>
+    </li>
+    <li>
+      <a href="20cross.html">Hayden Cross</a>
+    </li>
+    <li>
+      <a href="20drumheller.html">Luke Drumheller</a>
+    </li>
+    <li>
+      <a href="20greckel.html">Andrew Greckel</a>
+    </li>
+    <li>
+      <a href="20idol.html">Peyton Idol</a>
+    </li>
+    <li>
+      <a href="20kaloudis.html">Vasilious Kaloudis</a>
+    </li>
+    <li>
+      <a href="20leek.html">Tyler Leek</a>
+    </li>
+    <li>
+      <a href="20leshock.html">Alex Leshock</a>
+    </li>
+    <li>
+      <a href="20lipson.html">Jack Lipson</a>
+    </li>
+    <li>
+      <a href="20mcgowan.html">Kendall McGowan</a>
+    </li>
+    <li>
+      <a href="19terrell.html">Andrew Terrell</a>
+    </li>
+    <li>
+      <a href="20trease.html">Patrick Trease</a>
+    </li>
+    <li>
+      <a href="20welch.html">Bailey Welch</a>
+    </li>
+    <li>
+      <a href="20williams.html">Dalton Williams</a>
+    </li>
+    <li>
+      <a href="20yakubinis.html">JD Yakubinis</a>
+    </li>
+    <li>
+      <a href="20young.html">Robbie Young</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    2020-2021
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="21bryson.html">Hunter Bryson</a>
+    </li>
+    <li>
+      <a href="21cole.html">Phillip Cole</a>
+    </li>
+    <li>
+      <a href="21cross.html">Hayden Cross</a>
+    </li>
+    <li>
+      <a href="21drumheller.html">Luke Drumheller</a>
+    </li>
+    <li>
+      <a href="21greckel.html">Andrew Greckel</a>
+    </li>
+    <li>
+      <a href="21kaloudis.html">Kasilios Kaloudis</a>
+    </li>
+    <li>
+      <a href="21leshock.html">Alex Leshock</a>
+    </li>
+    <li>
+      <a href="21lewis.html">Trent Lewis</a>
+    </li>
+    <li>
+      <a href="21lipson.html">Jack Lipson</a>
+    </li>
+    <li>
+      <a href="21mcgowan.html">Kendall McGowan</a>
+    </li>
+    <li>
+      <a href="21raynor.html">Austin Raynor</a>
+    </li>
+    <li>
+      <a href="21terrell.html">Andrew Terrell</a>
+    </li>
+    <li>
+      <a href="21welch.html">Bailey Welch</a>
+    </li>
+    <li>
+      <a href="21williams.html">Dalton Williams</a>
+    </li>
+    <li>
+      <a href="21yakubinis.html">JD Yakubinis</a>
+    </li>
+    <li>
+      <a href="21young.html">Robbie Young</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Andrew Terrell</h1>
+
+</div>
+
+
+<hr>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th>2019-2020 TrackMan Statistics</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>PA:</td>
+<td>20</td>
+<td>2B:</td>
+<td>2</td>
+<td>RBI:</td>
+<td>0</td>
+<td>AVG:</td>
+<td>0.500</td>
+</tr>
+<tr class="even">
+<td>AB:</td>
+<td>20</td>
+<td>3B:</td>
+<td>0</td>
+<td>BB:</td>
+<td>0</td>
+<td>OBP:</td>
+<td>0.500</td>
+</tr>
+<tr class="odd">
+<td>Hits:</td>
+<td>10</td>
+<td>HR:</td>
+<td>0</td>
+<td>HBP:</td>
+<td>0</td>
+<td>SLG:</td>
+<td>0.600</td>
+</tr>
+<tr class="even">
+<td>SO:</td>
+<td>3</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>OPS:</td>
+<td>1.100</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr class="header">
+<th>Advanced Stats</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>AVG Exit Velocity:</td>
+<td>88.95 mph</td>
+</tr>
+<tr class="even">
+<td>Max Exit Velocity:</td>
+<td>101.39 mph</td>
+</tr>
+<tr class="odd">
+<td>AVG Launch Angle:</td>
+<td>14.89 degrees</td>
+</tr>
+<tr class="even">
+<td>Max Estimated Distance:</td>
+<td>371.57 feet</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr class="header">
+<th>Split Stats</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td><em>RHP</em></td>
+<td><em>LHP</em></td>
+</tr>
+<tr class="even">
+<td>Hits:</td>
+<td>6</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td>AB:</td>
+<td>13</td>
+<td>7</td>
+</tr>
+<tr class="even">
+<td>SO:</td>
+<td>2</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>BB:</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>HBP:</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>AVG:</td>
+<td>0.462</td>
+<td>0.571</td>
+</tr>
+<tr class="even">
+<td>OPS:</td>
+<td>0.923</td>
+<td>1.429</td>
+</tr>
+<tr class="odd">
+<td>AVG Exit Velocity:</td>
+<td>89.82 mph</td>
+<td>87.35 mph</td>
+</tr>
+<tr class="even">
+<td>AVG Launch Angle:</td>
+<td>9.07 degrees</td>
+<td>25.55 degrees</td>
+</tr>
+</tbody>
+</table>
+<center>
+<div id="htmlwidget-7f9972e28a90ec1a9d24" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-7f9972e28a90ec1a9d24">{"x":{"data":[{"x":[0,63.6396103067893,0,-63.6396103067893,0,0],"y":[0,63.6396103067893,127.279220613579,63.6396103067893,0,0],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-69.3813517731482,-195.3761630794],"y":[321.171017226282,267.641961703832],"text":["Exit Speed:  98.70 <br> Distance:  328.58 <br> Angle:  18.52","Exit Speed:  89.98 <br> Distance:  331.37 <br> Angle:  35.88"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(196,154,0,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(196,154,0,1)"}},"hoveron":"points","name":"Double","legendgroup":"Double","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[146.704746298731,-77.6722776385039,109.925579938079,-5.04073073204134,-9.10330615215456,2.05850411728116,-16.2937688476987],"y":[250.411115315114,363.362076718635,60.1673877209668,12.6608980067999,29.8386311015895,9.95511714816749,291.785273898555],"text":["Exit Speed:  84.94 <br> Distance:  290.22 <br> Angle:  29.20","Exit Speed:  96.65 <br> Distance:  371.57 <br> Angle:  28.49","Exit Speed:  53.29 <br> Distance:  125.31 <br> Angle:  57.24","Exit Speed:  74.52 <br> Distance:  13.63 <br> Angle:  -9.76","Exit Speed:  92.55 <br> Distance:  31.20 <br> Angle:  -5.02","Exit Speed:  96.26 <br> Distance:  10.17 <br> Angle:  -15.32","Exit Speed:  83.54 <br> Distance:  292.24 <br> Angle:  43.51"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,182,235,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,182,235,1)"}},"hoveron":"points","name":"Out","legendgroup":"Out","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[101.542758025437,-69.9928780595861,41.8000448285554,-18.7729432580514,-47.9499311829587,-25.8317327469082,-28.1712668131107,-65.415123411122],"y":[163.070818432108,218.760689752039,193.3598390997,225.81682546411,74.0243749769157,48.5677599598471,42.3279216514801,173.125366355487],"text":["Exit Speed:  86.08 <br> Distance:  192.10 <br> Angle:  12.53","Exit Speed:  80.42 <br> Distance:  229.69 <br> Angle:  19.03","Exit Speed:  87.02 <br> Distance:  197.83 <br> Angle:  14.21","Exit Speed:  94.92 <br> Distance:  226.60 <br> Angle:  11.06","Exit Speed:  101.39 <br> Distance:  88.20 <br> Angle:  3.49","Exit Speed:  99.40 <br> Distance:  55.01 <br> Angle:  0.65","Exit Speed:  98.00 <br> Distance:  50.85 <br> Angle:  -0.19","Exit Speed:  94.42 <br> Distance:  185.07 <br> Angle:  9.61"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"Single","legendgroup":"Single","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0,-233.35,null,0,-233.35,null,0,-233.35,null,0,-233.35,null,0,-233.35,null,0,-233.35],"y":[0,233.35,null,0,233.35,null,0,233.35,null,0,233.35,null,0,233.35,null,0,233.35],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-233.35,-160.59,null,-233.35,-160.59,null,-233.35,-160.59,null,-233.35,-160.59,null,-233.35,-160.59,null,-233.35,-160.59],"y":[233.35,340,null,233.35,340,null,233.35,340,null,233.35,340,null,233.35,340,null,233.35,340],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-160.59,-49.36,null,-160.59,-49.36,null,-160.59,-49.36,null,-160.59,-49.36,null,-160.59,-49.36,null,-160.59,-49.36],"y":[340,401.98,null,340,401.98,null,340,401.98,null,340,401.98,null,340,401.98,null,340,401.98],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-49.36,49.36,null,-49.36,49.36,null,-49.36,49.36,null,-49.36,49.36,null,-49.36,49.36,null,-49.36,49.36],"y":[401.98,401.98,null,401.98,401.98,null,401.98,401.98,null,401.98,401.98,null,401.98,401.98,null,401.98,401.98],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[49.36,157.67,null,49.36,157.67,null,49.36,157.67,null,49.36,157.67,null,49.36,157.67,null,49.36,157.67],"y":[401.98,338.05,null,401.98,338.05,null,401.98,338.05,null,401.98,338.05,null,401.98,338.05,null,401.98,338.05],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[157.67,229.81,null,157.67,229.81,null,157.67,229.81,null,157.67,229.81,null,157.67,229.81,null,157.67,229.81],"y":[338.05,229.81,null,338.05,229.81,null,338.05,229.81,null,338.05,229.81,null,338.05,229.81,null,338.05,229.81],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[229.81,0,null,229.81,0,null,229.81,0,null,229.81,0,null,229.81,0,null,229.81,0],"y":[229.81,0,null,229.81,0,null,229.81,0,null,229.81,0,null,229.81,0,null,229.81,0],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":26.2283105022831,"r":7.30593607305936,"b":13.8812785388128,"l":10.958904109589},"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-275,275],"tickmode":"array","ticktext":["-200","-100","0","100","200"],"tickvals":[-200,-100,0,100,200],"categoryorder":"array","categoryarray":["-200","-100","0","100","200"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":false,"tickfont":{"color":null,"family":null,"size":0},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":{"text":"","font":{"color":null,"family":null,"size":0}},"scaleanchor":"y","scaleratio":1,"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-35.5,525.5],"tickmode":"array","ticktext":["0","100","200","300","400","500"],"tickvals":[0,100,200,300,400,500],"categoryorder":"array","categoryarray":["0","100","200","300","400","500"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":false,"tickfont":{"color":null,"family":null,"size":0},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x","title":{"text":"","font":{"color":null,"family":null,"size":0}},"scaleanchor":"x","scaleratio":1,"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"y":1},"hovermode":"closest","barmode":"relative","dragmode":"pan"},"config":{"doubleClick":"reset","showSendToCloud":false},"source":"A","attrs":{"13c110d1e6bd":{"x":{},"y":{},"type":"scatter"},"13c160f11e05":{"colour":{},"text":{},"x":{},"y":{}},"13c1713ad645":{"x":{},"y":{}},"13c157d35bc6":{"x":{},"y":{}},"13c174ed283c":{"x":{},"y":{}},"13c19a033f1":{"x":{},"y":{}},"13c12b2e3277":{"x":{},"y":{}},"13c17e59e82e":{"x":{},"y":{}},"13c110a4ad62":{"x":{},"y":{}}},"cur_data":"13c110d1e6bd","visdat":{"13c110d1e6bd":["function (y) ","x"],"13c160f11e05":["function (y) ","x"],"13c1713ad645":["function (y) ","x"],"13c157d35bc6":["function (y) ","x"],"13c174ed283c":["function (y) ","x"],"13c19a033f1":["function (y) ","x"],"13c12b2e3277":["function (y) ","x"],"13c17e59e82e":["function (y) ","x"],"13c110a4ad62":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<p><img src="21terrell_files/figure-html/Launch%20Angle-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div id="htmlwidget-1c36a0170651ea63617e" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1c36a0170651ea63617e">{"x":{"data":[{"x":[-0.634,0.634],"y":[1.917,3.184],"z":[[0,0],[1,0]],"text":[["mean:  0.0000<br />x: -0.634<br />y: 1.917","mean:  0.0000<br />x:  0.634<br />y: 1.917"],["mean: 88.7482<br />x: -0.634<br />y: 3.184","mean:  0.0000<br />x:  0.634<br />y: 3.184"]],"colorscale":[[0,"#0000FF"],[1,"#FFB7A0"]],"type":"heatmap","showscale":false,"autocolorscale":false,"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"none","frame":null},{"x":[-0.623,0,0.623],"y":[1.917,2.55,3.193],"z":[[0,0.805615314215434,0],[0.818332935066282,1,0],[0.925784301028498,0.949241693674277,0]],"text":[["mean:  0.00000<br />x: -0.623<br />y: 1.917","mean: 80.42396<br />x:  0.000<br />y: 1.917","mean:  0.00000<br />x:  0.623<br />y: 1.917"],["mean: 81.69355<br />x: -0.623<br />y: 2.550","mean: 99.82923<br />x:  0.000<br />y: 2.550","mean:  0.00000<br />x:  0.623<br />y: 2.550"],["mean: 92.42034<br />x: -0.623<br />y: 3.193","mean: 94.76207<br />x:  0.000<br />y: 3.193","mean:  0.00000<br />x:  0.623<br />y: 3.193"]],"colorscale":[[0,"#0000FF"],[0.805615314215434,"#BA95FF"],[0.818332935066282,"#CFB2FF"],[0.925784301028498,"#FF6A48"],[0.949241693674277,"#FF1A09"],[1,"#FF0000"]],"type":"heatmap","showscale":false,"autocolorscale":false,"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"none","frame":null},{"x":[-0.95,0.95,0.95,-0.95,-0.95],"y":[1.6,1.6,3.5,3.5,1.6],"text":["x: -0.95<br />y: 1.6<br />x: -0.95<br />y: 1.6","x:  0.95<br />y: 1.6<br />x:  0.95<br />y: 1.6","x:  0.95<br />y: 3.5<br />x:  0.95<br />y: 3.5","x: -0.95<br />y: 3.5<br />x: -0.95<br />y: 3.5","x: -0.95<br />y: 1.6<br />x: -0.95<br />y: 1.6"],"type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"none","frame":null},{"x":[-0.95,0.95,0.95,-0.95],"y":[2.233,2.233,2.866,2.866],"text":["x4: -0.95<br />y4: 2.233<br />x: -0.95<br />y: 2.233","x4:  0.95<br />y4: 2.233<br />x:  0.95<br />y: 2.233","x4:  0.95<br />y4: 2.866<br />x:  0.95<br />y: 2.866","x4: -0.95<br />y4: 2.866<br />x: -0.95<br />y: 2.866"],"type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"none","frame":null},{"x":[-0.316,-0.316,0.316,0.316],"y":[1.6,3.5,3.5,1.6],"text":["x5: -0.316<br />y5: 1.6<br />x: -0.316<br />y: 1.6","x5: -0.316<br />y5: 3.5<br />x: -0.316<br />y: 3.5","x5:  0.316<br />y5: 3.5<br />x:  0.316<br />y: 3.5","x5:  0.316<br />y5: 1.6<br />x:  0.316<br />y: 1.6"],"type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"none","frame":null},{"x":[0,0,1.267,1.267,0.95,1.267,1.267,0,0,0,-1.267,-1.267,-0.95,-1.267,-1.267,0],"y":[3.5,3.817,3.817,2.55,2.55,2.55,1.283,1.283,1.6,1.283,1.283,2.55,2.55,2.55,3.817,3.817],"text":["x6:  0.000<br />y6: 3.500<br />x:  0.000<br />y: 3.500","x6:  0.000<br />y6: 3.817<br />x:  0.000<br />y: 3.817","x6:  1.267<br />y6: 3.817<br />x:  1.267<br />y: 3.817","x6:  1.267<br />y6: 2.550<br />x:  1.267<br />y: 2.550","x6:  0.950<br />y6: 2.550<br />x:  0.950<br />y: 2.550","x6:  1.267<br />y6: 2.550<br />x:  1.267<br />y: 2.550","x6:  1.267<br />y6: 1.283<br />x:  1.267<br />y: 1.283","x6:  0.000<br />y6: 1.283<br />x:  0.000<br />y: 1.283","x6:  0.000<br />y6: 1.600<br />x:  0.000<br />y: 1.600","x6:  0.000<br />y6: 1.283<br />x:  0.000<br />y: 1.283","x6: -1.267<br />y6: 1.283<br />x: -1.267<br />y: 1.283","x6: -1.267<br />y6: 2.550<br />x: -1.267<br />y: 2.550","x6: -0.950<br />y6: 2.550<br />x: -0.950<br />y: 2.550","x6: -1.267<br />y6: 2.550<br />x: -1.267<br />y: 2.550","x6: -1.267<br />y6: 3.817<br />x: -1.267<br />y: 3.817","x6:  0.000<br />y6: 3.817<br />x:  0.000<br />y: 3.817"],"type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"none","frame":null},{"x":[0.623,0.623,0.623,0.623,0.623,0.623,0.623,0.623,0.623],"y":[3.193,3.193,3.193,3.193,3.193,3.193,3.193,3.193,3.193],"text":["NaN","NaN","NaN","NaN","NaN","NaN","NaN","NaN","NaN"],"hovertext":["x: 0.623<br />y: 3.193<br />x: 0.623<br />y: 3.193","x: 0.623<br />y: 3.193<br />x: 0.623<br />y: 3.193","x: 0.623<br />y: 3.193<br />x: 0.623<br />y: 3.193","x: 0.623<br />y: 3.193<br />x: 0.623<br />y: 3.193","x: 0.623<br />y: 3.193<br />x: 0.623<br />y: 3.193","x: 0.623<br />y: 3.193<br />x: 0.623<br />y: 3.193","x: 0.623<br />y: 3.193<br />x: 0.623<br />y: 3.193","x: 0.623<br />y: 3.193<br />x: 0.623<br />y: 3.193","x: 0.623<br />y: 3.193<br />x: 0.623<br />y: 3.193"],"textfont":{"size":9.4488188976378,"color":"rgba(0,0,0,1)"},"type":"scatter","mode":"text","hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"none","frame":null},{"x":[0,0,0,0,0,0,0,0,0],"y":[3.193,3.193,3.193,3.193,3.193,3.193,3.193,3.193,3.193],"text":["94.76","94.76","94.76","94.76","94.76","94.76","94.76","94.76","94.76"],"hovertext":["x: 0<br />y: 3.193<br />x: 0<br />y: 3.193","x: 0<br />y: 3.193<br />x: 0<br />y: 3.193","x: 0<br />y: 3.193<br />x: 0<br />y: 3.193","x: 0<br />y: 3.193<br />x: 0<br />y: 3.193","x: 0<br />y: 3.193<br />x: 0<br />y: 3.193","x: 0<br />y: 3.193<br />x: 0<br />y: 3.193","x: 0<br />y: 3.193<br />x: 0<br />y: 3.193","x: 0<br />y: 3.193<br />x: 0<br />y: 3.193","x: 0<br />y: 3.193<br />x: 0<br />y: 3.193"],"textfont":{"size":9.4488188976378,"color":"rgba(0,0,0,1)"},"type":"scatter","mode":"text","hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"none","frame":null},{"x":[-0.623,-0.623,-0.623,-0.623,-0.623,-0.623,-0.623,-0.623,-0.623],"y":[3.193,3.193,3.193,3.193,3.193,3.193,3.193,3.193,3.193],"text":["92.42","92.42","92.42","92.42","92.42","92.42","92.42","92.42","92.42"],"hovertext":["-0.623: -0.623<br />y: 3.193<br />x: -0.623<br />y: 3.193","-0.623: -0.623<br />y: 3.193<br />x: -0.623<br />y: 3.193","-0.623: -0.623<br />y: 3.193<br />x: -0.623<br />y: 3.193","-0.623: -0.623<br />y: 3.193<br />x: -0.623<br />y: 3.193","-0.623: -0.623<br />y: 3.193<br />x: -0.623<br />y: 3.193","-0.623: -0.623<br />y: 3.193<br />x: -0.623<br />y: 3.193","-0.623: -0.623<br />y: 3.193<br />x: -0.623<br />y: 3.193","-0.623: -0.623<br />y: 3.193<br />x: -0.623<br />y: 3.193","-0.623: -0.623<br />y: 3.193<br />x: -0.623<br />y: 3.193"],"textfont":{"size":9.4488188976378,"color":"rgba(0,0,0,1)"},"type":"scatter","mode":"text","hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"none","frame":null},{"x":[0.623,0.623,0.623,0.623,0.623,0.623,0.623,0.623,0.623],"y":[2.55,2.55,2.55,2.55,2.55,2.55,2.55,2.55,2.55],"text":["NaN","NaN","NaN","NaN","NaN","NaN","NaN","NaN","NaN"],"hovertext":["x: 0.623<br />y: 2.55<br />x: 0.623<br />y: 2.55","x: 0.623<br />y: 2.55<br />x: 0.623<br />y: 2.55","x: 0.623<br />y: 2.55<br />x: 0.623<br />y: 2.55","x: 0.623<br />y: 2.55<br />x: 0.623<br />y: 2.55","x: 0.623<br />y: 2.55<br />x: 0.623<br />y: 2.55","x: 0.623<br />y: 2.55<br />x: 0.623<br />y: 2.55","x: 0.623<br />y: 2.55<br />x: 0.623<br />y: 2.55","x: 0.623<br />y: 2.55<br />x: 0.623<br />y: 2.55","x: 0.623<br />y: 2.55<br />x: 0.623<br />y: 2.55"],"textfont":{"size":9.4488188976378,"color":"rgba(0,0,0,1)"},"type":"scatter","mode":"text","hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"none","frame":null},{"x":[0,0,0,0,0,0,0,0,0],"y":[2.55,2.55,2.55,2.55,2.55,2.55,2.55,2.55,2.55],"text":["99.83","99.83","99.83","99.83","99.83","99.83","99.83","99.83","99.83"],"hovertext":["x: 0<br />y: 2.55<br />x: 0<br />y: 2.55","x: 0<br />y: 2.55<br />x: 0<br />y: 2.55","x: 0<br />y: 2.55<br />x: 0<br />y: 2.55","x: 0<br />y: 2.55<br />x: 0<br />y: 2.55","x: 0<br />y: 2.55<br />x: 0<br />y: 2.55","x: 0<br />y: 2.55<br />x: 0<br />y: 2.55","x: 0<br />y: 2.55<br />x: 0<br />y: 2.55","x: 0<br />y: 2.55<br />x: 0<br />y: 2.55","x: 0<br />y: 2.55<br />x: 0<br />y: 2.55"],"textfont":{"size":9.4488188976378,"color":"rgba(0,0,0,1)"},"type":"scatter","mode":"text","hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"none","frame":null},{"x":[-0.623,-0.623,-0.623,-0.623,-0.623,-0.623,-0.623,-0.623,-0.623],"y":[2.55,2.55,2.55,2.55,2.55,2.55,2.55,2.55,2.55],"text":["81.69","81.69","81.69","81.69","81.69","81.69","81.69","81.69","81.69"],"hovertext":["-0.623: -0.623<br />y: 2.55<br />x: -0.623<br />y: 2.55","-0.623: -0.623<br />y: 2.55<br />x: -0.623<br />y: 2.55","-0.623: -0.623<br />y: 2.55<br />x: -0.623<br />y: 2.55","-0.623: -0.623<br />y: 2.55<br />x: -0.623<br />y: 2.55","-0.623: -0.623<br />y: 2.55<br />x: -0.623<br />y: 2.55","-0.623: -0.623<br />y: 2.55<br />x: -0.623<br />y: 2.55","-0.623: -0.623<br />y: 2.55<br />x: -0.623<br />y: 2.55","-0.623: -0.623<br />y: 2.55<br />x: -0.623<br />y: 2.55","-0.623: -0.623<br />y: 2.55<br />x: -0.623<br />y: 2.55"],"textfont":{"size":9.4488188976378,"color":"rgba(0,0,0,1)"},"type":"scatter","mode":"text","hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"none","frame":null},{"x":[0.623,0.623,0.623,0.623,0.623,0.623,0.623,0.623,0.623],"y":[1.917,1.917,1.917,1.917,1.917,1.917,1.917,1.917,1.917],"text":["NaN","NaN","NaN","NaN","NaN","NaN","NaN","NaN","NaN"],"hovertext":["x: 0.623<br />y: 1.917<br />x: 0.623<br />y: 1.917","x: 0.623<br />y: 1.917<br />x: 0.623<br />y: 1.917","x: 0.623<br />y: 1.917<br />x: 0.623<br />y: 1.917","x: 0.623<br />y: 1.917<br />x: 0.623<br />y: 1.917","x: 0.623<br />y: 1.917<br />x: 0.623<br />y: 1.917","x: 0.623<br />y: 1.917<br />x: 0.623<br />y: 1.917","x: 0.623<br />y: 1.917<br />x: 0.623<br />y: 1.917","x: 0.623<br />y: 1.917<br />x: 0.623<br />y: 1.917","x: 0.623<br />y: 1.917<br />x: 0.623<br />y: 1.917"],"textfont":{"size":9.4488188976378,"color":"rgba(0,0,0,1)"},"type":"scatter","mode":"text","hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"none","frame":null},{"x":[0,0,0,0,0,0,0,0,0],"y":[1.917,1.917,1.917,1.917,1.917,1.917,1.917,1.917,1.917],"text":["80.42","80.42","80.42","80.42","80.42","80.42","80.42","80.42","80.42"],"hovertext":["x: 0<br />y: 1.917<br />x: 0<br />y: 1.917","x: 0<br />y: 1.917<br />x: 0<br />y: 1.917","x: 0<br />y: 1.917<br />x: 0<br />y: 1.917","x: 0<br />y: 1.917<br />x: 0<br />y: 1.917","x: 0<br />y: 1.917<br />x: 0<br />y: 1.917","x: 0<br />y: 1.917<br />x: 0<br />y: 1.917","x: 0<br />y: 1.917<br />x: 0<br />y: 1.917","x: 0<br />y: 1.917<br />x: 0<br />y: 1.917","x: 0<br />y: 1.917<br />x: 0<br />y: 1.917"],"textfont":{"size":9.4488188976378,"color":"rgba(0,0,0,1)"},"type":"scatter","mode":"text","hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"none","frame":null},{"x":[-0.623,-0.623,-0.623,-0.623,-0.623,-0.623,-0.623,-0.623,-0.623],"y":[1.917,1.917,1.917,1.917,1.917,1.917,1.917,1.917,1.917],"text":["NaN","NaN","NaN","NaN","NaN","NaN","NaN","NaN","NaN"],"hovertext":["-0.623: -0.623<br />y: 1.917<br />x: -0.623<br />y: 1.917","-0.623: -0.623<br />y: 1.917<br />x: -0.623<br />y: 1.917","-0.623: -0.623<br />y: 1.917<br />x: -0.623<br />y: 1.917","-0.623: -0.623<br />y: 1.917<br />x: -0.623<br />y: 1.917","-0.623: -0.623<br />y: 1.917<br />x: -0.623<br />y: 1.917","-0.623: -0.623<br />y: 1.917<br />x: -0.623<br />y: 1.917","-0.623: -0.623<br />y: 1.917<br />x: -0.623<br />y: 1.917","-0.623: -0.623<br />y: 1.917<br />x: -0.623<br />y: 1.917","-0.623: -0.623<br />y: 1.917<br />x: -0.623<br />y: 1.917"],"textfont":{"size":9.4488188976378,"color":"rgba(0,0,0,1)"},"type":"scatter","mode":"text","hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"none","frame":null},{"x":[0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95],"y":[3.659,3.659,3.659,3.659,3.659,3.659,3.659,3.659,3.659],"text":["NaN","NaN","NaN","NaN","NaN","NaN","NaN","NaN","NaN"],"hovertext":["x: 0.95<br />y: 3.659<br />x: 0.95<br />y: 3.659","x: 0.95<br />y: 3.659<br />x: 0.95<br />y: 3.659","x: 0.95<br />y: 3.659<br />x: 0.95<br />y: 3.659","x: 0.95<br />y: 3.659<br />x: 0.95<br />y: 3.659","x: 0.95<br />y: 3.659<br />x: 0.95<br />y: 3.659","x: 0.95<br />y: 3.659<br />x: 0.95<br />y: 3.659","x: 0.95<br />y: 3.659<br />x: 0.95<br />y: 3.659","x: 0.95<br />y: 3.659<br />x: 0.95<br />y: 3.659","x: 0.95<br />y: 3.659<br />x: 0.95<br />y: 3.659"],"textfont":{"size":9.4488188976378,"color":"rgba(0,0,0,1)"},"type":"scatter","mode":"text","hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"none","frame":null},{"x":[-0.95,-0.95,-0.95,-0.95,-0.95,-0.95,-0.95,-0.95,-0.95],"y":[3.659,3.659,3.659,3.659,3.659,3.659,3.659,3.659,3.659],"text":["88.75","88.75","88.75","88.75","88.75","88.75","88.75","88.75","88.75"],"hovertext":["-0.95: -0.95<br />y: 3.659<br />x: -0.95<br />y: 3.659","-0.95: -0.95<br />y: 3.659<br />x: -0.95<br />y: 3.659","-0.95: -0.95<br />y: 3.659<br />x: -0.95<br />y: 3.659","-0.95: -0.95<br />y: 3.659<br />x: -0.95<br />y: 3.659","-0.95: -0.95<br />y: 3.659<br />x: -0.95<br />y: 3.659","-0.95: -0.95<br />y: 3.659<br />x: -0.95<br />y: 3.659","-0.95: -0.95<br />y: 3.659<br />x: -0.95<br />y: 3.659","-0.95: -0.95<br />y: 3.659<br />x: -0.95<br />y: 3.659","-0.95: -0.95<br />y: 3.659<br />x: -0.95<br />y: 3.659"],"textfont":{"size":9.4488188976378,"color":"rgba(0,0,0,1)"},"type":"scatter","mode":"text","hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"none","frame":null},{"x":[0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95],"y":[1.442,1.442,1.442,1.442,1.442,1.442,1.442,1.442,1.442],"text":["NaN","NaN","NaN","NaN","NaN","NaN","NaN","NaN","NaN"],"hovertext":["x: 0.95<br />y: 1.442<br />x: 0.95<br />y: 1.442","x: 0.95<br />y: 1.442<br />x: 0.95<br />y: 1.442","x: 0.95<br />y: 1.442<br />x: 0.95<br />y: 1.442","x: 0.95<br />y: 1.442<br />x: 0.95<br />y: 1.442","x: 0.95<br />y: 1.442<br />x: 0.95<br />y: 1.442","x: 0.95<br />y: 1.442<br />x: 0.95<br />y: 1.442","x: 0.95<br />y: 1.442<br />x: 0.95<br />y: 1.442","x: 0.95<br />y: 1.442<br />x: 0.95<br />y: 1.442","x: 0.95<br />y: 1.442<br />x: 0.95<br />y: 1.442"],"textfont":{"size":9.4488188976378,"color":"rgba(0,0,0,1)"},"type":"scatter","mode":"text","hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"none","frame":null},{"x":[-0.95,-0.95,-0.95,-0.95,-0.95,-0.95,-0.95,-0.95,-0.95],"y":[1.442,1.442,1.442,1.442,1.442,1.442,1.442,1.442,1.442],"text":["NaN","NaN","NaN","NaN","NaN","NaN","NaN","NaN","NaN"],"hovertext":["-0.95: -0.95<br />y: 1.442<br />x: -0.95<br />y: 1.442","-0.95: -0.95<br />y: 1.442<br />x: -0.95<br />y: 1.442","-0.95: -0.95<br />y: 1.442<br />x: -0.95<br />y: 1.442","-0.95: -0.95<br />y: 1.442<br />x: -0.95<br />y: 1.442","-0.95: -0.95<br />y: 1.442<br />x: -0.95<br />y: 1.442","-0.95: -0.95<br />y: 1.442<br />x: -0.95<br />y: 1.442","-0.95: -0.95<br />y: 1.442<br />x: -0.95<br />y: 1.442","-0.95: -0.95<br />y: 1.442<br />x: -0.95<br />y: 1.442","-0.95: -0.95<br />y: 1.442<br />x: -0.95<br />y: 1.442"],"textfont":{"size":9.4488188976378,"color":"rgba(0,0,0,1)"},"type":"scatter","mode":"text","hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"none","frame":null},{"x":[1.61,3.11,3.11,1.61,1.61],"y":[0,0,5.5,5.5,0],"text":["x2: 1.61<br />y2: 0.0<br />x: 1.61<br />y: 0.0","x2: 3.11<br />y2: 0.0<br />x: 3.11<br />y: 0.0","x2: 3.11<br />y2: 5.5<br />x: 3.11<br />y: 5.5","x2: 1.61<br />y2: 5.5<br />x: 1.61<br />y: 5.5","x2: 1.61<br />y2: 0.0<br />x: 1.61<br />y: 0.0"],"type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(211,211,211,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"none","frame":null},{"x":[-1.61,-3.11,-3.11,-1.61,-1.61],"y":[0,0,5.5,5.5,0],"text":["x3: -1.61<br />y3: 0.0<br />x: -1.61<br />y: 0.0","x3: -3.11<br />y3: 0.0<br />x: -3.11<br />y: 0.0","x3: -3.11<br />y3: 5.5<br />x: -3.11<br />y: 5.5","x3: -1.61<br />y3: 5.5<br />x: -1.61<br />y: 5.5","x3: -1.61<br />y3: 0.0<br />x: -1.61<br />y: 0.0"],"type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(211,211,211,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"none","frame":null},{"x":[2.36,2.36,2.36,2.36,2.36,2.36,2.36,2.36,2.36],"y":[2.75,2.75,2.75,2.75,2.75,2.75,2.75,2.75,2.75],"text":["RHB","RHB","RHB","RHB","RHB","RHB","RHB","RHB","RHB"],"hovertext":["x: 2.36<br />y: 2.75<br />x: 2.36<br />y: 2.75","x: 2.36<br />y: 2.75<br />x: 2.36<br />y: 2.75","x: 2.36<br />y: 2.75<br />x: 2.36<br />y: 2.75","x: 2.36<br />y: 2.75<br />x: 2.36<br />y: 2.75","x: 2.36<br />y: 2.75<br />x: 2.36<br />y: 2.75","x: 2.36<br />y: 2.75<br />x: 2.36<br />y: 2.75","x: 2.36<br />y: 2.75<br />x: 2.36<br />y: 2.75","x: 2.36<br />y: 2.75<br />x: 2.36<br />y: 2.75","x: 2.36<br />y: 2.75<br />x: 2.36<br />y: 2.75"],"textfont":{"size":14.6645669291339,"color":"rgba(211,211,211,1)"},"type":"scatter","mode":"text","hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"none","frame":null},{"x":[-2.36,-2.36,-2.36,-2.36,-2.36,-2.36,-2.36,-2.36,-2.36],"y":[2.75,2.75,2.75,2.75,2.75,2.75,2.75,2.75,2.75],"text":["LHB","LHB","LHB","LHB","LHB","LHB","LHB","LHB","LHB"],"hovertext":["-2.36: -2.36<br />y: 2.75<br />x: -2.36<br />y: 2.75","-2.36: -2.36<br />y: 2.75<br />x: -2.36<br />y: 2.75","-2.36: -2.36<br />y: 2.75<br />x: -2.36<br />y: 2.75","-2.36: -2.36<br />y: 2.75<br />x: -2.36<br />y: 2.75","-2.36: -2.36<br />y: 2.75<br />x: -2.36<br />y: 2.75","-2.36: -2.36<br />y: 2.75<br />x: -2.36<br />y: 2.75","-2.36: -2.36<br />y: 2.75<br />x: -2.36<br />y: 2.75","-2.36: -2.36<br />y: 2.75<br />x: -2.36<br />y: 2.75","-2.36: -2.36<br />y: 2.75<br />x: -2.36<br />y: 2.75"],"textfont":{"size":14.6645669291339,"color":"rgba(211,211,211,1)"},"type":"scatter","mode":"text","hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"none","frame":null},{"x":[-0.95,-0.95,0,0.95,0.95,-0.95,-0.95],"y":[0,0.15,0.25,0.15,0,0,0],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"fill":"toself","fillcolor":"rgba(255,255,255,1)","hoveron":"fills","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"none","frame":null},{"x":[-2.5],"y":[0],"name":"99_925b18d3c53ddf4cf0aa2e1d80ef63b2","type":"scatter","mode":"markers","opacity":0,"hoverinfo":"none","showlegend":false,"marker":{"color":[0,1],"colorscale":[[0,"#0000FF"],[0.0526315789473685,"#512CFF"],[0.105263157894737,"#7348FF"],[0.157894736842105,"#8E61FF"],[0.210526315789474,"#A479FF"],[0.263157894736842,"#B791FF"],[0.31578947368421,"#C9A9FF"],[0.368421052631579,"#DAC1FF"],[0.421052631578947,"#E9DAFF"],[0.473684210526316,"#F8F3FF"],[0.526315789473684,"#FFF5F1"],[0.578947368421053,"#FFE1D6"],[0.631578947368421,"#FFCDBB"],[0.68421052631579,"#FFB8A1"],[0.736842105263158,"#FFA388"],[0.789473684210526,"#FF8E6F"],[0.842105263157894,"#FF7756"],[0.894736842105263,"#FF5E3D"],[0.947368421052632,"#FF4023"],[1,"#FF0000"]],"colorbar":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"thickness":23.04,"title":"","titlefont":{"color":null,"family":null,"size":0},"tickmode":"array","ticktext":["75","80","85","90","95"],"tickvals":[0,0.25,0.5,0.75,1],"tickfont":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"ticklen":2,"len":0.5}},"xaxis":"x","yaxis":"y","frame":null}],"layout":{"margin":{"t":43.7625570776256,"r":7.30593607305936,"b":13.8812785388128,"l":10.958904109589},"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"Exit Velocities Heat Map","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-4.95,4.95],"tickmode":"array","ticktext":["-2.5","0.0","2.5"],"tickvals":[-2.5,0,2.5],"categoryorder":"array","categoryarray":["-2.5","0.0","2.5"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":false,"tickfont":{"color":null,"family":null,"size":0},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":{"text":"","font":{"color":null,"family":null,"size":0}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.275,5.775],"tickmode":"array","ticktext":["0","2","4"],"tickvals":[0,2,4],"categoryorder":"array","categoryarray":["0","2","4"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":false,"tickfont":{"color":null,"family":null,"size":0},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x","title":{"text":"","font":{"color":null,"family":null,"size":0}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895}},"hovermode":"closest","barmode":"relative","dragmode":"pan"},"config":{"doubleClick":"reset","showSendToCloud":false},"source":"A","attrs":{"13c11104cdf5":{"fill":{},"x":{},"y":{},"type":"heatmap"},"13c17bedf094":{"fill":{},"x":{},"y":{}},"13c17e3b6a3d":{"x":{},"y":{},"x.1":{},"y.1":{}},"13c17a5e9745":{"x":{},"y":{},"x.1":{},"y.1":{}},"13c1163148dc":{"x":{},"y":{},"x.1":{},"y.1":{}},"13c178af2e18":{"x":{},"y":{},"x.1":{},"y.1":{}},"13c17567a40c":{"x":{},"y":{},"x.1":{},"y.1":{}},"13c1539edd4a":{"x":{},"y":{},"x.1":{},"y.1":{}},"13c15dcd3d73":{"x":{},"y":{},"x.1":{},"y.1":{}},"13c126d1766b":{"x":{},"y":{},"x.1":{},"y.1":{}},"13c141baf37d":{"x":{},"y":{},"x.1":{},"y.1":{}},"13c12049f265":{"x":{},"y":{},"x.1":{},"y.1":{}},"13c15c13ac7":{"x":{},"y":{},"x.1":{},"y.1":{}},"13c144b9c810":{"x":{},"y":{},"x.1":{},"y.1":{}},"13c16020469":{"x":{},"y":{},"x.1":{},"y.1":{}},"13c14b98ac3c":{"x":{},"y":{},"x.1":{},"y.1":{}},"13c1356983e1":{"x":{},"y":{},"x.1":{},"y.1":{}},"13c13960af77":{"x":{},"y":{},"x.1":{},"y.1":{}},"13c1eee8525":{"x":{},"y":{},"x.1":{},"y.1":{}},"13c17a2f01b4":{"x":{},"y":{},"x.1":{},"y.1":{}},"13c153d26d1c":{"x":{},"y":{},"x.1":{},"y.1":{}},"13c1722f683f":{"x":{},"y":{},"x.1":{},"y.1":{}},"13c177605aae":{"x":{},"y":{},"x.1":{},"y.1":{}},"13c17b882f40":{"x":{},"y":{},"x.1":{},"y.1":{}}},"cur_data":"13c11104cdf5","visdat":{"13c11104cdf5":["function (y) ","x"],"13c17bedf094":["function (y) ","x"],"13c17e3b6a3d":["function (y) ","x"],"13c17a5e9745":["function (y) ","x"],"13c1163148dc":["function (y) ","x"],"13c178af2e18":["function (y) ","x"],"13c17567a40c":["function (y) ","x"],"13c1539edd4a":["function (y) ","x"],"13c15dcd3d73":["function (y) ","x"],"13c126d1766b":["function (y) ","x"],"13c141baf37d":["function (y) ","x"],"13c12049f265":["function (y) ","x"],"13c15c13ac7":["function (y) ","x"],"13c144b9c810":["function (y) ","x"],"13c16020469":["function (y) ","x"],"13c14b98ac3c":["function (y) ","x"],"13c1356983e1":["function (y) ","x"],"13c13960af77":["function (y) ","x"],"13c1eee8525":["function (y) ","x"],"13c17a2f01b4":["function (y) ","x"],"13c153d26d1c":["function (y) ","x"],"13c1722f683f":["function (y) ","x"],"13c177605aae":["function (y) ","x"],"13c17b882f40":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-08b5de25336521db6522" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-08b5de25336521db6522">{"x":{"data":[{"x":[-0.95,0.95,0.95,-0.95,-0.95],"y":[1.6,1.6,3.5,3.5,1.6],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.95,-0.95,0,0.95,0.95,-0.95,-0.95],"y":[0,0.15,0.25,0.15,0,0,0],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"fill":"toself","fillcolor":"rgba(255,255,255,1)","hoveron":"fills","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1.61,3.11,3.11,1.61,1.61],"y":[0,0,5.5,5.5,0],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(211,211,211,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-1.61,-3.11,-3.11,-1.61,-1.61],"y":[0,0,5.5,5.5,0],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(211,211,211,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[2.36],"y":[2.75],"text":"RHB","hovertext":"","textfont":{"size":14.6645669291339,"color":"rgba(211,211,211,1)"},"type":"scatter","mode":"text","hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-2.36],"y":[2.75],"text":"LHB","hovertext":"","textfont":{"size":14.6645669291339,"color":"rgba(211,211,211,1)"},"type":"scatter","mode":"text","hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.500369946,0.177399534,-0.230869908,-0.373514672,0.225884421,0.300238398,-0.370405598,-0.242131457],"y":[3.204649579,2.422976883,2.409949804,3.951251741,2.523145196,3.107103622,3.114585078,3.281872279],"text":["Pitch Type:  Fastball <br>Exit Speed:  94.92 <br> Distance:  226.60 <br> Launch Angle:  11.06","Pitch Type:  Fastball <br>Exit Speed:  101.39 <br> Distance:  88.20 <br> Launch Angle:  3.49","Pitch Type:  Fastball <br>Exit Speed:  98.70 <br> Distance:  328.58 <br> Launch Angle:  18.52","Pitch Type:  Fastball <br>Exit Speed:  92.55 <br> Distance:  31.20 <br> Launch Angle:  -5.02","Pitch Type:  Fastball <br>Exit Speed:  99.40 <br> Distance:  55.01 <br> Launch Angle:  0.65","Pitch Type:  Fastball <br>Exit Speed:  98.00 <br> Distance:  50.85 <br> Launch Angle:  -0.19","Pitch Type:  Fastball <br>Exit Speed:  96.26 <br> Distance:  10.17 <br> Launch Angle:  -15.32","Pitch Type:  Fastball <br>Exit Speed:  94.42 <br> Distance:  185.07 <br> Launch Angle:  9.61"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"Fastball","legendgroup":"Fastball","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.287477057],"y":[3.386599914],"text":"Pitch Type:  Slider <br>Exit Speed:  96.65 <br> Distance:  371.57 <br> Launch Angle:  28.49","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(231,107,243,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(231,107,243,1)"}},"hoveron":"points","name":"Slider","legendgroup":"Slider","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.7625570776256,"r":7.30593607305936,"b":13.8812785388128,"l":10.958904109589},"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"90+ Exit Velocities","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-4.95,4.95],"tickmode":"array","ticktext":["-2.5","0.0","2.5"],"tickvals":[-2.5,0,2.5],"categoryorder":"array","categoryarray":["-2.5","0.0","2.5"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":false,"tickfont":{"color":null,"family":null,"size":0},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":{"text":"","font":{"color":null,"family":null,"size":0}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.275,5.775],"tickmode":"array","ticktext":["0","2","4"],"tickvals":[0,2,4],"categoryorder":"array","categoryarray":["0","2","4"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":false,"tickfont":{"color":null,"family":null,"size":0},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x","title":{"text":"","font":{"color":null,"family":null,"size":0}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"y":1},"hovermode":"closest","barmode":"relative","dragmode":"pan"},"config":{"doubleClick":"reset","showSendToCloud":false},"source":"A","attrs":{"13c134b3cae5":{"x":{},"y":{},"type":"scatter"},"13c1769d9b1f":{"x":{},"y":{}},"13c113e25140":{"x":{},"y":{}},"13c12d62f8fd":{"x":{},"y":{}},"13c16c053f2b":{"x":{},"y":{}},"13c167812e8a":{"x":{},"y":{}},"13c1b303670":{"x":{},"y":{},"colour":{},"text":{}}},"cur_data":"13c134b3cae5","visdat":{"13c134b3cae5":["function (y) ","x"],"13c1769d9b1f":["function (y) ","x"],"13c113e25140":["function (y) ","x"],"13c12d62f8fd":["function (y) ","x"],"13c16c053f2b":["function (y) ","x"],"13c167812e8a":["function (y) ","x"],"13c1b303670":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-b5d262c6d4733781cf0c" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b5d262c6d4733781cf0c">{"x":{"data":[{"x":[-0.95,0.95,0.95,-0.95,-0.95],"y":[1.6,1.6,3.5,3.5,1.6],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.95,-0.95,0,0.95,0.95,-0.95,-0.95],"y":[0,0.15,0.25,0.15,0,0,0],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"fill":"toself","fillcolor":"rgba(255,255,255,1)","hoveron":"fills","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1.61,3.11,3.11,1.61,1.61],"y":[0,0,5.5,5.5,0],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(211,211,211,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-1.61,-3.11,-3.11,-1.61,-1.61],"y":[0,0,5.5,5.5,0],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(211,211,211,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[2.36],"y":[2.75],"text":"RHB","hovertext":"","textfont":{"size":14.6645669291339,"color":"rgba(211,211,211,1)"},"type":"scatter","mode":"text","hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-2.36],"y":[2.75],"text":"LHB","hovertext":"","textfont":{"size":14.6645669291339,"color":"rgba(211,211,211,1)"},"type":"scatter","mode":"text","hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.82175925,-0.647620365,-0.382484748],"y":[3.682962156,2.578322401,3.954053339],"text":["Count:  0 - 0 ","Count:  0 - 0 ","Count:  3 - 0 "],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"Fastball","legendgroup":"Fastball","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.7625570776256,"r":7.30593607305936,"b":13.8812785388128,"l":10.958904109589},"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"Fastball Takes","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-4.95,4.95],"tickmode":"array","ticktext":["-2.5","0.0","2.5"],"tickvals":[-2.5,0,2.5],"categoryorder":"array","categoryarray":["-2.5","0.0","2.5"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":false,"tickfont":{"color":null,"family":null,"size":0},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":{"text":"","font":{"color":null,"family":null,"size":0}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.275,5.775],"tickmode":"array","ticktext":["0","2","4"],"tickvals":[0,2,4],"categoryorder":"array","categoryarray":["0","2","4"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":false,"tickfont":{"color":null,"family":null,"size":0},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x","title":{"text":"","font":{"color":null,"family":null,"size":0}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"y":1},"hovermode":"closest","barmode":"relative","dragmode":"pan"},"config":{"doubleClick":"reset","showSendToCloud":false},"source":"A","attrs":{"13c1731f21bf":{"x":{},"y":{},"type":"scatter"},"13c11d8e6fad":{"x":{},"y":{}},"13c13eaf49d2":{"x":{},"y":{}},"13c1654e89ff":{"x":{},"y":{}},"13c114eeca5c":{"x":{},"y":{}},"13c13a377913":{"x":{},"y":{}},"13c14a39a4e2":{"x":{},"y":{},"colour":{},"text":{}}},"cur_data":"13c1731f21bf","visdat":{"13c1731f21bf":["function (y) ","x"],"13c11d8e6fad":["function (y) ","x"],"13c13eaf49d2":["function (y) ","x"],"13c1654e89ff":["function (y) ","x"],"13c114eeca5c":["function (y) ","x"],"13c13a377913":["function (y) ","x"],"13c14a39a4e2":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-0279ad074d35a12ee75e" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0279ad074d35a12ee75e">{"x":{"data":[{"x":[-0.95,0.95,0.95,-0.95,-0.95],"y":[1.6,1.6,3.5,3.5,1.6],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.95,-0.95,0,0.95,0.95,-0.95,-0.95],"y":[0,0.15,0.25,0.15,0,0,0],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"fill":"toself","fillcolor":"rgba(255,255,255,1)","hoveron":"fills","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1.61,3.11,3.11,1.61,1.61],"y":[0,0,5.5,5.5,0],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(211,211,211,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-1.61,-3.11,-3.11,-1.61,-1.61],"y":[0,0,5.5,5.5,0],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(211,211,211,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[2.36],"y":[2.75],"text":"RHB","hovertext":"","textfont":{"size":14.6645669291339,"color":"rgba(211,211,211,1)"},"type":"scatter","mode":"text","hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-2.36],"y":[2.75],"text":"LHB","hovertext":"","textfont":{"size":14.6645669291339,"color":"rgba(211,211,211,1)"},"type":"scatter","mode":"text","hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.590838352,-0.741003139],"y":[2.553953496,2.304807174],"text":["Pitch Type:  ChangeUp <br>Velocity:  75.92 <br>Spin Rate:  1587.64","Pitch Type:  ChangeUp <br>Velocity:  79.86 <br>Spin Rate:  1937.27"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(163,165,0,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(163,165,0,1)"}},"hoveron":"points","name":"ChangeUp","legendgroup":"ChangeUp","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.603118556,0.351698078],"y":[2.616407264,2.89412952],"text":["Pitch Type:  Curveball <br>Velocity:  73.75 <br>Spin Rate:  2045.20","Pitch Type:  Curveball <br>Velocity:  73.94 <br>Spin Rate:  2086.29"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,176,246,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,176,246,1)"}},"hoveron":"points","name":"Curveball","legendgroup":"Curveball","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.795226525,0.049610984,0.426678523,-0.699742733,0.605880924],"y":[2.132748121,2.849951536,2.200355195,2.247860405,3.032712152],"text":["Pitch Type:  Fastball <br>Velocity:  87.29 <br>Spin Rate:  2091.81","Pitch Type:  Fastball <br>Velocity:  80.16 <br>Spin Rate:  1760.51","Pitch Type:  Fastball <br>Velocity:  80.86 <br>Spin Rate:  1958.50","Pitch Type:  Fastball <br>Velocity:  89.19 <br>Spin Rate:  2107.72","Pitch Type:  Fastball <br>Velocity:  88.94 <br>Spin Rate:  1948.30"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"Fastball","legendgroup":"Fastball","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.7625570776256,"r":7.30593607305936,"b":13.8812785388128,"l":10.958904109589},"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"Swings & Misses","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-4.95,4.95],"tickmode":"array","ticktext":["-2.5","0.0","2.5"],"tickvals":[-2.5,0,2.5],"categoryorder":"array","categoryarray":["-2.5","0.0","2.5"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":false,"tickfont":{"color":null,"family":null,"size":0},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":{"text":"","font":{"color":null,"family":null,"size":0}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.275,5.775],"tickmode":"array","ticktext":["0","2","4"],"tickvals":[0,2,4],"categoryorder":"array","categoryarray":["0","2","4"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":false,"tickfont":{"color":null,"family":null,"size":0},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x","title":{"text":"","font":{"color":null,"family":null,"size":0}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"y":1},"hovermode":"closest","barmode":"relative","dragmode":"pan"},"config":{"doubleClick":"reset","showSendToCloud":false},"source":"A","attrs":{"13c1786939a0":{"x":{},"y":{},"type":"scatter"},"13c151bcf9f1":{"x":{},"y":{}},"13c12baa6d3a":{"x":{},"y":{}},"13c1646e78cc":{"x":{},"y":{}},"13c1393e287b":{"x":{},"y":{}},"13c136daa3aa":{"x":{},"y":{}},"13c177452e63":{"x":{},"y":{},"colour":{},"text":{}}},"cur_data":"13c1786939a0","visdat":{"13c1786939a0":["function (y) ","x"],"13c151bcf9f1":["function (y) ","x"],"13c12baa6d3a":["function (y) ","x"],"13c1646e78cc":["function (y) ","x"],"13c1393e287b":["function (y) ","x"],"13c136daa3aa":["function (y) ","x"],"13c177452e63":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+
+<div id = "footer">
+  
+  
+<p>
+<strong>Cameron Lyons</strong><br>
+Phone: 336-407-4710<br>
+<a href="mailto:lyonscf@appstate.edu">lyonscf@appstate.edu</a><br>
+
+      
+<p>&nbsp;</p>
+          
+</div>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

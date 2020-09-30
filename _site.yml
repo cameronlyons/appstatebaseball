@@ -97,7 +97,35 @@ navbar:
         href: 21bryson.html
       - text: "Phillip Cole"
         href: 21cole.html
-
+      - text: "Hayden Cross"
+        href: 21cross.html
+      - text: "Luke Drumheller"
+        href: 21drumheller.html
+      - text: "Andrew Greckel"
+        href: 21greckel.html
+      - text: "Kasilios Kaloudis"
+        href: 21kaloudis.html
+      - text: "Alex Leshock"
+        href: 21leshock.html
+      - text: "Trent Lewis"
+        href: 21lewis.html
+      - text: "Jack Lipson"
+        href: 21lipson.html
+      - text: "Kendall McGowan"
+        href: 21mcgowan.html
+      - text: "Austin Raynor"
+        href: 21raynor.html
+      - text: "Andrew Terrell"
+        href: 21terrell.html
+      - text: "Bailey Welch"
+        href: 21welch.html
+      - text: "Dalton Williams"
+        href: 21williams.html
+      - text: "JD Yakubinis"
+        href: 21yakubinis.html
+      - text: "Robbie Young"
+        href: 21young.html
+      
 output:
   html_document: 
     theme: cosmo
