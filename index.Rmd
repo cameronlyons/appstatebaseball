@@ -5,3 +5,4 @@ title: "Appalachian State Baseball Analytics"
 **Last Updated:**  `r format(Sys.time(), "%A, %B %d, %Y")`
 
 <hr>
+

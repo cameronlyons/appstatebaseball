@@ -448,8 +448,27 @@ $(document).ready(function () {
 </div>
 
 
-<p><strong>Last Updated:</strong> Wednesday, March 11, 2020</p>
+<p><strong>Last Updated:</strong> Saturday, September 19, 2020</p>
 <hr>
+<p>{% for entry in site.data.navigation %} {% capture fullurl %}{{ site.baseurl }}{{ entry.url }}{% endcapture %} {% if fullurl == page.url %} {% assign current_page = fullurl %} {% break %} {% elsif page.url contains fullurl %} {% assign current_page = fullurl %} {% endif %} {% endfor %}</p>
+<!-- Then we build the nav bar. -->
+<nav>
+<ul>
+{% for entry in site.data.navigation %} {% if entry.url == current_page %} {% assign current = ’ class=“current”’ %} {% else %} <!-- We have to declare it 'null' to ensure it doesn't propagate. --> {% assign current = null %} {% endif %} {% assign sublinks = entry.sublinks %} {% if sublinks %} &lt;li{{ current }}&gt; <a href="{{ site.baseurl }}{{ entry.url }}">{{ entry.title }}</a>
+<ul>
+{% for sublink in sublinks %}
+<li>
+<a href="{{ site.baseurl }}{{ sublink.url }}">{{ sublink.title }}</a>
+</li>
+{% endfor %}
+</ul>
+<pre><code>&lt;/li&gt;
+    {% else %}
+    &lt;li{{ current }}&gt;&lt;a href=&quot;{{ site.baseurl }}{{ entry.url }}&quot;&gt;{{ entry.title }}&lt;/a&gt;&lt;/li&gt;
+    {% endif %}
+{% endfor %}
+&lt;/ul&gt;</code></pre>
+<p></nav></p>
 
 <div id = "footer">
   
