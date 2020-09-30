@@ -90,11 +90,13 @@ navbar:
         href: 20yakubinis.html
       - text: "Robbie Young"
         href: 20young.html
-- text: "2020-2021"
+    - text: "2020-2021"
       icon: 
       menu:
       - text: "Hunter Bryson"
         href: 21bryson.html
+      - text: "Phillip Cole"
+        href: 21cole.html
 
 output:
   html_document: 
