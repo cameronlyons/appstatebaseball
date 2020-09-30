@@ -1,0 +1,543 @@
+---
+title: "Phillip Cole"
+---
+
+<hr>
+
+```{r Setup,label = "SETUP", include=FALSE, results = 'hide'}
+knitr::opts_chunk$set(echo = FALSE, fig.align = "center", comment = NA, warning = FALSE, message = FALSE)
+library(utils)
+library(dplyr)
+library(stringr)
+library(ggplot2)
+library(gridExtra)
+library(plotly)
+library(lubridate)
+library(scales)
+master <- read.csv("2020-2021.csv")
+master$Date <- as.Date(master$Date , "%m/%d/%Y")
+hitter <- master %>%
+  filter(Batter == "Cole, Phillip")
+```
+
+```{r Batter Summary}
+s <- sum(str_count(hitter$PlayResult, "Single"))
+do <- sum(str_count(hitter$PlayResult, "Double"))
+t <- sum(str_count(hitter$PlayResult, "Triple"))
+hr <- sum(str_count(hitter$PlayResult, "HomeRun"))
+hit <- sum(s + do + t + hr)
+inpl <- sum(str_count(hitter$PitchCall, "InPlay"))
+rbi <- sum(hitter$RunsScored)
+bb <- sum(str_count(hitter$KorBB, "Walk"))
+hbp <- sum(str_count(hitter$PitchCall, "HitByPitch"))
+walk <- sum(hbp + bb)
+sac <- sum(str_count(hitter, "Sacrifice"))
+es <- hitter %>%
+  filter(PitchCall == "InPlay" & ExitSpeed & !hitter$HitType == "Bunt")
+la <- hitter %>%
+  filter(PitchCall == "InPlay" & Angle & !hitter$HitType == "Bunt")
+so <- sum(str_count(hitter$KorBB, "Strikeout"))
+pa <- inpl + walk + so
+ab <- pa - walk - sac
+avg <- hit / ab
+obp <- (hit + walk) / pa
+tb <- sum(s + (2 * do) + (3 * t) + (4 * hr)) 
+slg <- tb / ab
+ops <- obp + slg
+```
+
+| | | | | | | 2019-2020 TrackMan Statistics
+-|-|-|-|-|-|-|-
+PA:|`r pa`| 2B:| `r do` | RBI: |`r rbi`| AVG: |`r sprintf("%.3f", avg)` |
+AB: |`r ab` | 3B: | `r t` | BB: |`r bb` |OBP: | `r sprintf("%.3f", obp)`|
+Hits: |`r hit`| HR: | `r hr` | HBP: | `r hbp` | SLG: | `r sprintf("%.3f", slg)`|
+ | SO: |`r so` ||||| OPS: | `r sprintf("%.3f", ops)`
+
+Advanced Stats| | 
+-|-|
+AVG Exit Velocity: | `r sprintf("%.2f", mean(es$ExitSpeed, na.rm = TRUE))` mph
+Max Exit Velocity: | `r sprintf("%.2f", max(es$ExitSpeed, na.rm = TRUE))` mph
+AVG Launch Angle: | `r sprintf("%.2f", mean(la$Angle, na.rm = TRUE))` degrees
+Max Estimated Distance: | `r sprintf("%.2f", max(hitter$Distance, na.rm = TRUE))` feet
+
+```{r Split Stats}
+pitcher_r <- hitter %>%
+  filter(PitcherThrows == "Right")
+s_r <- sum(str_count(pitcher_r$PlayResult, "Single"))
+do_r <- sum(str_count(pitcher_r$PlayResult, "Double"))
+t_r <- sum(str_count(pitcher_r$PlayResult, "Triple"))
+hr_r <- sum(str_count(pitcher_r$PlayResult, "HomeRun"))
+hit_r <- sum(s_r + do_r + t_r + hr_r)
+inpl_r <- sum(str_count(pitcher_r$PitchCall, "InPlay"))
+rbi_r <- sum(pitcher_r$RunsScored)
+bb_r <- sum(str_count(pitcher_r$KorBB, "Walk"))
+hbp_r <- sum(str_count(pitcher_r$PitchCall, "HitByPitch"))
+walk_r <- sum(hbp_r + bb_r)
+sac_r <- sum(str_count(pitcher_r, "Sacrifice"))
+es_r <- pitcher_r %>%
+  filter(PitchCall == "InPlay" & ExitSpeed & !pitcher_r$HitType == "Bunt")
+la_r <- pitcher_r %>%
+  filter(PitchCall == "InPlay" & Angle & !pitcher_r$HitType == "Bunt")
+so_r <- sum(str_count(pitcher_r$KorBB, "Strikeout"))
+pa_r <- inpl_r + walk_r + so_r
+ab_r <- pa_r - walk_r - sac_r
+avg_r <- hit_r / ab_r
+obp_r <- (hit_r + walk_r) / pa_r
+tb_r <- sum(s_r + (2 * do_r) + (3 * t_r) + (4 * hr_r)) 
+slg_r <- tb_r / ab_r
+ops_r <- obp_r + slg_r
+
+pitcher_l <- hitter %>%
+  filter(PitcherThrows == "Left")
+s_l <- sum(str_count(pitcher_l$PlayResult, "Single"))
+do_l <- sum(str_count(pitcher_l$PlayResult, "Double"))
+t_l <- sum(str_count(pitcher_l$PlayResult, "Triple"))
+hr_l <- sum(str_count(pitcher_l$PlayResult, "HomeRun"))
+hit_l <- sum(s_l + do_l + t_l + hr_l)
+inpl_l <- sum(str_count(pitcher_l$PitchCall, "InPlay"))
+rbi_l <- sum(pitcher_l$RunsScored)
+bb_l <- sum(str_count(pitcher_l$KorBB, "Walk"))
+hbp_l <- sum(str_count(pitcher_l$PitchCall, "HitByPitch"))
+walk_l <- sum(hbp_l + bb_l)
+sac_l <- sum(str_count(pitcher_l, "Sacrifice"))
+es_l <- pitcher_l %>%
+  filter(PitchCall == "InPlay" & ExitSpeed & !pitcher_l$HitType == "Bunt")
+la_l <- pitcher_l %>%
+  filter(PitchCall == "InPlay" & Angle & !pitcher_l$HitType == "Bunt")
+so_l <- sum(str_count(pitcher_l$KorBB, "Strikeout"))
+pa_l <- inpl_l + walk_l + so_l
+ab_l <- pa_l - walk_l - sac_l
+avg_l <- hit_l / ab_l
+obp_l <- (hit_l + walk_l) / pa_l
+tb_l <- sum(s_l + (2 * do_l) + (3 * t_l) + (4 * hr_l)) 
+slg_l <- tb_l / ab_l
+ops_l <- obp_l + slg_l
+```
+
+Split Stats||
+-|-|-
+||*RHP*|*LHP*
+Hits:|`r hit_r`|`r hit_l`
+AB: |`r ab_r`|`r ab_l`
+SO: | `r so_r`|`r so_l`
+BB: |`r bb_r`|`r bb_l`
+HBP: |`r hbp_r`| `r hbp_l`
+AVG: |`r sprintf("%.3f", avg_r)`|`r sprintf("%.3f", avg_l)`
+OPS: |`r sprintf("%.3f", ops_r)`|`r sprintf("%.3f", ops_l)`
+AVG Exit Velocity:|`r sprintf("%.2f", mean(es_r$ExitSpeed, na.rm = TRUE))` mph|`r sprintf("%.2f", mean(es_l$ExitSpeed, na.rm = TRUE))` mph
+AVG Launch Angle:|`r sprintf("%.2f", mean(la_r$Angle, na.rm = TRUE))` degrees|`r sprintf("%.2f", mean(la_l$Angle, na.rm = TRUE))` degrees
+
+<center>
+```{r Spray Chart}
+hitter$Bearing <- ((hitter$Bearing * -1) + 90)*pi/180
+hitter$x <- hitter$Distance*cos(hitter$Bearing)
+hitter$y <- hitter$Distance*sin(hitter$Bearing)
+bases <- data.frame(xa = c(0, 90/sqrt(2), 0, -90/sqrt(2), 0, rep(0)),
+ya = c(0, 90/sqrt(2), 2 * 90/sqrt(2), 90/sqrt(2), 0, rep(0)))
+sprayfilter <- hitter %>%
+  filter(!PlayResult == "Undefined" & !PlayResult == "Sacrifice")
+bb <- ggplot(bases, aes(x = xa, y = ya)) + 
+  geom_path() + 
+  geom_point(data = sprayfilter, x = sprayfilter$x, y = sprayfilter$y, 
+             aes(color = factor(sprayfilter$PlayResult), 
+                 text = paste("Exit Speed: ", sprintf("%.2f", ExitSpeed),
+                               "<br> Distance: ", sprintf("%.2f", Distance),
+                               "<br> Angle: ", sprintf("%.2f", Angle)))) + 
+  geom_segment(x = 0, xend = -233.35, y = 0, yend = 233.35) +
+  geom_segment(x = -233.35, xend = -160.59, y = 233.35, yend = 340) + 
+  geom_segment(x = -160.59, xend = -49.36, y = 340, yend = 401.98) +
+  geom_segment(x = -49.36, xend = 49.36, y = 401.98, yend = 401.98) +
+  geom_segment(x = 49.36, xend = 157.67, y = 401.98, yend = 338.05) +
+  geom_segment(x = 157.67, xend = 229.81, y = 338.05, yend = 229.81) +
+  geom_segment(x = 229.81, xend = 0, y = 229.81, yend = 0) +
+  xlim(-250, 250) + ylim(-10, 500) +
+  theme(axis.line = element_blank(),
+      axis.text.x = element_blank(),
+      axis.text.y = element_blank(),
+      axis.ticks = element_blank(),
+      axis.title.x = element_blank(),
+      axis.title.y = element_blank(),
+      panel.background = element_blank(),
+      panel.border = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank(),
+      plot.background = element_blank(),
+      legend.title = element_blank()) +
+  coord_equal() +
+  scale_color_discrete(limits = c("Single" ,"Double", "Triple", "HomeRun", "Out", "FieldersChoice", "Error"))
+layout(ggplotly(bb, tooltip = "text"), dragmode = "pan")
+```
+
+```{r Launch Angle}
+lax <- c(0, 6, 0, 5.976, 0, 5.909, 0, 5.796, 0, 5.638, 0, 5.438, 0, 5.196, 0, 4.915, 0, 4.596, 0, 4.242)
+lay <- c(0, 0, 0, 0.523, 0, 1.042, 0, 1.553, 0, 2.052, 0, 2.535, 0, 3, 0, 3.441, 0, 3.856, 0, 4.242)
+laxy <- data_frame(lax, lay)
+lax1 <- c(0, 6, 0, 5.976, 0, 5.909, 0, 5.796, 0, 5.638, 0, 5.438)
+lay1 <- c(0, 0, 0, -0.523, 0, -1.042, 0, -1.553, 0, -2.052, 0, -2.535)
+lax1y1 <- data_frame(lax1, lay1)
+
+la_g <- ggplot() +
+  geom_path(data = laxy, aes(x = lax, y = lay), color = "black") +
+  geom_path(data = lax1y1, aes(x = lax1, y = lay1), color = "black") + 
+  coord_fixed() +
+  theme(axis.line = element_blank(),
+      axis.text.x = element_blank(),
+      axis.text.y = element_blank(),
+      axis.ticks = element_blank(),
+      axis.title.x = element_blank(),
+      axis.title.y = element_blank(),
+      panel.background = element_blank(),
+      panel.border = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank(),
+      plot.background = element_blank(),
+      legend.title = element_blank())
+
+la_g <- la_g + 
+  annotate(geom = "text", x = 6.40, y = 0, label = "0°",angle = 0) + 
+  annotate(geom = "text", x = 6.376, y = 0.558, label = "5°",angle = 5) +
+  annotate(geom = "text", x = 6.303, y = 1.111, label = "10°",angle = 10) +
+  annotate(geom = "text", x = 6.182, y = 1.656, label = "15°",angle = 15) +
+  annotate(geom = "text", x = 6.014, y = 2.189, label = "20°",angle = 20) +
+  annotate(geom = "text", x = 5.8, y = 2.705, label = "25°",angle = 25) +
+  annotate(geom = "text", x = 5.543, y = 3.2, label = "30°",angle = 30) +
+  annotate(geom = "text", x = 5.243, y = 3.671, label = "35°",angle = 35) +
+  annotate(geom = "text", x = 4.903, y = 4.114, label = "40°",angle = 40) +
+  annotate(geom = "text", x = 4.525, y = 4.525, label = "45°",angle = 45) + 
+  annotate(geom = "text", x = 6.376, y = -0.558, label = "-5°",angle = -5) +
+  annotate(geom = "text", x = 6.303, y = -1.111, label = "-10°",angle = -10) +
+  annotate(geom = "text", x = 6.182, y = -1.656, label = "-15°",angle = -15) +
+  annotate(geom = "text", x = 6.014, y = -2.189, label = "-20°",angle = -20) +
+  annotate(geom = "text", x = 5.8, y = -2.705, label = "-25°",angle = -25)
+
+range0_5<- hitter %>%
+  filter(Angle >= 0) %>%
+  filter(Angle < 5) %>%
+  summarise(mean = mean(ExitSpeed))
+range5_10<- hitter %>%
+  filter(Angle >= 5) %>%
+  filter(Angle < 10) %>%
+  summarise(mean = mean(ExitSpeed))
+range10_15<- hitter %>%
+  filter(Angle >= 10) %>%
+  filter(Angle < 15) %>%
+  summarise(mean = mean(ExitSpeed))
+range15_20<- hitter %>%
+  filter(Angle >= 15) %>%
+  filter(Angle < 20) %>%
+  summarise(mean = mean(ExitSpeed))
+range20_25<- hitter %>%
+  filter(Angle >= 20) %>%
+  filter(Angle < 25) %>%
+  summarise(mean = mean(ExitSpeed))
+range25_30<- hitter %>%
+  filter(Angle >= 25) %>%
+  filter(Angle < 30) %>%
+  summarise(mean = mean(ExitSpeed))
+range30_35<- hitter %>%
+  filter(Angle >= 30) %>%
+  filter(Angle < 35) %>%
+  summarise(mean = mean(ExitSpeed))
+range35_40<- hitter %>%
+  filter(Angle >= 35) %>%
+  filter(Angle < 40) %>%
+  summarise(mean = mean(ExitSpeed))
+range40_45<- hitter %>%
+  filter(Angle >= 40) %>%
+  filter(Angle < 45) %>%
+  summarise(mean = mean(ExitSpeed))
+range0_5_<- hitter %>%
+  filter(Angle >= -5) %>%
+  filter(Angle < 0) %>%
+  summarise(mean = mean(ExitSpeed))
+range5_10_<- hitter %>%
+  filter(Angle >= -10) %>%
+  filter(Angle < -5) %>%
+  summarise(mean = mean(ExitSpeed))
+range10_15_<- hitter %>%
+  filter(Angle >= -15) %>%
+  filter(Angle < -10) %>%
+  summarise(mean = mean(ExitSpeed))
+range15_20_<- hitter %>%
+  filter(Angle >= -20) %>%
+  filter(Angle < -15) %>%
+  summarise(mean = mean(ExitSpeed))
+range20_25_<- hitter %>%
+  filter(Angle >= -25) %>%
+  filter(Angle < -20) %>%
+  summarise(mean = mean(ExitSpeed))
+
+la_g +
+  geom_text(mapping = aes(x = 5.5, y = 0.262), label = sprintf("%.2f", range0_5), angle = 5) +
+  geom_text(mapping = aes(x = 5.453, y = 0.718), label = sprintf("%.2f", range5_10), angle = 10) +
+  annotate(geom = "text", x = 5.37, y = 1.19, label = sprintf("%.2f", range10_15), angle = 15) +
+  annotate(geom = "text", x = 5.245, y = 1.654, label = sprintf("%.2f", range15_20), angle = 20) +
+  annotate(geom = "text", x = 5.081, y = 2.105, label = sprintf("%.2f", range20_25), angle = 25) +
+  annotate(geom = "text", x = 4.879, y = 2.54, label = sprintf("%.2f", range25_30), angle = 30) +
+  annotate(geom = "text", x = 4.639, y = 2.955, label = sprintf("%.2f", range30_35), angle = 35) +
+  annotate(geom = "text", x = 4.363, y = 3.348, label = sprintf("%.2f", range35_40), angle = 40) +
+  annotate(geom = "text", x = 4.055, y = 3.716, label = sprintf("%.2f", range40_45), angle = 45) +
+  annotate(geom = "text", x = 5.5, y = -0.262, label = sprintf("%.2f", range0_5_), angle = -5) +
+  annotate(geom = "text", x = 5.453, y = -0.718, label = sprintf("%.2f", range5_10_), angle = -10) +
+  annotate(geom = "text", x = 5.37, y = -1.19, label = sprintf("%.2f", range10_15_), angle = -15) +
+  annotate(geom = "text", x = 5.245, y = -1.654, label = sprintf("%.2f", range15_20_), angle = -20) +
+  annotate(geom = "text", x = 5.081, y = -2.105, label = sprintf("%.2f", range20_25_), angle = -25)
+```
+
+```{r Strike Zone/Home Plate/Batter/Text Mapping}
+x <- c(-.95,.95,.95,-.95,-.95)
+y <- c(1.6,1.6,3.5,3.5,1.6)
+sz <- data_frame(x, y)
+
+x1 <- c(-.95, -.95, 0, .95, .95, -.95)
+y1 <- c(0, .15, .25, .15, 0, 0)
+hp <- data_frame(x1, y1)
+
+x2 <- c(1.61, 3.11, 3.11, 1.61, 1.61)
+y2 <- c(0, 0, 5.5, 5.5, 0)
+rhb <- data_frame(x2, y2)
+
+x3 <- c(-1.61, -3.11, -3.11, -1.61, -1.61)
+y3 <- c(0, 0, 5.5, 5.5, 0)
+lhb <- data_frame(x3, y3)
+
+x4 <- c(-.95, .95, .95, -.95)
+y4 <- c(2.233, 2.233, 2.866, 2.866)
+szv <- data_frame(x4, y4)
+
+x5 <- c(-0.316, -0.316, 0.316, 0.316)
+y5 <- c(1.6, 3.5, 3.5, 1.6)
+szh <- data_frame(x5, y5)
+
+x6 <- c(0, 0, 1.267, 1.267, .95, 1.267, 1.267, 0, 0, 0, -1.267, -1.267, -.95, -1.267, -1.267, 0)
+y6 <- c(3.5, 3.817, 3.817, 2.55, 2.55, 2.55, 1.283, 1.283, 1.6, 1.283, 1.283, 2.55, 2.55, 2.55, 3.817, 3.817)
+bllz <- data_frame(x6, y6)
+```
+
+```{r Heat Map}
+exits <- hitter %>%
+  filter(PitchCall == "InPlay" & ExitSpeed & !hitter$HitType == "Bunt")
+tr <- exits %>%
+  filter(PlateLocSide >= .316 & PlateLocSide <= .95 & PlateLocHeight >= 2.886 & PlateLocHeight <= 3.5) %>%
+  summarise(mean = mean(ExitSpeed, na.rm = TRUE))
+t <- exits %>%
+  filter(PlateLocSide <= .316 & PlateLocSide >= -.316 & PlateLocHeight >= 2.886 & PlateLocHeight <= 3.5) %>%
+  summarise(mean = mean(ExitSpeed, na.rm = TRUE))
+tl <- exits %>%
+  filter(PlateLocSide <= -.316 & PlateLocSide >= -.95 & PlateLocHeight >= 2.886 & PlateLocHeight <= 3.5) %>%
+  summarise(mean = mean(ExitSpeed, na.rm = TRUE))
+mr <- exits %>%
+  filter(PlateLocSide >= .316 & PlateLocSide <= .95 & PlateLocHeight <= 2.886 & PlateLocHeight >= 2.233) %>%
+  summarise(mean = mean(ExitSpeed, na.rm = TRUE))
+m <- exits %>%
+  filter(PlateLocSide <= .316 & PlateLocSide >= -.316 & PlateLocHeight <= 2.886 & PlateLocHeight >= 2.233) %>%
+  summarise(mean = mean(ExitSpeed, na.rm = TRUE))
+ml <- exits %>%
+  filter(PlateLocSide <= -.316 & PlateLocSide >= -.95 & PlateLocHeight <= 2.886 & PlateLocHeight >= 2.233) %>%
+  summarise(mean = mean(ExitSpeed, na.rm = TRUE))
+br <- exits %>%
+  filter(PlateLocSide >= .316 & PlateLocSide <= .95 & PlateLocHeight <= 2.223 & PlateLocHeight >= 1.6) %>%
+  summarise(mean = mean(ExitSpeed, na.rm = TRUE))
+b <- exits %>%
+  filter(PlateLocSide <= .316 & PlateLocSide >= -.316 & PlateLocHeight <= 2.223 & PlateLocHeight >= 1.6) %>%
+  summarise(mean = mean(ExitSpeed, na.rm = TRUE))
+bl <- exits %>%
+  filter(PlateLocSide <= -.316 & PlateLocSide >= -.95 & PlateLocHeight <= 2.223 & PlateLocHeight >= 1.6) %>%
+  summarise(mean = mean(ExitSpeed, na.rm = TRUE))
+btr <- exits %>%
+  filter(PlateLocSide >= .95 & PlateLocHeight >= 2.55 | PlateLocSide >= 0 & PlateLocHeight >= 3.5) %>%
+  summarise(mean = mean(ExitSpeed, na.rm = TRUE))
+btl <- exits %>%
+  filter(PlateLocSide <= -.95 & PlateLocHeight >= 2.55 | PlateLocSide <= 0 & PlateLocHeight >= 3.5) %>%
+  summarise(mean = mean(ExitSpeed, na.rm = TRUE))
+bbr <- exits %>%
+  filter(PlateLocSide >= .95 & PlateLocHeight <= 2.55 | PlateLocSide >= 0 & PlateLocHeight <= 1.6) %>%
+  summarise(mean = mean(ExitSpeed, na.rm = TRUE))
+bbl <- exits %>%
+  filter(PlateLocSide <= -.95 & PlateLocHeight <= 2.55 | PlateLocSide <= 0 & PlateLocHeight <= 1.6) %>%
+  summarise(mean = mean(ExitSpeed, na.rm = TRUE))
+
+xtr <- c(.623)
+ytr <- c(3.193)
+trdf <- data.frame(x = xtr, y = ytr, z = tr)
+xt <- c(0)
+yt <- c(3.193)
+tdf <- data.frame(x = xt, y = yt, z = t)
+xtl <- c(-.623)
+ytl <- c(3.193)
+tldf <- data.frame(x = xtl, y = ytl, z = tl)
+xmr <- c(.623)
+ymr <- c(2.55)
+mrdf <- data.frame(x = xmr, y = ymr, z = mr)
+xm <- c(0)
+ym <- c(2.55)
+mdf <- data.frame(x = xm, y = ym, z = m)
+xml <- c(-.623)
+yml <- c(2.55)
+mldf <- data.frame(x = xml, y = yml, z = ml)
+xbr <- c(.623)
+ybr <- c(1.917)
+brdf <- data.frame(x = xbr, y = ybr, z = br)
+xb <- c(0)
+yb <- c(1.917)
+bdf <- data.frame(x = xb, y = yb, z = b)
+xbl <- c(-.623)
+ybl <- c(1.917)
+bldf <- data.frame(x = xbl, y = ybl, z = bl)
+hmsdf <- rbind(trdf, tdf, tldf, mrdf, mdf, mldf, brdf, bdf, bldf)
+hmsdf[is.na(hmsdf)] <- 0
+xbtr <- c(.634)
+ybtr <- c(3.184)
+btrdf <- data.frame(x = xbtr, y = ybtr, z = btr)
+xbtl <- c(-.634)
+ybtl <- c(3.184)
+btldf <- data.frame(x = xbtl, y = ybtl, z = btl)
+xbbr <- c(.634)
+ybbr <- c(1.917)
+bbrdf <- data.frame(x = xbbr, y = ybbr, z = bbr)
+xbbl <- c(-.634)
+ybbl <- c(1.917)
+bbldf <- data.frame(x = xbbl, y = ybbl, z = bbl)
+hmbdf <- rbind(btrdf, btldf, bbrdf, bbldf)
+hmbdf[is.na(hmbdf)] <- 0
+
+hmp <- ggplot(hmsdf, aes(x, y)) +
+  geom_tile(data = hmbdf, aes(fill = mean), width = 1.267, height = 1.267, na.value = "white") +
+  geom_tile(aes(fill = mean), width = .633, height = .633, na.value = "white") +
+  scale_fill_gradient2(low = "blue", mid = "white", high = "red", midpoint = 85, limits = c(75, 95), oob = squish) +
+  labs(fill = "") +
+  geom_path(data = sz, aes(x = x, y = y)) +
+  geom_path(data = szv, aes(x = x4, y = y4)) +
+  geom_path(data = szh, aes(x = x5, y = y5)) +
+  geom_path(data = bllz, aes(x = x6, y = y6)) +
+  geom_text(mapping = aes(x = .623, y = 3.193), label = paste(sprintf("%.2f", tr)), size = 2.5) +
+  geom_text(mapping = aes(x = 0, y = 3.193), label = paste(sprintf("%.2f", t)), size = 2.5) +
+  geom_text(mapping = aes(x = -.623, y = 3.193), label = paste(sprintf("%.2f", tl)), size = 2.5) +
+  geom_text(mapping = aes(x = .623, y = 2.55), label = paste(sprintf("%.2f", mr)), size = 2.5) +
+  geom_text(mapping = aes(x = 0, y = 2.55), label = paste(sprintf("%.2f", m)), size = 2.5) +
+  geom_text(mapping = aes(x = -.623, y = 2.55), label = paste(sprintf("%.2f", ml)), size = 2.5) +
+  geom_text(mapping = aes(x = .623, y = 1.917), label = paste(sprintf("%.2f", br)), size = 2.5) +
+  geom_text(mapping = aes(x = 0, y = 1.917), label = paste(sprintf("%.2f", b)), size = 2.5) +
+  geom_text(mapping = aes(x = -.623, y = 1.917), label = paste(sprintf("%.2f", bl)), size = 2.5) +
+  geom_text(mapping = aes(x = .95, y = 3.659), label = paste(sprintf("%.2f", btr)), size = 2.5) +
+  geom_text(mapping = aes(x = -.95, y = 3.659), label = paste(sprintf("%.2f", btl)), size = 2.5) +
+  geom_text(mapping = aes(x = .95, y = 1.442), label = paste(sprintf("%.2f", bbr)), size = 2.5) +
+  geom_text(mapping = aes(x = -.95, y = 1.442), label = paste(sprintf("%.2f", bbl)), size = 2.5) +
+  geom_path(data = rhb, aes(x = x2, y = y2), color = "lightgray") +
+  geom_path(data = lhb, aes(x = x3, y = y3), color = "lightgray") +
+  geom_text(mapping = aes(x = 2.36, y = 2.75), label = paste("RHB"), color = "lightgray") +
+  geom_text(mapping = aes(x = -2.36, y = 2.75), label = paste("LHB"), color = "lightgray") +
+  geom_polygon(hp, mapping = aes(x = x1, y = y1), color = "black", fill = "white") +
+  coord_equal() +
+  ggtitle("Exit Velocities Heat Map") +
+  coord_cartesian(xlim = c(-4.5, 4.5), ylim = c(0, 5.5)) +
+  theme(axis.line = element_blank(),
+      axis.text.x = element_blank(),
+      axis.text.y = element_blank(),
+      axis.ticks = element_blank(),
+      axis.title.x = element_blank(),
+      axis.title.y = element_blank(),
+      panel.background = element_blank(),
+      panel.border = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank(),
+      plot.background = element_blank(),
+      legend.title = element_blank())
+layout(style(ggplotly(hmp), hoverinfo = "none"), dragmode = "pan")
+```
+
+```{r Ninety Plus}
+NinetyPlus <- hitter %>%
+  filter(ExitSpeed >= 90)
+np <- ggplot() +
+  geom_path(data = sz, aes(x = x, y = y)) +
+  geom_polygon(hp, mapping = aes(x = x1, y = y1), color = "black", fill = "white") +
+  geom_path(data = rhb, aes(x = x2, y = y2), color = "lightgray") +
+  geom_path(data = lhb, aes(x = x3, y = y3), color = "lightgray") +
+  geom_text(mapping = aes(x = 2.36, y = 2.75), label = paste("RHB"), color = "lightgray") +
+  geom_text(mapping = aes(x = -2.36, y = 2.75), label = paste("LHB"), color = "lightgray") +
+  coord_equal() +
+  ggtitle("90+ Exit Velocities") +
+  geom_point(data = NinetyPlus,
+             aes(x = PlateLocSide, y = PlateLocHeight, color = TaggedPitchType, 
+                 text = paste("Pitch Type: ", TaggedPitchType, "<br>Exit Speed: ", sprintf("%.2f", ExitSpeed), "<br> Distance: ", sprintf("%.2f", Distance), "<br> Launch Angle: ", sprintf("%.2f", Angle)))) +
+  scale_color_discrete(limits = c("Fastball" ,"ChangeUp", "Splitter", "Curveball", "Slider")) +
+  coord_cartesian(xlim = c(-4.5, 4.5), ylim = c(0, 5.5)) +
+  theme(axis.line = element_blank(),
+      axis.text.x = element_blank(),
+      axis.text.y = element_blank(),
+      axis.ticks = element_blank(),
+      axis.title.x = element_blank(),
+      axis.title.y = element_blank(),
+      panel.background = element_blank(),
+      panel.border = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank(),
+      plot.background = element_blank(),
+      legend.title = element_blank())
+layout(ggplotly(np, tooltip = "text"), dragmode = "pan")
+```
+
+```{r Fastball Takes}
+FastballTakes <- hitter %>%
+  filter(TaggedPitchType == "Fastball" & PitchCall == "StrikeCalled")
+FastballTakes$Count <- paste(FastballTakes$Balls, "-", FastballTakes$Strikes, "") 
+ft <- ggplot() +
+  geom_path(data = sz, aes(x = x, y = y)) +
+  geom_polygon(hp, mapping = aes(x = x1, y = y1), color = "black", fill = "white") +
+  geom_path(data = rhb, aes(x = x2, y = y2), color = "lightgray") +
+  geom_path(data = lhb, aes(x = x3, y = y3), color = "lightgray") +
+  geom_text(mapping = aes(x = 2.36, y = 2.75), label = paste("RHB"), color = "lightgray") +
+  geom_text(mapping = aes(x = -2.36, y = 2.75), label = paste("LHB"), color = "lightgray") +
+  coord_equal() +
+  xlab("Plate Width") +
+  ylab("Plate Height") +
+  ggtitle("Fastball Takes") +
+  geom_point(data = FastballTakes,aes(x = PlateLocSide, y = PlateLocHeight, color = TaggedPitchType, text = paste("Count: ", Count))) +
+  coord_cartesian(xlim = c(-4.5, 4.5), ylim = c(0, 5.5)) +
+  theme(axis.line = element_blank(),
+      axis.text.x = element_blank(),
+      axis.text.y = element_blank(),
+      axis.ticks = element_blank(),
+      axis.title.x = element_blank(),
+      axis.title.y = element_blank(),
+      panel.background = element_blank(),
+      panel.border = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank(),
+      plot.background = element_blank(),
+      legend.title = element_blank())
+layout(ggplotly(ft, tooltip = "text"), dragmode = "pan")
+```
+
+```{r Whiffs}
+Whiffs <- hitter %>%
+  filter(PitchCall == "StrikeSwinging")
+wh <- ggplot() +
+  geom_path(data = sz, aes(x = x, y = y)) +
+  geom_polygon(hp, mapping = aes(x = x1, y = y1), color = "black", fill = "white") +
+  geom_path(data = rhb, aes(x = x2, y = y2), color = "lightgray") +
+  geom_path(data = lhb, aes(x = x3, y = y3), color = "lightgray") +
+  geom_text(mapping = aes(x = 2.36, y = 2.75), label = paste("RHB"), color = "lightgray") +
+  geom_text(mapping = aes(x = -2.36, y = 2.75), label = paste("LHB"), color = "lightgray") +
+  coord_equal() +
+  xlab("Plate Width") +
+  ylab("Plate Height") +
+  ggtitle("Swings & Misses") +
+  geom_point(data = Whiffs,aes(x = PlateLocSide, y = PlateLocHeight, color = TaggedPitchType, text = paste("Pitch Type: ", TaggedPitchType, "<br>Velocity: ", sprintf("%.2f", RelSpeed), "<br>Spin Rate: ", sprintf("%.2f", SpinRate)))) +
+  scale_color_discrete(limits = c("Fastball" ,"ChangeUp", "Splitter", "Curveball", "Slider")) +
+  coord_cartesian(xlim = c(-4.5, 4.5), ylim = c(0, 5.5)) +
+  theme(axis.line = element_blank(),
+      axis.text.x = element_blank(),
+      axis.text.y = element_blank(),
+      axis.ticks = element_blank(),
+      axis.title.x = element_blank(),
+      axis.title.y = element_blank(),
+      panel.background = element_blank(),
+      panel.border = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank(),
+      plot.background = element_blank(),
+      legend.title = element_blank())
+layout(ggplotly(wh, tooltip = "text"), dragmode = "pan")
+```

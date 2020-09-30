@@ -4,17 +4,6 @@ output_dir: "."
 navbar:
   title: "Appalachian State Baseball"
   right:
-    - text: "Scouting"
-      icon: 
-      menu:
-      - text: "Georgia Southern"
-        href: GEO_EAG.html
-      - text: "Louisiana Monroe"
-        href: ULM_WAR.html
-      - text: "Radford"
-        href: RAD_HIG.html
-      - text: "Western Carollina"
-        href: WCC.html
     - text: "2018-2019"
       icon: 
       menu:
@@ -101,7 +90,7 @@ navbar:
         href: 20yakubinis.html
       - text: "Robbie Young"
         href: 20young.html
-- text: "2019-2020"
+- text: "2020-2021"
       icon: 
       menu:
       - text: "Hunter Bryson"
