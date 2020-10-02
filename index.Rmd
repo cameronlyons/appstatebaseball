@@ -18,5 +18,6 @@ season <- read_csv("2020-2021.csv")
 season <- season %>%
   filter(PitchCall == "InPlay") %>%
   select(Date, Batter, ExitSpeed)
-datatable(season, rownames = FALSE, class = 'cell-border stripe', caption = 'Recent Exit Speeds', options = list(pageLength = 5, order = list(list(0, "asc"), list(2, 'desc'))))
+season$Date <- as.Date(season$Date , "%m/%d/%Y")
+datatable(season, rownames = FALSE, caption = 'Recent Exit Speeds', options = list(pageLength = 5, order = list(list(0, "desc"), list(2, 'desc'))))
 ```
