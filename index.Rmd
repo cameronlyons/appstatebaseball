@@ -6,3 +6,17 @@ title: "Appalachian State Baseball Analytics"
 
 <hr>
 
+```{r Setup,label = "SETUP", include=FALSE, results = 'hide'}
+knitr::opts_chunk$set(echo = FALSE, fig.align = "center", comment = NA, warning = FALSE, message = FALSE)
+library(readr)
+library(DT)
+library(dplyr)
+```
+
+```{r Table}
+season <- read_csv("2020-2021.csv")
+season <- season %>%
+  filter(PitchCall == "InPlay") %>%
+  select(Date, Batter, ExitSpeed)
+datatable(season, rownames = FALSE, class = 'cell-border stripe', caption = 'Recent Exit Speeds', options = list(pageLength = 5, order = list(list(0, "asc"), list(2, 'desc'))))
+```
