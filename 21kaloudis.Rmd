@@ -17,7 +17,7 @@ library(scales)
 master <- read.csv("2020-2021.csv")
 master$Date <- as.Date(master$Date , "%m/%d/%Y")
 hitter <- master %>%
-  filter(Batter == "Kaloudis, Vasilios")
+  filter(Batter == "Kaloudis, Vasili")
 ```
 
 ```{r Batter Summary}
