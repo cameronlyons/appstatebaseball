@@ -95,6 +95,8 @@ navbar:
       menu:
       - text: "Team Batting"
         href: 21batting.html
+      - text: "Carson Arnold"
+        href: 21arnold.html
       - text: "Hunter Bryson"
         href: 21bryson.html
       - text: "Phillip Cole"

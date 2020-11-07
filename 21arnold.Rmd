@@ -1,5 +1,5 @@
 ---
-title: "Jack Lipson"
+title: "Carson Arnold"
 ---
 
 <hr>
@@ -17,7 +17,7 @@ library(scales)
 master <- read.csv("2020-2021.csv")
 master$Date <- as.Date(master$Date , "%m/%d/%Y")
 hitter <- master %>%
-  filter(BatterId == 1000035495)
+  filter(Batter == "Arnold, Carson")
 ```
 
 ```{r Batter Summary}
@@ -444,7 +444,7 @@ layout(style(ggplotly(hmp), hoverinfo = "none"), dragmode = "pan")
 ```
 
 ```{r Ninety Plus, eval=FALSE, include=FALSE}
-
+NinetyPlus <- hitter %>%
   filter(ExitSpeed >= 90)
 np <- ggplot() +
   geom_path(data = sz, aes(x = x, y = y)) +
