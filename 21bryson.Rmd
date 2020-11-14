@@ -14,6 +14,7 @@ library(gridExtra)
 library(plotly)
 library(lubridate)
 library(scales)
+library(ggimage)
 master <- read.csv("2020-2021.csv")
 master$Date <- as.Date(master$Date , "%m/%d/%Y")
 hitter <- master %>%
@@ -133,8 +134,8 @@ bases <- data.frame(xa = c(0, 90/sqrt(2), 0, -90/sqrt(2), 0, rep(0)),
 ya = c(0, 90/sqrt(2), 2 * 90/sqrt(2), 90/sqrt(2), 0, rep(0)))
 sprayfilter <- hitter %>%
   filter(!PlayResult == "Undefined" & !PlayResult == "Sacrifice")
-bb <- ggplot(bases, aes(x = xa, y = ya)) + 
-  geom_path() + 
+spray_chart <- ggplot(bases, aes(x = xa, y = ya)) + 
+  geom_path() +
   geom_point(data = sprayfilter, x = sprayfilter$x, y = sprayfilter$y, 
              aes(color = factor(sprayfilter$PlayResult), 
                  text = paste("Exit Speed: ", sprintf("%.2f", ExitSpeed),
@@ -162,7 +163,9 @@ bb <- ggplot(bases, aes(x = xa, y = ya)) +
       legend.title = element_blank()) +
   coord_equal() +
   scale_color_discrete(limits = c("Single" ,"Double", "Triple", "HomeRun", "Out", "FieldersChoice", "Error"))
-layout(ggplotly(bb, tooltip = "text"), dragmode = "pan")
+img = "field.png"
+#ggbackground(spray_chart, img)
+layout(ggplotly(spray_chart, tooltip = "text"), dragmode = "pan")
 ```
 
 ```{r Launch Angle}
