@@ -163,7 +163,7 @@ spray_chart <- ggplot(bases, aes(x = xa, y = ya)) +
       legend.title = element_blank()) +
   coord_equal() +
   scale_color_discrete(limits = c("Single" ,"Double", "Triple", "HomeRun", "Out", "FieldersChoice", "Error"))
-img = "field.png"
+#img = "field.png"
 #ggbackground(spray_chart, img)
 layout(ggplotly(spray_chart, tooltip = "text"), dragmode = "pan")
 ```
